@@ -4,9 +4,30 @@
 				<%= link_to "Gestion Calendarios Laborales", '#', id:"logo" %>
 				<nav>
 					<ul class="nav pull-right">
+						
 						<li><%= link_to "Inicio", root_path %></li>
 						<li><%= link_to "Ayuda", help_path %></li>
-						<li><%= link_to "Registrarse", '#' %></li>
+			
+						<% if signed_in? %>
+						<li><%= link_to "Empleados", '#' %></li>
+						<li id="fat-menu" class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								Mi cuenta <b class="caret"></b>
+							</a>
+						
+							<ul class="dropdown-menu">
+								<li><%= link_to "Mi Perfil", current_user %></li>
+								<li><%= link_to "Mi cuenta", '#' %></li>
+								<li class="divider"></li>
+								<li><%= link_to "Salir", signout_path, method: "delete" %></li>
+
+							</ul>
+						</li>
+						
+					
+						<% else %>
+							<li><%= link_to "Iniciar Sessión", signin_path %></li>
+						<% end %>
 					</ul>
 				</nav>
 			</div>

@@ -11,6 +11,7 @@ class EmployeesController < ApplicationController
    		@emp=Employee.new(employee_params)
 
    		if(@emp.save)
+        sign_in @emp
    			flash[:success] = "Bienvenido a su Calendario"
    			redirect_to @emp
    		else
