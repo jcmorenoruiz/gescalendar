@@ -1,0 +1,17 @@
+<% provide(:title, 'Lista de empleados') %>
+<h1>Empleados</h1>
+<%= will_paginate %>
+
+<table>
+<thead>
+	<th>Nombre</th>
+	<th>Email</th>
+	<th>&nbsp;</th>
+</thead>
+<tbody>
+	<%= render @employees %>
+</tbody>
+</table>
+
+<%= will_paginate %>
+

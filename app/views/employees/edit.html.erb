@@ -1,5 +1,5 @@
-<% provide(:title, 'Registrarse') %>
-<h1>Registrarse</h1>
+<% provide(:title, 'Editar información') %>
+<h1>Modificar sus datos</h1>
 
 
 <div class="row">
@@ -20,9 +20,13 @@
 			<%= f.label :password_confirmation, "Confirmar password" %>
 			<%= f.password_field :password_confirmation %>
 			<p>
-			<%= f.submit "Crear cuenta", class:"btn btn-large btn-primary" %>
+			<%= f.submit "Actualizar", class:"btn btn-large btn-primary" %>
 			</p>
 		<% end %>
+
+
+		<%= gravatar_for @emp %>
+		<a href="http://gravatar.com/emails">Modificar</a>
 
 	</div>
 </div>
