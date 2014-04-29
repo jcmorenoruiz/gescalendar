@@ -1,4 +1,4 @@
-class CreateDepartments < ActiveRecord::Migration
+class AddEnterpriseIdDepartments < ActiveRecord::Migration
  
   def change
     create_table :departments do |t|
