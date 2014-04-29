@@ -15,4 +15,17 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
-
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+$(function() { 
+	$('.datepicker').datepicker({
+		format: "dd/mm/yyyy",
+		todayBtn: "linked",
+		language: "es",
+		todayHighlight: true,
+		autoclose: true,
+		startDate: '-1y',
+		endDate: '+1y',
+		weekStart: 1
+	});
+});

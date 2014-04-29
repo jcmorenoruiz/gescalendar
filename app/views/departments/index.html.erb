@@ -1,0 +1,20 @@
+<% provide(:title, 'Lista de Departamentos') %>
+<h1>Departamentos</h1>
+	
+<p> <%= link_to "Nuevo!", new_department_path, class: "btn btn-medium btn-primary" %> </p>
+<%= will_paginate %>
+
+<table>
+<thead>
+	<th>Nombre</th>
+	<th>Num.Empleados</th>
+	<th>&nbsp;</th>
+</thead>
+<tbody>
+	<%= render @departments %>
+</tbody>
+</table>
+
+<%= will_paginate %>
+
+

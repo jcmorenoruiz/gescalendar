@@ -1,0 +1,12 @@
+<h3>Datos del calendario</h3>
+<div class="well well-small">
+	<% if @cal.status %>
+			<%= link_to "Cerrar calendario", @cal, method: :delete, :class => "btn btn-info", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
+			<% else %>
+			<%= link_to "Reabrir calendario", calendar_path(@cal,"calendar[status]"=>true), method: :patch, :class => "btn btn-info" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
+			<% end %>
+</div>
+
+<legend>Calendario <%= @cal.anio %></legend>
+Fecha de apertura: <%= @cal.fecha_apertura %>
+

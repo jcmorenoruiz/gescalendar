@@ -1,0 +1,14 @@
+<%= f.label :nombre, "Nombre del empleado"   %>
+<%= f.text_field :nombre %>
+
+<%= f.label :email %>
+<%= f.text_field :email %>
+
+<%= f.label :fecha_alta, "Fecha de alta en la empresa" %>
+<%= f.text_field :fecha_alta, :class => 'datepicker' %>	
+				
+<%= f.label :password %>
+<%= f.password_field :password %>
+
+<%= f.label :password_confirmation, "Confirmar password" %>
+<%= f.password_field :password_confirmation %> 

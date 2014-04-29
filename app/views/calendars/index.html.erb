@@ -1,0 +1,29 @@
+<% provide(:title, 'Lista de Departamentos') %>
+<h3>Calendarios</h3>
+	
+<p> <%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> </p>
+<div class="row">
+<div class="span6">
+	<table class="table table-hover table-striped">
+	<thead>
+		<th>Año</th>
+		<th>Fecha de Apertura</th>
+		<th>Fecha de Cierre </th>
+		<th>Estado</th>
+		<th>&nbsp;</th>
+	</thead>
+	<tbody>
+		<% @calendars.each do |cal| %>
+		<tr class="fields">
+			<td><%= cal.anio %></td>
+			<td><%= cal.fecha_apertura %></td>
+			<td><%= cal.fecha_cierre %></td>
+			<td><%= cal.status %> </td>
+			<td>	<%= link_to "Ver Datos",calendar_path(cal) %>	</td>
+		</tr>
+		<% end %>
+	</tbody>
+	</table>
+</div>
+</div>
+

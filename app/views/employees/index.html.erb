@@ -1,8 +1,32 @@
 <% provide(:title, 'Lista de empleados') %>
-<h1>Empleados</h1>
+<h3>Lista de Empleados</h3>
+
+
+<p> <%= link_to "Nuevo!", new_employee_path, class: "btn btn-medium btn-primary" %> </p>
+
+<div class="well well-small">
+<%= form_tag(employees_path, :method => "get" , :class => 'form-inline') do %>
+
+
+<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query input-medium' %>
+
+<%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
+%>
+
+<%= select_tag :status, options_for_select([["Activo","1"],["Baja","0"]],params[:status]), :class=> 'input-small' %>
+
+
+<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+  <%= link_to("Limpiar", employees_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+<% end %>
+</div>
+
+
+
+
 <%= will_paginate %>
 
-<table>
+<table class="table table-hover table-striped">
 <thead>
 	<th>Nombre</th>
 	<th>Email</th>
@@ -14,4 +38,5 @@
 </table>
 
 <%= will_paginate %>
+
 

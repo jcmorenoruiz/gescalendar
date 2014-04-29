@@ -30,6 +30,17 @@ module SessionsHelper
 		emp==current_user
 	end
 
+	# obtener la empresa del empleado autentificado.
+	def current_emp
+		user=self.current_user
+		dpto=Department.find(user.department_id)
+		@current_emp=Enterprise.find(dpto.enterprise_id) if dpto
+	end
+
+	# comprobar si la información pertenece a la empresa autentificada
+	def correct_emp
+		
+	end
 
 	def store_location
 		session[:return_to]= request.url if request.get?
@@ -39,4 +50,31 @@ module SessionsHelper
 		redirect_to(session[:return_to] || default)
 		session.delete(:return_to)
 	end
+
+	def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Por favor, identifiquese!" 
+      end
+    end
+
+     # Enterprise Administrator
+    def admin_user
+      redirect_to(current_user) unless current_user.role==3
+    end
+ 
+    def admin_user?
+      current_user.role==3
+    end
+
+    # Aplication Administrator 
+    def super_admin
+       redirect_to(current_user) unless current_user.role==4
+    end
+
+    def super_admin_user?
+      current_user.role==4	
+    end
+
+
 end

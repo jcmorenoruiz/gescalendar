@@ -1,0 +1,11 @@
+	
+	<%= f.hidden_field :nombre , :value => "Gerencia" %>
+	<%= f.hidden_field :enterprise_id, :value => @enterprise.id %>
+
+<%= f.fields_for :employees do |e| %>
+	<%= render 'employees_fields', :f => e %>
+<% end %>
+
+
+
+				

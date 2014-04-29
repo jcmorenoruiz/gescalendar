@@ -1,0 +1,10 @@
+<tr>
+		<td><%= department.nombre %></td>
+		<td><%= department.employees.count %></td>
+		<td><%= link_to 'Mostrar', department %>|	
+		<td><%= link_to 'Editar',[:edit,department] %>|	
+			<%= link_to "Dar de baja", department, method: :delete, data: { confirm: "Esta seguro?" } %>
+		 </td>
+
+
+</tr>

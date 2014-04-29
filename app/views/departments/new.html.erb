@@ -1,0 +1,32 @@
+<% provide(:title, 'Nuevo Departamento') %>
+<h1>Nuevo Departamento</h1>
+
+<% if @dpto.errors.any? %>
+	<div id="error_explanation">
+
+		<div class="alert alert-error">
+		El formulario contiene <%= pluralize(@dpto.errors.count,"error") %>
+		</div>
+		<ul>
+				<% @dpto.errors.full_messages.each do |msg| %>
+					<li>* <%= msg %></li>
+				<% end %> 
+		</ul>
+	</div>
+<% end %>
+
+<div class="row">
+	<div class="span5 offset1">
+		<%= form_for(@dpto) do |f| %>
+
+		
+			<%= f.label :nombre, "*Nombre" %>
+			<%= f.text_field :nombre, :required => true %>
+
+			<p>
+			<%= f.submit "Crear Departamento", class:"btn btn-large btn-primary" %>
+			</p>
+		<% end %>
+
+	</div>
+</div>

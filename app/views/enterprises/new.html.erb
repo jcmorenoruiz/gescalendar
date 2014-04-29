@@ -1,0 +1,50 @@
+<% provide(:title, 'Registrarse') %>
+<h1>Registrarse</h1>
+
+
+<% if @enterprise.errors.any? %>
+	<div id="error_explanation">
+		<div class="alert alert-error">
+		Datos de la empresa contiene <%= pluralize(@enterprise.errors.count,"error") %>
+		</div>
+		<ul>
+				<% @enterprise.errors.full_messages.each do |msg| %>
+					<% if !msg.include? 'Department' %>
+					<li>* <%= msg %></li>
+					<% end %>
+				<% end %> 
+				
+				<% @enterprise.departments[0].employees[0].errors.full_messages.each do |msg| %>
+					<% if !msg.include? 'Department' %>
+					<li>* <%= msg %></li>
+					<% end %>
+				<% end %> 
+		</ul>
+	</div>
+<% end %>
+
+
+
+
+
+<div class="row">
+	<div class="span5 offset1">
+		<%= form_for @enterprise do |f| %>
+	
+			<%= f.label :empresa, "Empresa o Razón Social" %>
+			<%= f.text_field :empresa %>
+
+
+			<%= f.fields_for :departments do |d| %>
+				
+				<%= render "departments_fields", :f => d %>		
+
+			<% end %>
+	
+			<p>
+			<%= f.submit "Crear cuenta", class:"btn btn-large btn-primary" %>
+			</p>
+		<% end %>
+
+	</div>
+</div>

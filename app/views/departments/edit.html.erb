@@ -1,0 +1,17 @@
+<% provide(:title, 'Editar departamento') %>
+<h1>Modificar departamento</h1>
+
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@dpto) do |f| %>
+
+			<%= f.label :nombre %>
+			<%= f.text_field :nombre %>
+			
+		<p><%= f.submit "Actualizar", class:"btn btn-large btn-primary" %></p>
+
+		<% end %>
+
+	</div>
+</div>

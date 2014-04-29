@@ -56,3 +56,8 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# datepicker jquery
+gem 'bootstrap-datepicker-rails'
+
+# rails date validations
+gem 'validates_timeliness', '~> 3.0'

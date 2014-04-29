@@ -3,7 +3,7 @@ namespace :db do
 
 	desc "Rellenar base de datos con usuarios de ejemplo"
 	task populate: :environment do
-		Employee.create!(name:" Empleado",
+		Employee.create!(nombre:" Empleado",
 						 email: "ejemplo@gmail.com",
 						 password: "testpass",
 						 password_confirmation: "testpass")
@@ -13,7 +13,7 @@ namespace :db do
 			name= Faker::Name.name
 			email = "example-#{n+1}@gmail.com"
 			password ="password"
-			Employee.create(name: name,
+			Employee.create(nombre: name,
 							email: email,
 							password: password,
 							password_confirmation: password)

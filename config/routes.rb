@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   
+  resources :enterprises, only: [:show,:new, :create,:edit,:update]
   resources :employees
+  resources :departments
   resources :sessions, only: [:new, :create, :destroy]
-  
-  match '/signup', to: 'employees#new', via: 'get'
+  resources :calendars
+
+  match '/signup', to: 'enterprises#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/about', to: 'static_pages#about', via: 'get'
