@@ -1,5 +1,12 @@
-class AddEnterpriseIdDeparment < ActiveRecord::Migration
+class CreateDepartments < ActiveRecord::Migration
+ 
   def change
-  		add_column :departments, :enterprise_id , :integer
+    create_table :departments do |t|
+      t.string :nombre
+      t.boolean :status
+      t.integer :enterprise_id
+      t.timestamps
+    end
   end
+
 end
