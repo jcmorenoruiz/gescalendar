@@ -8,7 +8,7 @@ class DepartmentsController < ApplicationController
 
 	# departamentos de la empresa cuyo usuario esta autentificado
 	def index
-		 @departments=Department.where(enterprise_id: current_emp.id,status: 1).paginate(page: params[:page]) 	
+		 @departments=Department.where(enterprise_id: current_emp.id,status: 't').paginate(page: params[:page]) 	
 	end 
 	def new
 		@dpto=Department.new
