@@ -2,7 +2,7 @@ class RequestTypesController < ApplicationController
   before_action :set_request_type, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user
   before_action :admin_user
-  before_action :correct_calendar
+  before_action :correct_calendar, only: [:new, :edit, :update , :destroy]
 
 
   # GET /request_types/new
@@ -33,8 +33,7 @@ class RequestTypesController < ApplicationController
   
   # PATCH/PUT /request_types/1
   # PATCH/PUT /request_types/1.json
-  def update
-    
+  def update   
       if @request_type.update(request_type_params)
           flash[:success]="Tipo de solicitud actualizada correctamente"
           redirect_to :controller => 'calendars', :action => 'ausencias', id: @request_type.calendar_id
@@ -63,7 +62,13 @@ class RequestTypesController < ApplicationController
     end
 
     def correct_calendar
-      @calcheck=Department.find(@request_type.calendar.department_id)
+      if !@request_type.nil?
+        @calcheck=Department.find(@request_type.calendar.department_id)
+      else
+        @calen=Calendar.find(params[:calendar_id])
+        @calcheck=Department.find(@calen.department_id)
+      end
+      
       redirect_to(calendars_url) unless current_emp.id==@calcheck.enterprise_id || current_user.role>3      
     end
 

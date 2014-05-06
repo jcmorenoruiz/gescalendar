@@ -2,8 +2,7 @@ class LineCalendarsController < ApplicationController
   before_action :set_line_calendar, only: [:edit, :update, :destroy]
   before_action :signed_in_user
   before_action :admin_user
-  before_action :correct_calendar
-
+  before_action :correct_calendar, only: [:index,:edit,:create,:update,:destroy]
   # GET /line_calendars
   # GET /line_calendars.json
   def index
@@ -69,13 +68,17 @@ class LineCalendarsController < ApplicationController
     end
 
     def correct_calendar
-      @calcheck=Department.find(@line_calendar.calendar.department_id)
+      if(!@line_calendar.nil?)
+        @calcheck=Department.find(@line_calendar.calendar.department_id)
+      else
+        @calcheck=Department.find(Calendar.find(params[:line_calendar][:calendar_id]).department_id)
+      end
       redirect_to(calendars_url) unless current_emp.id==@calcheck.enterprise_id || current_user.role>3      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def line_calendar_params
-      params.require(:line_calendar).permit(:fecha, :dia, :desc)
+      params.require(:line_calendar).permit(:fecha, :dia, :desc,:calendar_id)
     end
 
 end

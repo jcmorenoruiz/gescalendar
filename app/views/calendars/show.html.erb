@@ -1,5 +1,5 @@
 <% provide(:title, 'Dias festivos del calendario') %>
-<h3>Dias festivos del calendario <%= @cal.anio %></h3>
+<h3>Dias festivos del calendario <%= @cal.anio %> - <%= @cal.department.nombre %></h3>
   
 <p> <%= link_to "Nuevo!", new_line_calendar_path(calendar_id: @cal.id), class: "btn btn-medium btn-primary" %> </p>
 <div class="row">
