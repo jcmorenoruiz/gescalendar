@@ -1,0 +1,29 @@
+<h1>Listing default_request_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Num dias max</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @default_request_types.each do |default_request_type| %>
+      <tr>
+        <td><%= default_request_type.nombre %></td>
+        <td><%= default_request_type.num_dias_max %></td>
+        <td><%= default_request_type.status %></td>
+        <td><%= link_to 'Show', default_request_type %></td>
+        <td><%= link_to 'Edit', edit_default_request_type_path(default_request_type) %></td>
+        <td><%= link_to 'Destroy', default_request_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Default request type', new_default_request_type_path %>

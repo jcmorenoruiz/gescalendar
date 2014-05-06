@@ -37,10 +37,7 @@ module SessionsHelper
 		@current_emp=Enterprise.find(dpto.enterprise_id) if dpto
 	end
 
-	# comprobar si la información pertenece a la empresa autentificada
-	def correct_emp
-		
-	end
+
 
 	def store_location
 		session[:return_to]= request.url if request.get?
@@ -68,11 +65,11 @@ module SessionsHelper
     end
 
     # Aplication Administrator 
-    def super_admin
+    def superadmin_user
        redirect_to(current_user) unless current_user.role==4
     end
 
-    def super_admin_user?
+    def superadmin_user?
       current_user.role==4	
     end
 

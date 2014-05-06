@@ -1,5 +1,6 @@
 class Department < ActiveRecord::Base
 	has_many :employees, :inverse_of => :department
+	has_many :calendars, :inverse_of => :department 
 	belongs_to :enterprise , :inverse_of => :departments
 	default_scope { order('nombre ASC') }
 

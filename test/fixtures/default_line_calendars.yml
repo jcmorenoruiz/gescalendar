@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2014-05-05
+  nombre: MyString
+  status: false
+
+two:
+  fecha: 2014-05-05
+  nombre: MyString
+  status: false

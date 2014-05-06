@@ -69,10 +69,10 @@ class DepartmentsController < ApplicationController
    		
       # before filers
 
-    def correct_department
-      @emp=Department.find(params[:id])
-      redirect_to(departments_url) unless current_emp.id==@emp.enterprise_id || current_user.role>3
-    end
+    	def correct_department
+      		@emp=Department.find(params[:id]) 
+      		redirect_to(departments_url) unless current_emp.id==@emp.enterprise_id || current_user.role>3
+    	end
 
 
 

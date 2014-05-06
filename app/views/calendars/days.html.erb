@@ -1,0 +1,72 @@
+<% provide(:title, 'Dias festivos del calendario') %>
+<h3>Dias hábiles del calendario <%= @cal.anio %></h3>
+  
+
+<%= form_for(@cal, :url => {:action=> "update_days", :id => @cal }, :html => {:class => "form form-horizontal"}) do |f| %>
+<fieldset>
+<legend>Días de la semana</legend>
+
+
+<div class="control-group">
+  <%= f.label 'Lunes', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d1 %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label 'Martes', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d2 %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label 'Miércoles', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d3 %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label 'Jueves', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d4 %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label 'Viernes', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d5 %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label 'Sabado', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d6 %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label 'Domingo', :class=>"control-label" %>
+ <div class="controls">
+ <%= f.check_box :d7 %>
+  </div>
+</div>
+
+<br>
+<div class="modal-footer">
+      <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+        <%= link_to("Volver", calendars_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-primary", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+</div>
+
+
+</fieldset>
+<% end %>
+
+
+
+
+

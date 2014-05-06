@@ -11,26 +11,61 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428222103) do
+ActiveRecord::Schema.define(version: 20140505164013) do
 
   create_table "calendars", force: true do |t|
     t.integer  "anio"
     t.date     "fecha_apertura"
     t.date     "fecha_cierre"
-    t.integer  "enterprise_id"
+    t.integer  "department_id"
     t.boolean  "status",         default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "d1",             default: true
+    t.boolean  "d2",             default: true
+    t.boolean  "d3",             default: true
+    t.boolean  "d4",             default: true
+    t.boolean  "d5",             default: true
+    t.boolean  "d6",             default: true
+    t.boolean  "d7",             default: true
+  end
+
+  add_index "calendars", ["anio", "department_id"], name: "index_calendars_on_anio_and_department_id", unique: true
+
+  create_table "default_calendars", force: true do |t|
+    t.integer  "anio"
+    t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "calendars", ["anio", "enterprise_id"], name: "index_calendars_on_anio_and_enterprise_id", unique: true
+  add_index "default_calendars", ["anio"], name: "index_default_calendars_on_anio", unique: true
+
+  create_table "default_line_calendars", force: true do |t|
+    t.date     "fecha"
+    t.string   "nombre"
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "default_calendar_id"
+  end
+
+  add_index "default_line_calendars", ["fecha", "default_calendar_id"], name: "index_default_line_calendars_on_fecha_and_default_calendar_id", unique: true
+
+  create_table "default_request_types", force: true do |t|
+    t.string   "nombre"
+    t.integer  "num_dias_max"
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "departments", force: true do |t|
     t.string   "nombre"
     t.boolean  "status",        default: true
+    t.integer  "enterprise_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "enterprise_id"
   end
 
   create_table "employees", force: true do |t|
@@ -58,6 +93,25 @@ ActiveRecord::Schema.define(version: 20140428222103) do
     t.boolean  "notif_apertura",    default: true
     t.date     "fecha_baja"
     t.boolean  "status",            default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "line_calendars", force: true do |t|
+    t.date     "fecha"
+    t.string   "dia"
+    t.string   "desc"
+    t.integer  "calendar_id"
+    t.boolean  "status",      default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "request_types", force: true do |t|
+    t.string   "nombre"
+    t.integer  "num_dias_max"
+    t.boolean  "status"
+    t.integer  "calendar_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

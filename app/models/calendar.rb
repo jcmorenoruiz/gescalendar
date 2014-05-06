@@ -1,12 +1,17 @@
 class Calendar < ActiveRecord::Base
-
-	belongs_to :enterprise , :inverse_of => :enterprises
+	include Filterable
+	has_many :line_calendars
+	has_many :request_types
+	belongs_to :department , :inverse_of => :calendars
 	default_scope { order('anio ASC') }
+	scope :status, -> (status) { where status: status}
+	scope :department, -> (department_id) { where department_id: department_id } 
+
 
 	validates :anio, presence: true,length: { is: 4 }, 
 	numericality: { only_integer: true}
 
-	validates_uniqueness_of  :anio, scope: :enterprise_id
+	validates_uniqueness_of  :anio, scope: :department_id
 	validates :fecha_apertura, presence: true, length: { is: 10}
 	validates :status, inclusion: { in: [true,false]}
 

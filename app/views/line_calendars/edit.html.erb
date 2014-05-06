@@ -1,0 +1,35 @@
+<h3>Editar día no laborable</h1>
+
+<fieldset>
+  <legend>Dia no laborable</legend>
+
+<%= form_for (@line_calendar) do |f| %>
+  <% if @line_calendar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@line_calendar.errors.count, "error") %> prohibited this line_calendar from being saved:</h2>
+
+      <ul>
+      <% @line_calendar.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  	<%= f.label :fecha, "Fecha" %>
+  	<%= f.text_field :fecha, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>
+      
+    <%= f.label :dia, "Nombre del dia" %><br>
+    <%= f.text_field :dia %>
+  
+    <%= f.label :desc, "Descripción" %><br>
+    <%= f.text_area :desc, size: "60x4" %>
+  
+    <div class="modal-footer">
+      <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+        <%= link_to("Cancelar", calendar_path(@calendar), :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+      </div>
+<% end %>
+</fieldset>
+
+

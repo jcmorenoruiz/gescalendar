@@ -1,0 +1,29 @@
+<%= form_for(@default_request_type) do |f| %>
+  <% if @default_request_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@default_request_type.errors.count, "error") %> prohibited this default_request_type from being saved:</h2>
+
+      <ul>
+      <% @default_request_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nombre %><br>
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="field">
+    <%= f.label :num_dias_max %><br>
+    <%= f.number_field :num_dias_max %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

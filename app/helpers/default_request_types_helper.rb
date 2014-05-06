@@ -1,0 +1,2 @@
+module DefaultRequestTypesHelper
+end

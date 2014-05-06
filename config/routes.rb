@@ -1,14 +1,42 @@
 Rails.application.routes.draw do
   
+  resources :default_request_types
+
+  resources :request_types
+
+  resources :default_line_calendars
+
+  resources :default_calendars
+
+  resources :line_calendars
+
   resources :enterprises, only: [:show,:new, :create,:edit,:update]
   resources :employees
   resources :departments
   resources :sessions, only: [:new, :create, :destroy]
   resources :calendars
 
+  resources :calendars do
+     resources :line_calendars, :only=>[:new, :create]
+  end
+
+  get "calendars/days"
+  match 'calendars/days/:id' => 'calendars#days', via: 'get'
+
+  get "calendars/ausencias"
+  match 'calendars/ausencias/:id' => 'calendars#ausencias', via: 'get'
+  
+  get "calendars/update_days"
+  match 'calendars/update_days/:id' => 'calendars#update_days', via: 'patch'
+
+
+
+  # Not logged in
   match '/signup', to: 'enterprises#new', via: 'get'
+
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
+
   match '/about', to: 'static_pages#about', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/help', to: 'static_pages#help', via: 'get'  

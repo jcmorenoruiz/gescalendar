@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Anio:</strong>
+  <%= @default_calendar.anio %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @default_calendar.status %>
+</p>
+
+<%= link_to 'Edit', edit_default_calendar_path(@default_calendar) %> |
+<%= link_to 'Back', default_calendars_path %>

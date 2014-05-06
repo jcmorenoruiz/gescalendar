@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  num_dias_max: 1
+  status: false
+
+two:
+  nombre: MyString
+  num_dias_max: 1
+  status: false

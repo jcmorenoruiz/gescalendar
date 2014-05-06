@@ -1,0 +1,34 @@
+<%= form_for(@request_type) do |f| %>
+  <% if @request_type.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+      El formulario contiene <%= pluralize(@request_type.errors.count, "error") %>
+      </div>
+      <ul>
+      <% @request_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ 
+
+  <div class="field">
+    <%= f.label :nombre %><br>
+    <%= f.text_field :nombre, :class => 'input-xlarge' %>
+  </div>
+  <br />
+  <div class="field">
+    <%= f.label :num_dias_max, "Número máximo de días permitidos" %><br>
+    <%= f.number_field :num_dias_max , :class => 'input-small' %>
+  </div>
+
+    <%= f.hidden_field :calendar_id, :value => @calendar.id %>
+<br />
+ <div class="modal-footer">
+      <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+        <%= link_to("Cancelar", {:controller => "calendars", :action => "ausencias", id: @calendar.id}, :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+
+ </div>
+<% end %>

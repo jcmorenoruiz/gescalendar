@@ -8,36 +8,49 @@
 		<ul>
 				<% @calendar.errors.full_messages.each do |msg| %>
 					<li>* <%= msg %></li>
-				<% end %> 
-				
+				<% end %> 		
 		</ul>
 	</div>
 <% end %>
 
- <legend>Periodo de solicitudes</legend>
 <%= form_for(@calendar, :html => {:class => "form form-horizontal"}) do |f| %>
+<fieldset>	
+ <legend>Periodo de solicitudes</legend>
+
 	
-	<fieldset>	
+	
 		<div class="control-group">
 		<%= f.label :anio, "Año del ejercicio",:class=>"control-label" %>
 			<div class="controls">
-			<%= f.select :anio, options_for_select((2.years.ago.year..Time.now.year+1),Time.now.year), {},html_options = {:class=> 'input-small'} %>
+			<%= f.select :anio, options_for_select((2.years.ago.year..Time.now.year+1),Time.now.year),
+				 {},html_options = {:class=> 'input-small'} %>
 			</div>
 		</div>
 
 		<div class="control-group">
 		<%= f.label :fecha_apertura, "Fecha de apertura" ,:class=>"control-label"%>
 			<div class="controls">
-			<%= f.text_field :fecha_apertura, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>
+			<%= f.text_field :fecha_apertura, :class => 'datepicker input-large', 
+									:placeholder => "Click para abrir calendario" %>
 			</div>	
 		</div>
-	</fieldset>
 
-			<div class="modal-footer">
+		<div class="control-group">
+			<%= f.label :department_id, "Departamento" ,:class=>"control-label"%>
+			<div class="controls">
+			<%= f.select :department_id, options_for_select(@dptos.map{ |s| [s.nombre, s.id] }) , {},
+					:class => 'input-large' %>
+									
+		</div>	
+		</div>
+	
+
+	<div class="modal-footer">
 			<%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
-			  <%= link_to("Cancelar", calendars_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
-			</div>
+			  <%= link_to("Cancelar", calendars_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", 
+			  :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+	</div>
 
-
+</fieldset>
 <% end %>
 

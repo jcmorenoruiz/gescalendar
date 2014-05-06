@@ -1,12 +1,35 @@
-<h3>Datos del calendario</h3>
-<div class="well well-small">
-	<% if @cal.status %>
-			<%= link_to "Cerrar calendario", @cal, method: :delete, :class => "btn btn-info", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
-			<% else %>
-			<%= link_to "Reabrir calendario", calendar_path(@cal,"calendar[status]"=>true), method: :patch, :class => "btn btn-info" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
-			<% end %>
-</div>
+<% provide(:title, 'Dias festivos del calendario') %>
+<h3>Dias festivos del calendario <%= @cal.anio %></h3>
+  
+<p> <%= link_to "Nuevo!", new_line_calendar_path(calendar_id: @cal.id), class: "btn btn-medium btn-primary" %> </p>
+<div class="row">
+  <table class="table table-hover table-striped">
+  <thead>
+    <tr class="fields">
+      <th width="15%">Fecha</th>
+      <th width="50%">Nombre</th>
+      <th width="10%">Estado</th>
+      <th width="7%">&nbsp;</th>
+      <th width="7%">&nbsp; </th>
+    </tr>
+  </thead>
 
-<legend>Calendario <%= @cal.anio %></legend>
-Fecha de apertura: <%= @cal.fecha_apertura %>
+  <tbody>
+    <% @cal.line_calendars.each do |line_calendar| %>
+      <tr>
+        <td><%= line_calendar.fecha %></td>
+        <td><%= line_calendar.dia %></td>
+        <td><%= bool_to_s(line_calendar.status) %></td>
+        <td><%= link_to 'Editar', edit_line_calendar_path(line_calendar), :class => 'btn btn-warning' %></td>
+        <td><%= link_to 'Eliminar', line_calendar, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+  <div class="modal-footer">
+    
+        <%= link_to("Volver", calendars_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-primary", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+  </div>
 

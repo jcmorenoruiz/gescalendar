@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @default_line_calendar.fecha %>
+</p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @default_line_calendar.nombre %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @default_line_calendar.status %>
+</p>
+
+<%= link_to 'Edit', edit_default_line_calendar_path(@default_line_calendar) %> |
+<%= link_to 'Back', default_line_calendars_path %>
