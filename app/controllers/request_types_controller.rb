@@ -2,7 +2,7 @@ class RequestTypesController < ApplicationController
   before_action :set_request_type, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user
   before_action :admin_user
-  before_action :correct_calendar, only: [:new, :edit, :update , :destroy]
+  before_action :correct_calendar, only: [:create, :edit, :update , :destroy]
 
 
   # GET /request_types/new
@@ -65,7 +65,7 @@ class RequestTypesController < ApplicationController
       if !@request_type.nil?
         @calcheck=Department.find(@request_type.calendar.department_id)
       else
-        @calen=Calendar.find(params[:calendar_id])
+        @calen=Calendar.find(params[:request_type][:calendar_id])
         @calcheck=Department.find(@calen.department_id)
       end
       
