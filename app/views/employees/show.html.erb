@@ -24,7 +24,7 @@
 		</br>
 		</br>
 				<legend>Día festivo</legend>
-				<strong>Fecha: </strong>&nbsp; <%= @nextfree.fecha %>
+				<strong>Fecha: </strong>&nbsp; <%= !@nextfree.fecha.nil? ? @nextfree.fecha  : ''  %>
 				<br />
 				<strong>Dia:</strong>&nbsp;&nbsp; <%= @nextfree.dia %>
 
