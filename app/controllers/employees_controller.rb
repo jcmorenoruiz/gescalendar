@@ -13,8 +13,11 @@ before_action :correct_emp, only: [:destroy,:balance]
 
     def show
       @nextRequest=Request.unscoped.where(:employee_id => current_user).where('desde>?',Time.now).order('desde asc').first
-      @nextfree=Calendar.where(:department_id => current_emp.departments).first.line_calendars.unscoped.where('fecha>?',Date.current).first
-
+      @nextfree=Calendar.where(:department_id => current_emp.departments).first
+      if @nextfree
+        @nextfree=@nextfree.line_calendars.unscoped.where('fecha>?',Date.current).first
+      end
+      
       if emp_user?
          @requests=@emp.requests.where(:status => 1,
             :employee_id => current_user.id).paginate(page: params[:page])
