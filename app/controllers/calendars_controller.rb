@@ -40,10 +40,11 @@ class CalendarsController < ApplicationController
   # close calendar
   def destroy
     @cal=Calendar.find(params[:id])
-    if @cal.update_attributes(:status => 'f',:fecha_cierre => Time.now)
-      flash[:success]="Ejercicio cerrado correctamente"
-    else 
-      flash[:error]= "Se ha producido un error al cerrar el ejercicio. Vuelta a intentarlo mas tarde"
+    @cal.status=!@cal.status?
+    if @cal.save
+        flash[:success]="Ejercicio cerrado correctamente"
+    else
+        flash[:error]= "Se ha producido un error al cerrar el ejercicio. Vuelta a intentarlo mas tarde"
     end
      redirect_to calendars_url
   end

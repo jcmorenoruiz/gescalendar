@@ -1,0 +1,94 @@
+<h3>Auditoria de la Solicitud</h3>
+<div class="row">
+<%= form_for(@request, html: {:class => 'form-horizontal' }) do |f| %>
+
+<% if @request.errors.any? %>
+	<div id="error_explanation">
+
+		<div class="alert alert-error">
+		El formulario contiene <%= pluralize(@request.errors.count,"error") %>
+		</div>
+		<ul>
+				<% @request.errors.full_messages.each do |msg| %>
+					<li>* <%= msg %></li>
+				<% end %> 
+		</ul>
+	</div>
+<% end %>
+
+	<fieldset>
+	<legend>Datos de la Solicitud</legend>
+
+
+<div class="span6">
+
+	<div class="well">
+
+		<div class="control-group">
+	    <%= f.label :empleado, "Empleado:" %>
+	    	    	<%=   f.text_field :empleado , :value => @request.employee.nombre,:disabled => true, :class => 'input-large' %>
+	  </div>
+
+
+	  <div class="control-group">
+	    <%= f.label :hasta, "Fecha de Fin:" %>
+	    	<%=   f.text_field :hasta ,:disabled => true, :class => 'input-medium' %>
+	  </div>
+
+	  <div class="control-group">
+	    <%= f.label :desde, "Fecha de Inicio:" %>
+	    	<%=   f.text_field :desde , :disabled => true,:class => 'input-medium' %>
+	  </div>
+
+	<div class="control-group">
+	    <%= f.label :solicitud, "Tipo de Solicitud:" %>
+	    	<%=   f.text_field :solicitud , :value => @request.request_type.nombre,:disabled => true, :class => 'input-large' %>
+	  	
+	  </div>
+
+	 <div class="control-group">
+	    <%= f.label :motivo, "Comentarios:" %>
+	    	<%=   f.text_area :motivo , :rows => 4 , :cols => 60, :disabled => true,:width => '80%', :class =>'span5' %>  	
+	  </div>
+	 
+
+	</div>
+	    
+</div>
+<% if current_user.role>1 %>
+	<div class="span5 well">
+		
+			<label> Auditoria: </label>	
+			<label class="radio inline">
+				<input type="radio" name="request[status]" id="request_status_confirmar" value="confirmada" <%= @request.confirmada? ? 'checked="checked"' : "" %> >
+				Confirmar
+			</label>
+			<label class="radio inline">
+				<input type="radio" name="request[status]" id="request_status_denegar" value="denegada" <%= @request.denegada? ? 'checked="checked"' : "" %>>
+				Denegar 
+			</label>
+			     
+		</br></br>
+				
+			
+				<%= f.label :motivo_rev, "Comentarios:" %>
+				<%= f.text_area :motivo_rev, :rows => 4, :cols => 60,:class =>'span5' %>
+
+	</div>
+<% end %>
+
+	</fieldset>
+<br />
+ <div class="modal-footer">
+     <% if current_user.role>1 %>
+      <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+     <% end %>
+
+     <%= link_to("Cancelar", employee_path(current_user),  :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+
+ </div>
+
+
+
+<% end %>
+</div>

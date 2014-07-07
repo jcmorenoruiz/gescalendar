@@ -1,43 +1,81 @@
 <% provide(:title, 'Alta de empleados') %>
 <h3>Alta de empleado</h3>
+	<%= render 'shared/error_messages' %>
 
+	<%= form_for(@emp, :html => {:class => "form form-horizontal"}) do |f| %>
 
-<div class="row">
-	<div class="span5 offset1">
-		<%= form_for(@emp) do |f| %>
-
-			<%= render 'shared/error_messages' %>
+	<div class="well">
+	
+			<fieldset>
+				<legend>Datos del empleado</legend>
+		
+			<div class="control-group">
+				<%= f.label :nombre, :class => 'control-label' %>
+				<div class="controls">
+					<%= f.text_field :nombre, :class =>'input-xlarge',:required => true %>
+				</div>
+			</div>
 			
-			<%= f.label :nombre %>
-			<%= f.text_field :nombre %>
+			<div class="control-group">
+			<%= f.label :email, :class => 'control-label' %>
+				<div class="controls">
+				<%= f.text_field :email, :class =>'input-xlarge', :required => true %>
+				</div>
+			</div>
 
-			<%= f.label :email %>
-			<%= f.text_field :email %>
+			<div class="control-group">
+			<%= f.label :fecha_alta, "Fecha de alta", :class => 'control-label' %>
+				<div class="controls">
+				<%= f.text_field :fecha_alta, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario", :required => true %>
+				</div>
+			</div>
 
-			<%= f.label :fecha_alta, "Fecha de alta" %>
-			<%= f.text_field :fecha_alta, :class => 'datepicker', :placeholder => "Click para abrir calendario" %>
-			
-			<%= f.label :role, "Privilegios" %>
-			<%= f.select :role, "<option value='1'>Empleado</option>
+			<div class="control-group">
+			<%= f.label :role, "Privilegios", :class=> 'control-label' %>
+				<div class="controls">
+				<%= f.select :role, "<option value='1'>Empleado</option>
 								 <option value='2'>Jefe de Departamento</option>
-								 <option value='3'>Administrador</option>".html_safe %>
-			
-			<%= f.label :department_id, "Departamento" %>
-			<%= f.select :department_id, options_for_select(@departments.map{ |s| [s.nombre, s.id] }) %>
+								 <option value='3'>Administrador</option>".html_safe,  {},
+					:class => 'input-large' %> 
+				</div>
+			</div>
 
-			<%= f.label :cargo %>
-			<%= f.text_field :cargo %>
+				<div class="control-group">
+			<%= f.label :department_id, "Departamento" , :class=> 'control-label' %>
+					<div class="controls">
+			<%= f.select :department_id,  options_for_select(@departments.map{ |s| [s.nombre, s.id] }),{}, :class => 'input-large'  %>
+							 
+				</div>
+			</div>
 
-			<%= f.label :password %>
-			<%= f.password_field :password %>
+				<div class="control-group">
+			<%= f.label :cargo , "Cargo (Opcional)",:class=> 'control-label' %> 
+					<div class="controls">
+			<%= f.text_field :cargo, :class => 'input-large' %>
+				</div>
+			</div>
 
-			<%= f.label :password_confirmation, "Confirmar password" %>
-			<%= f.password_field :password_confirmation %>
+				<div class="control-group">
+				<%= f.label :password, :class=> 'control-label' %>  
+					<div class="controls">
+					<%= f.password_field :password, :class => 'input-large', :required => true %>
+						</div>
+			</div>
 
-			<p>
-			<%= f.submit "Crear cuenta", class:"btn btn-medium btn-primary" %>
-			</p>
-		<% end %>
-
+				<div class="control-group">
+				<%= f.label :password_confirmation, "Confirmar password", :class=> 'control-label' %>  
+					<div class="controls">
+					<%= f.password_field :password_confirmation, :class=> 'input-large', :required => true %>
+				</div>
+			</div>
+	
+	
 	</div>
-</div>
+	<div class="modal-footer">
+		<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
+				
+		<%= link_to("Cancelar", employees_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Departamentos.") %>
+	</div>
+
+		</fieldset>
+	<% end %>

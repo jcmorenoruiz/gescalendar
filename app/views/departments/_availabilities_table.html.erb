@@ -1,0 +1,33 @@
+<%= f.fields_for(:availabilities) do |f2| %>
+
+<table id="availabilities-table" class="table table-hover table-striped">
+	<thead>
+		<th>Cargo</th>
+		<th>Nº Empleados.</th>
+		<th>Desde</th>
+		<th>Hasta</th>
+		<th>Notas</th>
+		<th></th>
+	</thead>
+		
+	<tbody>
+		<tr class="fields">
+
+			<td><%= f2.text_field(:cargo) %></td>
+			<td><%= f2.text_field(:num_min_emp) %></td>
+			<td><%= f2.text_field(:desde, :class => 'datepicker') %></td>
+			<td><%= f2.text_field(:hasta, :class => 'datepicker') %></td>
+			<td><%= f2.text_area(:notas) %></td>
+			<% if current_page?(edit_department_path) %>
+
+				<td> 
+				  <%= link_to_remove_fields('<i class="icon-remove">x</i>'.html_safe, f2, :title => "Delete this Pilot.") %>
+				</td>
+			<% end %>
+		</tr>
+	</tbody>
+
+
+</table>
+
+<% end %>

@@ -10,14 +10,32 @@
 			
 					<% if signed_in? %>					
 
+							<li id="fat-menu" class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								Mostrar <b class="caret"></b>
+							</a>
+						
+							<ul class="dropdown-menu">
+								<li><%= link_to "Calendario",   requests_calendar_path %></li>
+								<% if chief_user?  %>
+								<li><%= link_to "Estadísticas", requests_stats_path %></li>
+								<% end %>
+							</ul>
+
+						</li>
+
+
+
 						<% if admin_user? %>	
 						<!-- Submenu 1 -->
+
 						<li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								Administración <b class="caret"></b>
 							</a>
 						
 							<ul class="dropdown-menu">
+								<li><%= link_to "Ausencias", request_types_path %></li>
 								<li><%= link_to "Empleados", employees_path %></li>
 								<li><%= link_to "Departamentos", departments_path %></li>
 								<li><%= link_to "Calendarios", calendars_path %></li>
@@ -36,8 +54,10 @@
 							</a>
 						
 							<ul class="dropdown-menu">
+								<li><%= link_to "Mi Balance", {controller: "employees",action: "balance" , id: current_user.id} %></li>
 								<li><%= link_to "Mi Perfil", current_user %></li>
-								<li><%= link_to "Mis datos", edit_employee_path(current_user) %></li>
+								<li><%= link_to "Modificar Datos", edit_employee_path(current_user) %></li>
+								<li><%= link_to "Nueva Solicitud", new_request_path(:id => current_user.id) %> </li>
 								<li class="divider"></li>
 								<li><%= link_to "Salir", signout_path, method: "delete" %></li>
 							</ul>

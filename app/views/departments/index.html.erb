@@ -1,14 +1,21 @@
+<style>
+.datepicker{position: absolute;}
+</style>
 <% provide(:title, 'Lista de Departamentos') %>
-<h1>Departamentos</h1>
+<h3>Departamentos</h3>
 	
 <p> <%= link_to "Nuevo!", new_department_path, class: "btn btn-medium btn-primary" %> </p>
 <%= will_paginate %>
 
-<table>
+<table class="table table-hover table-striped">
 <thead>
-	<th>Nombre</th>
-	<th>Num.Empleados</th>
+	<th width="45%">Nombre</th>
+	<th width="16%">Empleados Activos</th>
+	<th width="14">Empleados Baja </th>
 	<th>&nbsp;</th>
+	
+	<th width="25%">&nbsp;</th>
+
 </thead>
 <tbody>
 	<%= render @departments %>

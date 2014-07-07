@@ -1,0 +1,32 @@
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+
+<h3>Estadísticas</h3>
+
+<div class="well well-small">
+<%= form_tag(requests_stats_path, :method => "get" , :class => 'form-inline') do %>
+
+<%= select_tag :calendar, options_for_select([["Calendario" , "" ]]+@calendars.collect{ |u| [u.anio, u.anio] },params[:calendar]), :class => 'input-large'
+%>
+
+<%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
+%>
+
+<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+  <%= link_to("Limpiar", requests_stats_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+<br />
+
+Comparar con:
+
+<% end %>
+</div>
+
+<div class="well">
+<%= line_chart @requests_types.map{|rt|    
+     {name: rt.nombre, data: rt.requests.where('extract(year from desde)= ?',"#{@year}").group_by_month(:hasta).count}
+} %>
+</div>
+
+<div class="well">
+	<%= pie_chart @requests_types.group(:nombre).count %>
+</div>

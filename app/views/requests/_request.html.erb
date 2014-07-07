@@ -1,0 +1,19 @@
+<tr class="fields">
+	<td><%= request.request_type.nombre %></td>
+	<td><%= request.desde %></td>
+	<td><%= request.hasta %></td>
+	<td><%= request.employee.nombre %> </td>
+	</td>
+	<td><% if current_user.role<3 %>
+		<%= link_to "Mostrar", request, :class => "btn btn-small" %>
+			<% else %>
+		<%= link_to "Mostrar", edit_request_path(request), :class => "btn btn-small" %>
+			<% end %>
+	</td>
+	<td>
+		<% if current_user.role==1 || current_user.role==2 %>
+		<%= link_to 'Anular', request, method: :delete, data: { confirm: 'Esta seguro?. Una vez anulada tendra que volver a hace una nueva solicitud' }, :class => 'btn btn-small btn-danger' %>
+		<% end %>
+	</td>
+	
+</tr>

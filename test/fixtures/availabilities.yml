@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  desde: 2014-05-06
+  hasta: 2014-05-06
+  num_min_emp: 1
+  status: false
+  cargo: MyString
+  department_id: 1
+
+two:
+  desde: 2014-05-06
+  hasta: 2014-05-06
+  num_min_emp: 1
+  status: false
+  cargo: MyString
+  department_id: 1

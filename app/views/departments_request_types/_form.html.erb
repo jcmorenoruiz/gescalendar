@@ -1,0 +1,29 @@
+<%= form_for(@departments_request_type) do |f| %>
+  <% if @departments_request_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@departments_request_type.errors.count, "error") %> prohibited this departments_request_type from being saved:</h2>
+
+      <ul>
+      <% @departments_request_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :num_max_dias %><br>
+    <%= f.number_field :num_max_dias %>
+  </div>
+  <div class="field">
+    <%= f.label :request_type_id %><br>
+    <%= f.text_field :request_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :department_id %><br>
+    <%= f.text_field :department_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

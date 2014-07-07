@@ -1,14 +1,39 @@
 <% provide(:title, @dpto.nombre) %>
 
-<div class="row">
-	<aside class="span4">
-		<section>
-			<h1>
-				
-				<%= @dpto.nombre %>
-			</h1>
-			
-		</section>
-	</aside>
-
+<h3>Disponibilidad de <%= @dpto.nombre %></h3>
+<div class="well well-small">
+<%= link_to "Nuevo!", new_availability_path(id: @dpto.id), class: "btn btn-medium btn-primary" %> 
 </div>
+<div class="row">
+<table class="table table-hover table-striped">
+  <thead>
+    <tr class="fields">
+      <th width="15%">Cargo</th>
+      <th width="15%">Nª min. Empleados</th>
+      <th width="7%">Desde</th>
+      <th width="7%">Hasta</th>
+      <th width="56%">Notas</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dpto.availabilities.each do |av| %>
+      <tr>
+        <td><%= av.cargo %></td>
+        <td><%= av.num_min_emp %></td>
+        <td><%= av.desde %></td>
+        <td><%= av.hasta %></td>
+        <td><%= av.notas %></td>
+        <td><%= link_to 'Editar', edit_availability_path(av), :class => 'btn btn-small btn-warning' %></td>
+        <td><%= link_to 'Eliminar', av, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-small btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+  <div class="modal-footer"> 
+        <%= link_to("Volver", departments_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-primary", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+  </div>
+

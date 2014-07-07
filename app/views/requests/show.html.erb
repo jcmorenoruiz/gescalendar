@@ -1,0 +1,51 @@
+<h3>Auditoria de la Solicitud</h3>
+<div class="row">
+<%= form_for(@request, html: {:class => 'form-horizontal' }) do |f| %>
+	<fieldset>
+	<% if admin_user? %>
+		<legend>Datos de la Solicitud</legend>
+	<% else %>
+		<legend>Datos de la Ausencia</legend>
+	<% end %>
+
+	<div class="span6">
+		<div class="well">
+
+			<div class="control-group">
+		    <%= f.label :empleado, "Empleado:" %>
+		    	    	<%=   f.text_field :empleado , :value => @request.employee.nombre,:disabled => true, :class => 'input-large' %>
+		  </div>
+
+		  <div class="control-group">
+		    <%= f.label :hasta, "Fecha de Fin:" %>
+		    	<%=   f.text_field :hasta ,:disabled => true, :class => 'input-medium' %>
+		  </div>
+
+		  <div class="control-group">
+		    <%= f.label :desde, "Fecha de Inicio:" %>
+		    	<%=   f.text_field :desde , :disabled => true,:class => 'input-medium' %>
+		  </div>
+
+		<div class="control-group">
+		    <%= f.label :solicitud, "Tipo de Solicitud:" %>
+		    	<%=   f.text_field :solicitud , :value => @request.request_type.nombre,:disabled => true, :class => 'input-large' %>
+		  	
+		  </div>
+
+		 <div class="control-group">
+		    <%= f.label :motivo, "Comentarios:" %>
+		    	<%=   f.text_area :motivo , :rows => 4 , :cols => 60, :disabled => true,:width => '80%', :class =>'span5' %>  	
+		  </div>
+		 
+		</div>    
+	</div>
+
+	</fieldset>
+<br />
+
+ <div class="modal-footer">  
+     <%= link_to("Volver", employee_path(current_user),  :class => "btn btn-inverse", :title => "Volver a la pagina inicial.") %>
+ </div>
+
+<% end %>
+</div>

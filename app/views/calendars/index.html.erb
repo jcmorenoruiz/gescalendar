@@ -48,14 +48,12 @@
 			<%= link_to "Días Hábiles", {action: "days" , id: cal.id} ,:class => "btn btn-small btn-primary" %>
 			
 			</td>
-			<td>
-				<%= link_to "Ausencias", {action: "ausencias" , id: cal.id} ,:class => "btn btn-small btn-primary" %>
-			</td>
+		
 			<td>
 			<% if cal.status %>
 			<%= link_to "Cerrar", cal, method: :delete, :class => "btn btn-small btn-danger", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
 			<% else %>
-			<%= link_to "Reabrir", calendar_path(cal,"calendar[status]"=>true), method: :patch, :class => "btn btn-small btn-danger" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
+			<%= link_to "Reabrir", cal, method: :delete, :class => "btn btn-small btn-danger" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
 			<% end %>
 			</td>
 		</tr>

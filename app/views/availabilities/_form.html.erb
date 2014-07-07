@@ -1,0 +1,49 @@
+
+<%= form_for(@av) do |f| %>
+
+<% if @av.errors.any? %>
+	<div id="error_explanation">
+
+		<div class="alert alert-error">
+		El formulario contiene <%= pluralize(@av.errors.count,"error") %>
+		</div>
+		<ul>
+				<% @av.errors.full_messages.each do |msg| %>
+					<li>* <%= msg %></li>
+				<% end %> 
+		</ul>
+	</div>
+<% end %>
+<div class="well">
+<fieldset>
+<legend>Datos del Periodo de Disponibilidad mínima</legend>		
+
+			<%= f.label :cargo, "Cargo*" %>
+			<%= f.text_field :cargo, :required => true, :class => 'input-large' %>
+
+			<%= f.label :num_min_emp, "Nº mínimo de empleados*" %>
+			<%= f.text_field :num_min_emp, :required => true, :class => 'input-small' %>
+
+			<%= f.label :desde, "Fecha de Inicio*" %>
+			<%= f.text_field :desde, :required => true, :value => @av.desde, :class => 'datepicker input-large', :placeholder => 'Click para abrir calendario' %>
+
+			<%= f.label :hasta, "Hasta*" %>
+			<%= f.text_field :hasta, :required => true, :value => @av.hasta, :class => 'datepicker input-large', :placeholder => 'Click para abrir calendario' %>
+
+			<%= f.label :notas, "Notas*" %>
+			<%= f.text_area :notas %>
+		
+		  <%= f.hidden_field :department_id, :value => @dpto.id %>
+
+			<br /><br />
+</fieldset>
+</div>
+<br />
+
+
+<div class="modal-footer">
+	<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
+			
+	<%= link_to("Cancelar", department_path(@dpto), :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Departamentos.") %>
+</div>
+<% end %>

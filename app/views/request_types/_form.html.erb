@@ -1,3 +1,4 @@
+
 <%= form_for(@request_type) do |f| %>
   <% if @request_type.errors.any? %>
     <div id="error_explanation">
@@ -13,22 +14,31 @@
   <% end %>
 
  
-
-  <div class="field">
-    <%= f.label :nombre %><br>
+<div class="well">
+  
+    <%= f.label :nombre %>
     <%= f.text_field :nombre, :class => 'input-xlarge' %>
-  </div>
-  <br />
-  <div class="field">
-    <%= f.label :num_dias_max, "Número máximo de días permitidos" %><br>
-    <%= f.number_field :num_dias_max , :class => 'input-small' %>
-  </div>
+ 
 
-    <%= f.hidden_field :calendar_id, :value => @calendar.id %>
+    <%= f.label :num_dias_max, "Número máximo de días permitidos" %>
+    <%= f.number_field :num_dias_max , :class => 'input-small' %>
+  
+
+    <%= f.label :color, "Color de la etiqueta" %>
+    <%= f.text_field :color, :class => 'input-large', :placeholder => 'Color' %>
+
+    <%= f.label :tipo, "Disponible para empleados" %>
+    <%= f.check_box :tipo %>
+    <div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Aviso!</strong> Si marca esta opción se permitirá a los empleados hacer solicitudes de este tipo.
+    </div>
+</div>
+  
 <br />
  <div class="modal-footer">
       <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
-        <%= link_to("Cancelar", {:controller => "calendars", :action => "ausencias", id: @calendar.id}, :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+        <%= link_to("Cancelar", request_types_path, :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
 
  </div>
 <% end %>

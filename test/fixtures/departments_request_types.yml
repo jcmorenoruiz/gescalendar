@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  num_max_dias: 1
+  request_type_id: 
+  department_id: 
+
+two:
+  num_max_dias: 1
+  request_type_id: 
+  department_id: 

@@ -36,8 +36,10 @@ module SessionsHelper
 		dpto=Department.find(user.department_id)
 		@current_emp=Enterprise.find(dpto.enterprise_id) if dpto
 	end
-
-
+	def current_dpto
+		user=self.current_user
+		dpto=Department.find(user.department_id)
+	end
 
 	def store_location
 		session[:return_to]= request.url if request.get?
@@ -53,6 +55,18 @@ module SessionsHelper
         store_location
         redirect_to signin_url, notice: "Por favor, identifiquese!" 
       end
+    end
+
+    def emp_user?
+      current_user.role==1
+    end
+
+    def chief_user?
+    	current_user.role==2
+    end
+
+    def chief_user
+    	redirect_to(current_user) unless current_user.role>=2
     end
 
      # Enterprise Administrator

@@ -1,8 +1,21 @@
 Rails.application.routes.draw do
   
+  
+  resources :departments_request_types
+
+
+
   resources :default_request_types
 
   resources :request_types
+
+
+  get 'requests/new'
+  get 'requests/destroy'
+  get "requests/stats"
+  get "requests/calendar"
+  resources :requests
+
 
   resources :default_line_calendars
 
@@ -10,21 +23,28 @@ Rails.application.routes.draw do
 
   resources :line_calendars
 
+
   resources :enterprises, only: [:show,:new, :create,:edit,:update]
   resources :employees
   resources :departments
   resources :sessions, only: [:new, :create, :destroy]
   resources :calendars
+  
 
   resources :calendars do
-     resources :line_calendars, :only=>[:new, :create]
+     resources :line_calendars, :only=> [:new, :create]
   end
+
+  resources :availabilities, only: [:new, :create,:edit,:update]
+
+  get "employees/balance"
+  match 'employees/balance/:id' => 'employees#balance', via: 'get'
 
   get "calendars/days"
   match 'calendars/days/:id' => 'calendars#days', via: 'get'
 
-  get "calendars/ausencias"
-  match 'calendars/ausencias/:id' => 'calendars#ausencias', via: 'get'
+  get "departments/ausencias"
+  match 'departments/ausencias/:id' => 'departments#ausencias', via: 'get'
   
   get "calendars/update_days"
   match 'calendars/update_days/:id' => 'calendars#update_days', via: 'patch'
@@ -43,6 +63,12 @@ Rails.application.routes.draw do
   match '/', to: 'static_pages#home', via: 'get'
 
   root 'static_pages#home'
+
+  # redirect root if not action found
+  #get '*path' => redirect('/') 
+  
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

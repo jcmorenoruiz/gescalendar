@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
@@ -18,9 +20,15 @@
 //= require_tree .
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
+//= require jquery.minicolors
+//= require jsapi
+//= require chartkick
 
-$(function() { 
-	$('.datepicker').datepicker({
+
+
+var ready = function() {
+    // do stuff here.
+    $('.datepicker').datepicker({
 		format: "dd/mm/yyyy",
 		todayBtn: "linked",
 		language: "es",
@@ -30,4 +38,8 @@ $(function() {
 		endDate: '+1y',
 		weekStart: 1
 	});
-});
+};
+
+$(document).ready(ready);
+$(document).on('page:load', ready);
+

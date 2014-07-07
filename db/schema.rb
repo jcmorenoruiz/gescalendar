@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505164013) do
+ActiveRecord::Schema.define(version: 20140529082250) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "availabilities", force: true do |t|
+    t.date     "desde"
+    t.date     "hasta"
+    t.integer  "num_min_emp"
+    t.boolean  "status",        default: true
+    t.string   "cargo"
+    t.integer  "department_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "notas"
+  end
 
   create_table "calendars", force: true do |t|
     t.integer  "anio"
@@ -30,7 +45,7 @@ ActiveRecord::Schema.define(version: 20140505164013) do
     t.boolean  "d7",             default: true
   end
 
-  add_index "calendars", ["anio", "department_id"], name: "index_calendars_on_anio_and_department_id", unique: true
+  add_index "calendars", ["anio", "department_id"], name: "index_calendars_on_anio_and_department_id", unique: true, using: :btree
 
   create_table "default_calendars", force: true do |t|
     t.integer  "anio"
@@ -39,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140505164013) do
     t.datetime "updated_at"
   end
 
-  add_index "default_calendars", ["anio"], name: "index_default_calendars_on_anio", unique: true
+  add_index "default_calendars", ["anio"], name: "index_default_calendars_on_anio", unique: true, using: :btree
 
   create_table "default_line_calendars", force: true do |t|
     t.date     "fecha"
@@ -50,7 +65,7 @@ ActiveRecord::Schema.define(version: 20140505164013) do
     t.integer  "default_calendar_id"
   end
 
-  add_index "default_line_calendars", ["fecha", "default_calendar_id"], name: "index_default_line_calendars_on_fecha_and_default_calendar_id", unique: true
+  add_index "default_line_calendars", ["fecha", "default_calendar_id"], name: "index_default_line_calendars_on_fecha_and_default_calendar_id", unique: true, using: :btree
 
   create_table "default_request_types", force: true do |t|
     t.string   "nombre"
@@ -68,6 +83,18 @@ ActiveRecord::Schema.define(version: 20140505164013) do
     t.datetime "updated_at"
   end
 
+  create_table "departments_request_types", force: true do |t|
+    t.integer  "num_max_dias"
+    t.integer  "request_type_id"
+    t.integer  "department_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "departments_request_types", ["department_id", "request_type_id"], name: "departments_request_types_index", unique: true, using: :btree
+  add_index "departments_request_types", ["department_id"], name: "index_departments_request_types_on_department_id", using: :btree
+  add_index "departments_request_types", ["request_type_id"], name: "index_departments_request_types_on_request_type_id", using: :btree
+
   create_table "employees", force: true do |t|
     t.string   "nombre"
     t.string   "email"
@@ -83,8 +110,8 @@ ActiveRecord::Schema.define(version: 20140505164013) do
     t.integer  "department_id"
   end
 
-  add_index "employees", ["email"], name: "index_employees_on_email", unique: true
-  add_index "employees", ["remember_token"], name: "index_employees_on_remember_token"
+  add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
+  add_index "employees", ["remember_token"], name: "index_employees_on_remember_token", using: :btree
 
   create_table "enterprises", force: true do |t|
     t.string   "empresa"
@@ -110,8 +137,22 @@ ActiveRecord::Schema.define(version: 20140505164013) do
   create_table "request_types", force: true do |t|
     t.string   "nombre"
     t.integer  "num_dias_max"
-    t.boolean  "status"
-    t.integer  "calendar_id"
+    t.boolean  "status",        default: true
+    t.integer  "enterprise_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "tipo",          default: true
+    t.string   "color"
+  end
+
+  create_table "requests", force: true do |t|
+    t.string   "motivo"
+    t.string   "motivo_rev"
+    t.date     "desde"
+    t.date     "hasta"
+    t.integer  "status",          default: 1
+    t.integer  "request_type_id"
+    t.integer  "employee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

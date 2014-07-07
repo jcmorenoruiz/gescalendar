@@ -12,10 +12,12 @@ class DepartmentsController < ApplicationController
 	end 
 	def new
 		@dpto=Department.new
+		@request_types=RequestType.where(:enterprise_id => current_emp)
 	end 
 
 
 	def edit
+		@request_types=RequestType.where(:enterprise_id => current_emp)
 		@dpto=Department.find(params[:id])
 	end
 
@@ -30,9 +32,12 @@ class DepartmentsController < ApplicationController
 	end
 
 	def create
+		@request_types=RequestType.where(:enterprise_id => current_emp)
+
 		@dpto=Department.new(department_params)
 		@dpto.nombre=@dpto.nombre.capitalize
 		@dpto.enterprise_id=current_emp.id
+
 		
 		if(@dpto.save)
 			flash[:success]="Departamento creado correctamente"
@@ -42,7 +47,9 @@ class DepartmentsController < ApplicationController
 		end
 	end
 
-	
+	def ausencias 
+    @dpto=Department.find(params[:id])
+  end
 	
 	def show
 		@dpto=Department.find(params[:id])
@@ -52,7 +59,7 @@ class DepartmentsController < ApplicationController
       @dpto=Department.find(params[:id])
 
       if(@dpto.employees.count>0)
-      	flash[:error]="No es posible dar de baja un departamento si tiene empleados en activo"
+      	flash[:error]="No es posible dar de baja un departamento si tiene empleados en activo o de baja"
       else
       	@dpto.update_attribute(:status,0)
       	flash[:success]="Departamento dado de baja correctamente"  	
@@ -63,10 +70,15 @@ class DepartmentsController < ApplicationController
     # private methods
     private
      	def department_params
-   		params.require(:department).permit(:nombre)
+   		params.require(:department).permit(:nombre, 
+   			availabilities_attributes: [:num_min_emp,:notas,:desde,:hasta,:cargo],
+   		  :request_type_ids => [],
+   		  :request_type_num_max_dias => []
+   			)
+
    		end
 
-   		
+   	
       # before filers
 
     	def correct_department

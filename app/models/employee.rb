@@ -3,6 +3,7 @@ class Employee < ActiveRecord::Base
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
 	
+	has_many :requests, dependent: :destroy
 	belongs_to :department, :inverse_of => :employees 
 
 	#validates :department_id, presence: true

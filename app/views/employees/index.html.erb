@@ -2,18 +2,18 @@
 <h3>Lista de Empleados</h3>
 
 
-<p> <%= link_to "Nuevo!", new_employee_path, class: "btn btn-medium btn-primary" %> </p>
+<p> <%= link_to "Nuevo Empleado!", new_employee_path, class: "btn btn-medium btn-primary" %> </p>
 
 <div class="well well-small">
 <%= form_tag(employees_path, :method => "get" , :class => 'form-inline') do %>
 
 
-<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query input-medium' %>
+<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query input-xlarge' %>
 
 <%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
 %>
 
-<%= select_tag :status, options_for_select([["Activo","1"],["Baja","0"]],params[:status]), :class=> 'input-small' %>
+<%= select_tag :status, options_for_select([["Activo","t"],["Baja","f"]],params[:status]), :class=> 'input-small' %>
 
 
 <%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
@@ -30,7 +30,11 @@
 <thead>
 	<th>Nombre</th>
 	<th>Email</th>
-	<th>&nbsp;</th>
+	<th>Fecha Alta</th>
+	<th>Cargo</th>
+	<th>Rol</th>
+	<th></th>
+	<th></th>
 </thead>
 <tbody>
 	<%= render @employees %>

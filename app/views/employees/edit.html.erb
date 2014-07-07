@@ -3,37 +3,46 @@
 
 
 <div class="row">
-	<div class="span6 offset3">
 		<%= form_for(@emp) do |f| %>
+	
+	<div class="well">
+	<fiedlset>
+		<legend>Datos del empleado</legend>
 
 			<%= render 'shared/error_messages' %>
 			
 			<%= f.label :nombre %>
-			<%= f.text_field :nombre %>
+			<%= f.text_field :nombre,:class =>'input-xlarge' %>
 
 			<%= f.label :email %>
-			<%= f.text_field :email %>
+			<%= f.text_field :email,:class =>'input-xlarge' %>
 
 			<% if admin_user? %>
 				<%= f.label :fecha_alta, "Fecha de alta" %>
-				<%= f.text_field :fecha_alta, :class => 'datepicker' %>
+				<%= f.text_field :fecha_alta, :class => 'datepicker input-large',:placeholder => "Click para abrir calendario" %>
 				
 				<%= f.label :role, "Tipo de Usuario" %>
-				<%= f.select :role, options_for_select({ "Empleado" => 1,"Jefe Departamento" => 2, "Administrador" => 3},@emp.role) %>
+				<%= f.select :role, options_for_select({ "Empleado" => 1,"Jefe Departamento" => 2, "Administrador" => 3},@emp.role), {},
+					:class => 'input-large' %>
 
 				<%= f.label :cargo %>
-				<%= f.text_field :cargo %>
+				<%= f.text_field :cargo, :class =>'input-xlarge' %>
 
 			<% end %>	
 			<%= f.label :password %>
-			<%= f.password_field :password %>
+			<%= f.password_field :password, :class =>'input-large' %>
 
 			<%= f.label :password_confirmation, "Confirmar password" %>
-			<%= f.password_field :password_confirmation %>
-			
-		<p><%= f.submit "Actualizar", class:"btn btn-large btn-primary" %></p>
+			<%= f.password_field :password_confirmation, :class => 'input-large' %>
 
-		<% end %>
-
+	
+	</fieldset>
 	</div>
+
+	<div class="modal-footer">
+		<%= f.submit "Actualizar", class:"btn btn-medium btn-primary",:title =>"Actualizar datos del empleado" %>
+				
+		<%= link_to("Cancelar", employees_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Empleados.") %>
+	</div>
+	<% end %>
 </div>

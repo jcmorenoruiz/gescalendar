@@ -1,0 +1,39 @@
+<%= form_for(@dpto, :html => { :class=>"form form-horizontal"}) do |f| %>
+
+<fieldset>
+<legend>Datos del Departamento <%= "#{@dpto.nombre}" unless @dpto.nombre.nil? %></legend>		
+
+			<%= f.label :nombre, "Nombre*" %>
+			<%= f.text_field :nombre, :required => true, :class => 'input-xlarge' %>
+			<br /><br />
+
+</fieldset>
+
+<fieldset>
+<legend>Solicitudes permitidas </legend>
+
+<% if @request_types.count>0 %>
+<div class="field">
+    <%= hidden_field_tag("department[request_type_ids][]", nil) %>
+    <% @request_types.each do |rt| %>
+     <label>
+     	<%= check_box_tag("department[request_type_ids][]", rt.id, rt.id.in?(@dpto.request_types.collect(&:id))) %> <%= rt.nombre %>
+
+     </label>
+    <% end %>
+ </div>
+<% else %>
+	<div class="alert">
+	<p>No existen tipos de solicitudes para su empresa.<br />
+	Dirigase al menu de Administración y haga click en Ausencias para generarlas.</p>
+	</div>
+<% end %>
+</fieldset>
+<br />
+
+<div class="modal-footer">
+	<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
+			
+	<%= link_to("Cancelar", departments_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Departamentos.") %>
+</div>
+<% end %>

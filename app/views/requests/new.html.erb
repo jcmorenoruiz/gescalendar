@@ -1,0 +1,66 @@
+<% provide(:title, 'Nuevas solicitudes') %>
+<% if admin_user? %>
+<h3>Asignar Ausencia </h3>
+<% else %>
+<h3>Nueva Solicitud</h3>
+<% end %>
+
+ <% if @request.errors.any? %>
+    <div id="error_explanation">
+    
+      <div class="alert alert-error">
+          El formulario contiene  <%= pluralize(@request.errors.count, "error") %>
+      </div>
+      <ul>
+        <% @request.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+<%= form_for (@request) do |f| %>
+
+ 
+
+<div class="well">
+<fieldset>
+  
+  <% if admin_user? %>
+  <legend>Datos de la Ausencia</legend>
+  <% else %>
+  <legend>Datos de la Solicitud</legend>
+  <% end %>
+  <%= f.label :desde, "Desde (Fecha de Inicio)" %>
+  <%= f.text_field :desde, :required => true, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>  
+
+  <%= f.label :hasta, "Hasta (Fecha de Fin)" %>
+  <%= f.text_field :hasta, :required => true, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>
+  
+  <%= f.label :request_type_id, "Tipo de Solicitud" %>
+	<%= f.select :request_type_id, options_for_select(@request_types.map{ |s| [s.nombre, s.id] }), {},:class => 'input-large' %>
+  
+  <%= f.label :motivo, "Comentarios:" %><br>
+  <%= f.text_area :motivo, size: "60x4" %>
+  
+  <%= f.hidden_field :employee_id, :value => @emp.id %>
+</div>
+  <div class="modal-footer">
+      <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+        
+      <% if admin_user? %>
+        <%= link_to("Cancelar", {:controller => :employees, :action => :balance, :id => @emp}, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+      <% else %>
+        <%= link_to("Cancelar", employee_path(@emp), :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+      <% end %>
+
+  </div>
+
+</fieldset>
+
+<% end %>
+
+

@@ -33,6 +33,14 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
   def create 
 
     @enterprise=Enterprise.new(enterprise_params)
+   
+    rts=DefaultRequestType.where(:status => true).all
+     # assign default request types to enterprise
+    rts.each do |line|
+      @enterprise.request_types.build(
+        :nombre => line.nombre,:num_dias_max => line.num_dias_max,:status => true,:tipo => true,:color => '#FAA07A')
+    end
+  
     @enterprise.departments[0].employees[0].role=3
     @enterprise.notif_solicitudes=1
     @enterprise.notif_auditoria=1

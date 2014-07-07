@@ -1,0 +1,100 @@
+<h3>Calendario</h3>
+<style type="text/css">	
+.table th, .table td{
+	padding:5px;
+	font-size:13px;
+}
+
+
+.table-bordered th{
+	border:0px; 
+}
+
+.table-bordered td{
+	border-left:2px solid white;
+/*	border-top:2px solid white; */
+
+}
+</style>
+
+<div class="row">
+
+<div class="well well-small">
+<%= form_tag(requests_calendar_path, :method => "get" , :class => 'form-inline') do %>
+
+<%= select_month(@date, {use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)},{:class => 'input-medium'}) %>
+
+<%= select_year(@date, {start_year: (Date.current.year-1), end_year: (Date.current.year+1)},
+			{:class => 'input-small'}) %>
+
+<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre de empleado", :class => 'search-query input-xlarge' %>
+
+<%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
+%>
+
+<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+  <%= link_to("Limpiar", requests_calendar_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+<% end %>
+</div>
+
+
+	
+	<table class="table table-hover table-striped table-bordered">
+		<thead>
+			<tr >
+				<th width="20%">
+					<%= link_to 'Anterior',  "#",  :class => 'btn btn-small anterior'  %>
+					<%= link_to 'Siguiente', "#", :class => 'btn btn-small siguiente' %>
+				</th>
+				<% @diasmes.each do |d|  %>
+					<th  width="2%"><%= d %></th>
+				<% end %>
+			</tr>
+
+			<tr>
+				<th width="20%"></th>
+				<% @nombredias.each do |d|  %>
+					<% if d=='S' || d=='D' %>
+						<th width="2%" style="background:#D9D9D9;"><%= d %></th>
+					<% else %>
+						<th width="2%"><%= d %></th>
+					<% end %>
+				<% end %>
+			</tr>
+		</thead>
+
+		<tbody>
+			<% @employees.each do |e| %>
+			<tr>
+					<td style="border:0em;" ><%= e.nombre %></td>
+					<% @fechas.each do |dia| %>
+						
+								<%  req=e.requests.where(:status => 2).where('? between desde and hasta',dia).first %>
+
+								<% if dia.wday==6 || dia.wday==0	%>
+									<td style="background:#D9D9D9;"></td>
+								<% elsif !req.nil? %>
+												<td style="background:<%= req.request_type.color %>"></td>
+								<% else %>
+											<td></td>
+								<% end %>
+
+					<% end %>
+			</tr>
+			<% end %>
+		</tbody>
+
+	</table>
+
+
+<div class="well">
+
+	<% @requests_types.each do |rt| %>
+
+		<span class="label" style="background:<%= rt.color %>"><%= rt.nombre %></span>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+	<% end %>
+</div>
+</div>
+

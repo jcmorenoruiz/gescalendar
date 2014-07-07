@@ -1,18 +1,23 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
+gem 'rake', '10.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
 
+
 group :development do
-  gem 'sqlite3', '1.3.8'
+ 	# gem 'sqlite3', '1.3.8'
+ 	gem 'pg'
 end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 
 # Bootstrap
-gem 'bootstrap-sass', '2.3.2.0'
+#gem 'bootstrap-sass', '2.3.2.0' if v3 have any problems with rails 4
+gem 'bootstrap-sass', '~> 3.0.3.0' 
 gem 'sprockets', '2.11.0'
 
 
@@ -25,6 +30,8 @@ gem 'coffee-rails', '4.0.1'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails','3.0.4'
+gem 'jquery-ui-rails', '~> 4.2.1'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -66,3 +73,17 @@ gem 'bootstrap-datepicker-rails'
 
 # rails date validations
 gem 'validates_timeliness', '~> 3.0'
+# overlaps dates (requests)
+gem 'validates_overlap'
+
+# mini cooler select
+gem 'jquery-minicolors-rails'
+
+# gem charts
+
+gem "chartkick"
+
+gem "groupdate"
+
+
+# jquery modal dialog 

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Num max dias:</strong>
+  <%= @departments_request_type.num_max_dias %>
+</p>
+
+<p>
+  <strong>Request type:</strong>
+  <%= @departments_request_type.request_type %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @departments_request_type.department %>
+</p>
+
+<%= link_to 'Edit', edit_departments_request_type_path(@departments_request_type) %> |
+<%= link_to 'Back', departments_request_types_path %>

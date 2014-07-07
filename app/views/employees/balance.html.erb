@@ -1,0 +1,108 @@
+<% provide(:title, @emp.nombre) %>
+<h3>Balance de <%= @emp.nombre %></h3>
+<div class="row">
+	<% if current_user.role>2 %>
+		 <div class="well">		
+			<%= link_to "Asignar Ausencias", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
+		</div>	
+	<% end %>	
+</div>
+
+<div class="well well-small">
+<%= form_tag({action: "balance"}, :method => "get",   :class => 'form-inline') do %>
+
+<%= select_tag :calendar, options_for_select([["Calendario" , "" ]]+@calendars.collect{ |u| [u.anio, u.anio] },@calselected), :class => 'input-large'
+%>
+
+
+
+
+<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+  <%= link_to("Limpiar", {:action => 'balance'},  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+<% end %>
+</div>
+
+
+<div class="row">
+	<aside class="span5">
+		<div class="well">
+		<legend>Información</legend>
+		<label><strong>Nombre:</strong> <%= @emp.nombre %></label>
+		<label><strong>Email:</strong> <%= @emp.email %></label>
+		<label><strong>Departamento:</strong> <%= @emp.department.nombre %></label>
+		<label><strong>Fecha de Alta: </strong><%= @emp.fecha_alta %></label>
+
+		<label><strong>Permisos:</strong> <%= @emp.nombre %></label>
+		<label><strong>Cargo:</strong> <%= @emp.cargo %></label>
+		<label><strong>Situación: </strong><%= bool_to_s(@emp.status) %></label>
+		</div>
+	</aside>
+
+
+	<div class="span7">	
+		<div class="well">
+
+			<div class="accordion">
+				<% @datos.each do |req| %>
+					
+						
+						<legend><%=  req[:nombre] %> </legend>
+						<table>
+						<tr><td>
+						<strong>Dias confirmados:</strong></td><td><%= req[:confirmados] %>
+						</td></tr>
+ 
+						<tr><td>
+						<strong>Dias pendientes:</strong></td><td><%= req[:pendientes] %>
+						</td></tr>
+
+						<tr><td>
+						<strong>Dias restantes:</strong></td><td>
+						<% if req[:num_dias_max]>0 %>
+							<%= req[:num_dias_max]-(req[:confirmados]+req[:pendientes]) %>
+						<% else %>
+							Sin Límite 
+						<% end %>
+						</td></tr>
+						</table>
+						<h4 class="acc_trigger"><a href="#">Total Días: </a><%= req[:confirmados]+req[:pendientes] %></h4>
+						<div class="acc_container">
+
+							<div class="block">
+									<table class="table table-hover table-striped">
+									<thead>
+										<th width="20%">Desde</th>
+										<th width="20%">Hasta</th>
+										<th width="50%"></th>
+									</thead>
+									<tbody>
+										<% req[:requests].each do |rq| %>
+											<tr>
+											<td align="center"><%= rq.desde %></td>
+											<td align="center"><%= rq.hasta %></td>
+											<td><%= rq.request_type.nombre %></td>
+											</tr>
+
+										<% end %>
+									</tbody>
+									</table>
+							</div>
+						</div>
+				
+				<% end %>
+				<br />
+		</div>
+		</div>
+	</div>
+
+
+</div>
+<div class="modal-footer">
+
+	<% if @emp==current_user %>
+			<%= link_to 'Volver', employee_path(@emp), :class => 'btn btn-primary' %>
+	<% else %>
+			<%= link_to 'Volver', employees_path, :class => 'btn btn-primary' %>
+	<% end %>
+
+</div>

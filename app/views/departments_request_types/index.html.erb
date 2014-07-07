@@ -1,0 +1,29 @@
+<h1>Listing departments_request_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Num max dias</th>
+      <th>Request type</th>
+      <th>Department</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @departments_request_types.each do |departments_request_type| %>
+      <tr>
+        <td><%= departments_request_type.num_max_dias %></td>
+        <td><%= departments_request_type.request_type %></td>
+        <td><%= departments_request_type.department %></td>
+        <td><%= link_to 'Show', departments_request_type %></td>
+        <td><%= link_to 'Edit', edit_departments_request_type_path(departments_request_type) %></td>
+        <td><%= link_to 'Destroy', departments_request_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Departments request type', new_departments_request_type_path %>
