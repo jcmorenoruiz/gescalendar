@@ -23,7 +23,6 @@ default_line_calendars = [
   [ "2015-01-06", "Epifanía del Señor", 2, 't' ],
   [ "2015-04-03", "Viernes Santo", 2, 't' ],
   [ "2015-05-01", "Dia del trabajador", 2 ,'t'],
-  [ "2015-12-08", "La inmaculada Concepción", 2, 't' ],
   [ "2015-10-12", "Día de la Hispanidad", 2, 't' ],
   [ "2015-11-01", "Todos los Santos", 2, 't' ],
   [ "2015-12-06", "Día de la constitución española", 2, 't'],

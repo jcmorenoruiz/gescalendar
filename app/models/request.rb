@@ -14,6 +14,7 @@ class Request < ActiveRecord::Base
 	validates :motivo, length: { maximum: 140 }
 	validates :motivo_rev, length: { maximum: 140 }
 	validates :employee_id , presence: true
+	validates :cargo, length: { maximum: 40 }
 
 	# date range validations. (pendientes,confirmadas)
 	validates :desde,:hasta,:overlap => 
