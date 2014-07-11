@@ -18,7 +18,7 @@ gem 'sass-rails', '~> 4.0.3'
 
 # Bootstrap
 #gem 'bootstrap-sass', '2.3.2.0' if v3 have any problems with rails 4
-gem 'bootstrap-sass', '~> 3.0.3.0' 
+gem 'bootstrap-sass', '~> 2.3.2.0' 
 gem 'sprockets', '2.11.0'
 
 
