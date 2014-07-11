@@ -7,7 +7,7 @@
 <%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
 
 
-<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query input-medium' %>
+<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query input-large' %>
 
 <%= select_tag :status, options_for_select([["Activo","t"],["Inactivo","f"]],params[:status]), :class=> 'input-small' %>
 
@@ -36,7 +36,7 @@
         <td><div class="well-small" style="background:<%= rt.color %>"></div></td>
         
         <td><%= number_departments(rt) %></td>
-        <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-small btn-warning' %></td>
+        <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-small btn-default' %></td>
         <td>
           <% if rt.status? %>
             <%= link_to 'Desactivar', rt, method: :delete, data: { confirm: 'Esta seguro?' },:class => 'btn btn-small btn-danger' %>

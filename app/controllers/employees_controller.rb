@@ -12,7 +12,10 @@ before_action :correct_user, only: [:edit, :update] # check user is from your ow
 before_action :correct_emp, only: [:destroy,:balance]
 
     def show
+      # next request from employee
       @nextRequest=Request.unscoped.where(:employee_id => current_user).where('desde>?',Time.now).order('desde asc').first
+      
+      # next holidays for employee
       @nextfree=Calendar.where(:department_id => current_emp.departments).first
       if !@nextfree.nil?
         @nextfree=@nextfree.line_calendars.unscoped.where('fecha>?',Date.current).first

@@ -63,7 +63,7 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
      def enterprise_params
       params.require(:enterprise).permit(:empresa,
         departments_attributes:[:nombre,:enterprise_id,
-          employees_attributes: [:nombre, :email, :password, :password_confirmation,
+          employees_attributes: [:nombre, :email, :password, :password_confirmation, :cargo,
           	:fecha_alta]
           ])
     end

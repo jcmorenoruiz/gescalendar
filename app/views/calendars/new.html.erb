@@ -13,8 +13,10 @@
 	</div>
 <% end %>
 
+
 <%= form_for(@calendar, :html => {:class => "form form-horizontal"}) do |f| %>
 <fieldset>	
+	<div class="well">
  <legend>Periodo de solicitudes</legend>
 
 	
@@ -43,7 +45,7 @@
 									
 		</div>	
 		</div>
-	
+	</div>
 
 	<div class="modal-footer">
 			<%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
@@ -53,4 +55,5 @@
 
 </fieldset>
 <% end %>
+
 

@@ -8,7 +8,9 @@
 			</h1>
 			<p>&nbsp;</p>
 		 <div class="well">
-	<%= link_to "Nueva solicitud", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
+			<% if !admin_user? %>
+				<%= link_to "Nueva solicitud", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
+			<% end %>
 	&nbsp;&nbsp;
 	<%= link_to "Mi Balance", {action: "balance" , id: @emp.id}, class: "btn btn-primary" %>
 	</div>

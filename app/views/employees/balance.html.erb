@@ -1,14 +1,15 @@
 <% provide(:title, @emp.nombre) %>
 <h3>Balance de <%= @emp.nombre %></h3>
 <div class="row">
-	<% if current_user.role>2 %>
-		 <div class="well">		
-			<%= link_to "Asignar Ausencias", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
-		</div>	
-	<% end %>	
+	
 </div>
 
 <div class="well well-small">
+	<% if current_user.role>2 %>
+		 
+			<p><%= link_to "Asignar Ausencias", new_request_path(:id => @emp.id), class: "btn btn-primary" %></p>
+		
+	<% end %>	
 <%= form_tag({action: "balance"}, :method => "get",   :class => 'form-inline') do %>
 
 <%= select_tag :calendar, options_for_select([["Calendario" , "" ]]+@calendars.collect{ |u| [u.anio, u.anio] },@calselected), :class => 'input-large'
@@ -98,11 +99,5 @@
 
 </div>
 <div class="modal-footer">
-
-	<% if @emp==current_user %>
-			<%= link_to 'Volver', employee_path(@emp), :class => 'btn btn-primary' %>
-	<% else %>
-			<%= link_to 'Volver', employees_path, :class => 'btn btn-primary' %>
-	<% end %>
-
+	<%= link_to 'Volver', employees_path, :class => 'btn btn-primary' %>
 </div>

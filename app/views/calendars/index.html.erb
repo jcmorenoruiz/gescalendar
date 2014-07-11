@@ -1,8 +1,8 @@
 <% provide(:title, 'Lista de Departamentos') %>
 <h3>Calendarios</h3>
 	
-<p> <%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> </p>
 <div class="well well-small">
+	<p><%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> &nbsp;&nbsp; </p>
 <%= form_tag(calendars_path, :method => "get" , :class => 'form-inline') do %>
 
 <%= select_tag :department, options_for_select([["Departamentos" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'

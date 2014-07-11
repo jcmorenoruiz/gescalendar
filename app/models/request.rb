@@ -14,7 +14,8 @@ class Request < ActiveRecord::Base
 	validates :motivo, length: { maximum: 140 }
 	validates :motivo_rev, length: { maximum: 140 }
 	validates :employee_id , presence: true
-	validates :cargo, length: { maximum: 40 }
+	validates :request_type_id, length: { minimum: 1, message: "Indique el tipo de solicitud" }
+    
 
 	# date range validations. (pendientes,confirmadas)
 	validates :desde,:hasta,:overlap => 
@@ -27,6 +28,8 @@ class Request < ActiveRecord::Base
 	validate :date_same_year, on: :create
 	validate :calendar_open, on: :create
 	validate :min_disponibilidad, on: :create
+
+
 
 	# both dates must be in the same year
 	def date_same_year

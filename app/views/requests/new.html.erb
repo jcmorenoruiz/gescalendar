@@ -41,8 +41,18 @@
   <%= f.text_field :hasta, :required => true, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>
   
   <%= f.label :request_type_id, "Tipo de Solicitud" %>
-	<%= f.select :request_type_id, options_for_select(@request_types.map{ |s| [s.nombre, s.id] }), {},:class => 'input-large' %>
+	<%= f.select :request_type_id, options_for_select([["Seleccione ...",""]]+@request_types.map{ |s| [s.nombre, s.id] }),{} ,:class => 'input-large' %>
   
+  <% if @request_types.count<1 %>
+  <div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Aviso!</strong> Su departamento no tiene asignados tipos de ausencias.
+      <% if admin_user? %>
+        Diríjase al panel de departamentos y edite el departmento correspondiente.
+      <% end %>
+   </div>
+  <% end %>
+
   <%= f.label :motivo, "Comentarios:" %><br>
   <%= f.text_area :motivo, size: "60x4" %>
   

@@ -39,6 +39,7 @@ class LineCalendarsController < ApplicationController
   # PATCH/PUT /line_calendars/1
   # PATCH/PUT /line_calendars/1.json
   def update
+     @calendar=Calendar.find(@line_calendar.calendar_id)
     if @line_calendar.update(line_calendar_params)
         flash[:success] = "Dia no laborable actualizado correctamente"
         redirect_to calendar_path(@line_calendar.calendar_id)

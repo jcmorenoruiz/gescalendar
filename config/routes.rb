@@ -35,7 +35,7 @@ Rails.application.routes.draw do
      resources :line_calendars, :only=> [:new, :create]
   end
 
-  resources :availabilities, only: [:new, :create,:edit,:update]
+  resources :availabilities, only: [:new, :create,:edit,:update,:destroy]
 
   get "employees/balance"
   match 'employees/balance/:id' => 'employees#balance', via: 'get'

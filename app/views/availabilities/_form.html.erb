@@ -22,7 +22,7 @@
 			<%= f.text_field :cargo, :required => true, :class => 'input-large' %>
 
 			<%= f.label :num_min_emp, "Nº mínimo de empleados*" %>
-			<%= f.text_field :num_min_emp, :required => true, :class => 'input-small' %>
+			<%= f.number_field :num_min_emp, :required => true, :class => 'input-small' %>
 
 			<%= f.label :desde, "Fecha de Inicio*" %>
 			<%= f.text_field :desde, :required => true, :value => @av.desde, :class => 'datepicker input-large', :placeholder => 'Click para abrir calendario' %>
@@ -30,7 +30,7 @@
 			<%= f.label :hasta, "Hasta*" %>
 			<%= f.text_field :hasta, :required => true, :value => @av.hasta, :class => 'datepicker input-large', :placeholder => 'Click para abrir calendario' %>
 
-			<%= f.label :notas, "Notas*" %>
+			<%= f.label :notas, "Notas" %>
 			<%= f.text_area :notas %>
 		
 		  <%= f.hidden_field :department_id, :value => @dpto.id %>

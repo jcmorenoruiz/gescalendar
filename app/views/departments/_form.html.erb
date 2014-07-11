@@ -1,5 +1,6 @@
 <%= form_for(@dpto, :html => { :class=>"form form-horizontal"}) do |f| %>
 
+<div class="well">
 <fieldset>
 <legend>Datos del Departamento <%= "#{@dpto.nombre}" unless @dpto.nombre.nil? %></legend>		
 
@@ -11,9 +12,12 @@
 
 <fieldset>
 <legend>Solicitudes permitidas </legend>
-
+ 
 <% if @request_types.count>0 %>
 <div class="field">
+	<div class="alert alert-info">
+    <strong>Marque</strong> únicamente los tipos de solicitud para los que se permitiran solicitudes en el departamento.
+    </div>
     <%= hidden_field_tag("department[request_type_ids][]", nil) %>
     <% @request_types.each do |rt| %>
      <label>
@@ -21,6 +25,7 @@
 
      </label>
     <% end %>
+    
  </div>
 <% else %>
 	<div class="alert">
@@ -30,7 +35,7 @@
 <% end %>
 </fieldset>
 <br />
-
+</div>
 <div class="modal-footer">
 	<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
 			

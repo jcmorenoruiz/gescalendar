@@ -1,8 +1,10 @@
 <% provide(:title, 'Dias festivos del calendario') %>
 <h3>Dias festivos del calendario <%= @cal.anio %> - <%= @cal.department.nombre %></h3>
-  
-<p> <%= link_to "Nuevo!", new_line_calendar_path(calendar_id: @cal.id), class: "btn btn-medium btn-primary" %> </p>
+
 <div class="row">
+<div class="well well-small">
+  <%= link_to "Nuevo Día festivo!", new_line_calendar_path(calendar_id: @cal.id), class: "btn btn-medium btn-primary" %> 
+</div>
   <table class="table table-hover table-striped">
   <thead>
     <tr class="fields">
@@ -20,8 +22,8 @@
         <td><%= line_calendar.fecha %></td>
         <td><%= line_calendar.dia %></td>
         <td><%= bool_to_s(line_calendar.status) %></td>
-        <td><%= link_to 'Editar', edit_line_calendar_path(line_calendar), :class => 'btn btn-warning' %></td>
-        <td><%= link_to 'Eliminar', line_calendar, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-danger' %></td>
+        <td><%= link_to 'Editar', edit_line_calendar_path(line_calendar), :class => 'btn btn-default btn-small' %></td>
+        <td><%= link_to 'Eliminar', line_calendar, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-danger btn-small' %></td>
       </tr>
     <% end %>
   </tbody>
