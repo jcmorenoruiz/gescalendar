@@ -13,11 +13,11 @@
       </ul>
     </div>
   <% end %>
-  
+  <%= form_for (@line_calendar) do |f| %>
   <div class="well">
   <legend>Dia no laborable</legend>
 
-<%= form_for (@line_calendar) do |f| %>
+
 
 
   	<%= f.label :fecha, "Fecha" %>

@@ -50,11 +50,11 @@
 						<legend><%=  req[:nombre] %> </legend>
 						<table>
 						<tr><td>
-						<strong>Dias confirmados:</strong></td><td><%= req[:confirmados] %>
+						<strong>Dias hábiles confirmados:</strong></td><td><%= req[:confirmados] %>
 						</td></tr>
  
 						<tr><td>
-						<strong>Dias pendientes:</strong></td><td><%= req[:pendientes] %>
+						<strong>Dias hábiles pendientes:</strong></td><td><%= req[:pendientes] %>
 						</td></tr>
 
 						<tr><td>
@@ -75,6 +75,7 @@
 										<th width="20%">Desde</th>
 										<th width="20%">Hasta</th>
 										<th width="50%"></th>
+										
 									</thead>
 									<tbody>
 										<% req[:requests].each do |rq| %>
@@ -82,6 +83,7 @@
 											<td align="center"><%= rq.desde %></td>
 											<td align="center"><%= rq.hasta %></td>
 											<td><%= rq.request_type.nombre %></td>
+											
 											</tr>
 
 										<% end %>

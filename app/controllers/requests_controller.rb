@@ -134,6 +134,13 @@ class RequestsController < ApplicationController
   end
 
 
+  protected
+
+  def weekdays_in_date_range(range)
+    # You could modify the select block to also check for holidays
+    range.select { |d| (1..5).include?(d.wday) }.size
+  end
+
   private
 
    def set_request

@@ -26,9 +26,9 @@
 
  
 
-<div class="well">
+
 <fieldset>
-  
+  <div class="well">
   <% if admin_user? %>
   <legend>Datos de la Ausencia</legend>
   <% else %>
@@ -41,7 +41,7 @@
   <%= f.text_field :hasta, :required => true, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>
   
   <%= f.label :request_type_id, "Tipo de Solicitud" %>
-	<%= f.select :request_type_id, options_for_select([["Seleccione ...",""]]+@request_types.map{ |s| [s.nombre, s.id] }),{} ,:class => 'input-large' %>
+	<%= f.select :request_type_id, options_for_select(@request_types.map{ |s| [s.nombre, s.id] }),{} ,:required => true,:class => 'input-large' %>
   
   <% if @request_types.count<1 %>
   <div class="alert">

@@ -29,7 +29,25 @@ class Request < ActiveRecord::Base
 	validate :calendar_open, on: :create
 	validate :min_disponibilidad, on: :create
 
+	validate :rest_days, on: :create
+	# check if rest days for this availability
+	def rest_days
 
+		dias_requested=weekdays_in_date_range(desde..hasta)
+		rt=RequestType.find(request_type_id)
+		dias=0
+    requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).all.where('extract(year from desde)= ?',"#{desde.year.to_i}")
+     
+    #working days.
+    requests.each do |rq|  
+      dias+=weekdays_in_date_range(rq.desde..rq.hasta) 
+    end
+
+    if dias_requested>(rt.num_dias_max-dias)
+    	errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(rt.num_dias_max-dias).abs} dias)")
+    end
+
+	end
 
 	# both dates must be in the same year
 	def date_same_year
@@ -70,6 +88,11 @@ class Request < ActiveRecord::Base
 	 # Check if a given interval overlaps this interval    
   def overlaps?(other)
     ((start_date - other.end_date) * (other.start_date - end_date)) >= 0
+  end
+
+   def weekdays_in_date_range(range)
+    # You could modify the select block to also check for holidays
+    range.select { |d| (1..5).include?(d.wday) }.size
   end
 
 

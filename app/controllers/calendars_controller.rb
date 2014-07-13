@@ -14,13 +14,14 @@ class CalendarsController < ApplicationController
  def create
     #@dptos=Department.where(enterprise_id: current_emp.id)
    @calendar=Calendar.new(calendar_params)
-   lines=DefaultCalendar.where(anio: @calendar.anio).first.default_line_calendars
-   # assign default line calendars for year.
-   lines.each do |line|
-
-    @calendar.line_calendars.build(:fecha => line.fecha,:dia => line.nombre,:status => line.status)
+   lines=DefaultCalendar.where(anio: @calendar.anio).first
+   if !lines.nil?
+    lines=lines.default_line_calendars
+     # assign default line calendars for year.
+     lines.each do |line|
+      @calendar.line_calendars.build(:fecha => line.fecha,:dia => line.nombre,:status => line.status)
+     end
    end
-   
    if(@calendar.save)
       flash[:success]="Ejercicio activado correctamente. Se han asignado los dias no laborales por defecto. Acceda a 'Dias festivos' si desea modificarlos "
       redirect_to calendars_url
@@ -41,6 +42,7 @@ class CalendarsController < ApplicationController
   def destroy
     @cal=Calendar.find(params[:id])
     @cal.status=!@cal.status?
+    @cal.fecha_cierre=Date.current
     if @cal.save
         flash[:success]="Ejercicio cerrado correctamente"
     else

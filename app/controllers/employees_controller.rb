@@ -97,7 +97,7 @@ before_action :correct_emp, only: [:destroy,:balance]
       @rts=Array.new
       @rtsdif=Array.new
 
-
+      #output view
       @calendars=Calendar.where(department_id: @emp.department)
 
       if !params[:calendar].blank?
@@ -109,26 +109,29 @@ before_action :correct_emp, only: [:destroy,:balance]
       #get request for user. for calendar
      
 
-      requests=Request.joins(:request_type).select('requests.status,request_types.num_dias_max as maxdias,desde,hasta,(hasta-desde)+1 as dias,nombre,request_type_id as rid').where(:employee_id => @emp.id,status: [1,2]).all.where('extract(year from desde)= ?',"#{year}")
+      requests=Request.joins(:request_type).select('requests.status,request_types.num_dias_max as maxdias,(hasta-desde)+1 as dias,desde,hasta,nombre,request_type_id as rid').where(:employee_id => @emp.id,status: [1,2]).all.where('extract(year from desde)= ?',"#{year}")
      
       requests.each do |rq| 
-       
+
+       #working days.
+       dias=weekdays_in_date_range(rq.desde..rq.hasta) 
         if rq.status==1        # pending
           if @pendientes[rq.rid].nil? 
-            @pendientes[rq.rid]=rq.dias 
+            @pendientes[rq.rid]=dias
           else 
-            @pendientes[rq.rid]+=rq.dias 
+            @pendientes[rq.rid]+=dias
           end
         end
 
          if @confirmados[rq.rid].nil? 
-              @confirmados[rq.rid]=rq.dias 
+              @confirmados[rq.rid]=dias 
          else 
-              @confirmados[rq.rid]+=rq.dias 
+              @confirmados[rq.rid]+=dias
          end
          if @pendientes[rq.rid].nil? 
           @pendientes[rq.rid]=0 
          end
+
          # diferents request_types
          if !@rtsdif.include?(rq.rid)
             @rtsdif.push(rq.rid)
@@ -143,6 +146,7 @@ before_action :correct_emp, only: [:destroy,:balance]
       end
 
     end
+
 
    	private
 

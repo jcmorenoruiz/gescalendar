@@ -3,6 +3,12 @@
 	
 <div class="well well-small">
 	<p><%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> &nbsp;&nbsp; </p>
+	<% if @calendars.count<1 %>
+	<div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Aviso!</strong> No se ha generado ningún calendario para este departamento. Haga click en nuevo para abrir un calendario.
+  </div>
+  <% end %>
 <%= form_tag(calendars_path, :method => "get" , :class => 'form-inline') do %>
 
 <%= select_tag :department, options_for_select([["Departamentos" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
@@ -14,8 +20,11 @@
 <%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
   <%= link_to("Limpiar", calendars_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
 <% end %>
+ 
 </div>
 <div class="row">
+	
+<% if @calendars.count>0 %>
 	<table class="table table-hover table-striped">
 	<thead>
 		<th width="4%">Año</th>
@@ -33,7 +42,11 @@
 	<tbody>
 		<% @calendars.each do |cal| %>
 		<tr class="fields">
-			<td><%= cal.anio %></td>
+		
+			<td>
+				<%= link_to cal.anio,requests_calendar_path+("?date[month]=#{Date.current.month}&date[year]=#{cal.anio}") %>
+			</td>
+			
 			<td><%= cal.department.nombre %></td>
 			<td><%= cal.fecha_apertura %></td>
 			<td><%= cal.fecha_cierre %></td>
@@ -60,6 +73,12 @@
 		<% end %>
 	</tbody>
 	</table>
+<% else %>
+
+
+
+
+<% end %>
 
 </div>
 

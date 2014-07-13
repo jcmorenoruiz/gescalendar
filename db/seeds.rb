@@ -31,8 +31,39 @@ default_line_calendars = [
 ]
 
 default_request_types = [
-  [ "Vacaciones", 30 ],
+  [ "Vacaciones", 30,'t' ],
 ]
+
+
+
+
+# Enterprises
+enterprises=[
+  [1,"Grupo Costa del Sol","t"],
+  [2,"Confort Systems","t"],
+]
+
+# Departments
+departments=[
+  [1,"Gerencia","t",1],
+  [2,"Sede Malaga","t",1],
+  [3,"Sede Madrid","t",1],
+  [4,"Gerencia","t",2],
+  [5,"Sede Malaga","t",2],
+  [6,"Sede Madrid","t",2]
+]
+
+# Employees
+
+employees=[
+[1,"Juan Carlos Moreno","jc@gmail.com","$2a$10$giibIg22SHcAmwPMVFcGZedlrFM1IDONZSuEi4OnDW/xkWhPcXY06",3,"2014-07-13","t","Jefe",1],
+[2,"Antonio Robles","antonio@gmail.com","$2a$10$giibIg22SHcAmwPMVFcGZedlrFM1IDONZSuEi4OnDW/xkWhPcXY06",2,"2014-07-13","t","Jefe Técnico",2],
+[3,"Jose Luis","jose@gmail.com","$2a$10$giibIg22SHcAmwPMVFcGZedlrFM1IDONZSuEi4OnDW/xkWhPcXY06",1,"2014-07-13","t","Técnico Mantenimiento",2],
+[4,"Adolfo Rodriguez","adolfo@gmail.com","$2a$10$giibIg22SHcAmwPMVFcGZedlrFM1IDONZSuEi4OnDW/xkWhPcXY06",1,"2014-07-13","t","Técnico Instalaciones",2],
+[5,"Salvador Allende","salva@gmail.com","$2a$10$giibIg22SHcAmwPMVFcGZedlrFM1IDONZSuEi4OnDW/xkWhPcXY06",1,"2014-07-11","t","Técnico Instalaciones",2],
+]
+
+
 
 default_calendars.each do |id, anio, status|
   DefaultCalendar.create( id: id, anio: anio, status: status)
@@ -46,4 +77,25 @@ end
 default_request_types.each do |nombre, num_dias_max,status|
   DefaultRequestType.create( nombre: nombre, num_dias_max: num_dias_max, status: status)
 end
+
+
+#enterprises.each do |id, empresa,status |
+ # Enterprise.create( id: id, empresa: empresa, status: status)
+#end
+
+#departments.each do |id,nombre,status,enterprise_id|
+ # Department.create( id: id, nombre: nombre, 
+  #  status: status, enterprise_id: enterprise_id )
+#end
+
+#employees.each do |id,nombre,email,password,role,fecha_alta,status,cargo,department_id|
+ # Employee.create( id: id, nombre: nombre, email: email, password: password, role: role, fecha_alta: fecha_alta, status: status, cargo: cargo, department_id: department_id)
+
+#end
+
+
+
+
+
+
 

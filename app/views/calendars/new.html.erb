@@ -17,9 +17,12 @@
 <%= form_for(@calendar, :html => {:class => "form form-horizontal"}) do |f| %>
 <fieldset>	
 	<div class="well">
- <legend>Periodo de solicitudes</legend>
+ 	<legend>Periodo de solicitudes</legend>
 
-	
+	<div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Aviso!</strong> Al generar el calendario se asignaran los días festivos correspondientes al año seleccionado. Para modificarlo acceda a "dias no laborables" en el listado de calendarios.
+  </div>
 	
 		<div class="control-group">
 		<%= f.label :anio, "Año del ejercicio",:class=>"control-label" %>
@@ -42,8 +45,7 @@
 			<div class="controls">
 			<%= f.select :department_id, options_for_select(@dptos.map{ |s| [s.nombre, s.id] }) , {},
 					:class => 'input-large' %>
-									
-		</div>	
+			</div>	
 		</div>
 	</div>
 
