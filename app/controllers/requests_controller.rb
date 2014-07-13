@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
   
   before_action :signed_in_user
-  before_action :admin_user, only: [:edit, :update]
+  before_action :chief_user, only: [:edit, :update]
   before_action :set_request, only: [:show, :edit, :update, :destroy]
   #before_action :correct_user, only: [:create, :edit, :update , :destroy]
 
@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
     else
       @request_types=current_user.department.request_types.where(:status => true,:tipo => true)
     end
- 
+
        
   end
 
