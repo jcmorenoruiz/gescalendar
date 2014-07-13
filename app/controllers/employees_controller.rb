@@ -28,8 +28,7 @@ before_action :correct_emp, only: [:destroy,:balance]
         @requests=Request.where(:status => 1,:request_type_id => Department.find(
           current_user.department_id).request_types).paginate(page: params[:page])
       else admin_user?        
-         @requests=Request.where(:status => 1,:request_type_id => Department.find(
-          current_user.department_id).request_types).paginate(page: params[:page])
+         @requests=Request.where(:status => 1).paginate(page: params[:page])
       end
     end
 
