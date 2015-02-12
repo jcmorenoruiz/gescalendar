@@ -1,15 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.1.3'
 
 gem 'rake', '10.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
-
+gem 'pg'
 
 group :development do
- 	# gem 'sqlite3', '1.3.8'
- 	gem 'pg'
  	gem 'railroady'
 end
 
@@ -49,7 +47,6 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 group :production do 
-	gem 'pg'
 	gem 'rails_12factor'
 end
 
