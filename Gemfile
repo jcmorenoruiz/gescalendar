@@ -6,7 +6,7 @@ gem 'rake', '10.3.1'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-
+ 
 group :development do
  	gem 'railroady'
 end
