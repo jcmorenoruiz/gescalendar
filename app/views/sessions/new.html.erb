@@ -1,24 +1,27 @@
+
+<style>	body{	background-color: #eee;	} </style>
+
 <% provide(:title, "Autentificarse") %>
 
-<h1>Autentifiquese! </h1>
 
-
-
-<div class="row">
 	
-	<div class="well span6 offset3">
-		<%= form_for(:session, url: sessions_path) do |f| %>
+	
+<%= form_for(:session, url: sessions_path, :html => {:class=>'form-signin'}) do |f| %>
+		
+		 	<h2 class="form-signin-heading">Autentifiquese</h2>
+			<%= f.label "Email",:email, :class=>'sr-only' %>
+			<%= f.text_field :email, :class=>'form-control', :placeholder=>"Email", :required => true %>
+
+			<%= f.label "Password",:password,:class=>'sr-only' %>
+			<%= f.password_field :password,:class=>'form-control', :placeholder=>"Password", :required => true %>
 			
-			<%= f.label :email %>
-			<%= f.text_field :email %>
-
-			<%= f.label :password %>
-			<%= f.password_field :password %>
-			<p>
-			<%= f.submit "Autentificarse", class:"btn btn-large btn-primary" %>
+			<%= f.submit "Aceptar", class:"btn btn-lg btn-primary btn-block" %>
+			<br>
+			<p> 
+				No esta registrado? <%= link_to "Registrese ahora!", signup_path %> 
 			</p>
-		<% end %>
-		<p> No esta registrado? <%= link_to "Registrese ahora!", signup_path %> </p>
-	</div>
+<% end %>
+		
 
-</div>
+	
+

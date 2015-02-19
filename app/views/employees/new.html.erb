@@ -1,73 +1,74 @@
 <% provide(:title, 'Alta de empleados') %>
-<h3>Alta de empleado</h3>
-	<%= render 'shared/error_messages' %>
+<h2 class="sub-header">Alta de empleado</h2>
+	<%= render partial:'shared/error_messages',  object: @calendar, as: 'object' %>
 
-	<%= form_for(@emp, :html => {:class => "form form-horizontal"}) do |f| %>
+	
+	<%= form_for(@emp, html: {class: "form-horizontal"}) do |f| %>
 
 	<div class="well">
 	
 			<fieldset>
 				<legend>Datos del empleado</legend>
 		
-			<div class="control-group">
-				<%= f.label :nombre, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :nombre, :class =>'input-xlarge',:required => true %>
-				</div>
-			</div>
-			
-			<div class="control-group">
-			<%= f.label :email, :class => 'control-label' %>
-				<div class="controls">
-				<%= f.text_field :email, :class =>'input-xlarge', :required => true %>
-				</div>
-			</div>
 
-			<div class="control-group">
-			<%= f.label :fecha_alta, "Fecha de alta", :class => 'control-label' %>
-				<div class="controls">
-				<%= f.text_field :fecha_alta, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario", :required => true %>
+				<div class="field form-group">
+					<%= f.label :nombre,"Nombre Completo", :class => 'col-sm-2 control-label' %>
+					<div class="col-sm-6 col-md-4">
+						<%= f.text_field :nombre, :class =>'form-control',:required => true %>
+					</div>
 				</div>
-			</div>
-
-			<div class="control-group">
-			<%= f.label :role, "Privilegios", :class=> 'control-label' %>
-				<div class="controls">
-				<%= f.select :role, "<option value='1'>Empleado</option>
-								 <option value='2'>Jefe de Departamento</option>
-								 <option value='3'>Administrador</option>".html_safe,  {},
-					:class => 'input-large' %> 
+				
+				<div class="field form-group">
+					<%= f.label :email, :class => 'col-sm-2 control-label' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.text_field :email, :class =>'form-control', :required => true %>
+					</div>
 				</div>
-			</div>
 
-				<div class="control-group">
-			<%= f.label :department_id, "Departamento" , :class=> 'control-label' %>
-					<div class="controls">
-			<%= f.select :department_id,  options_for_select(@departments.map{ |s| [s.nombre, s.id] }),{}, :class => 'input-large'  %>
-							 
+				<div class="field form-group">
+					<%= f.label :fecha_alta, "Fecha de alta", :class => 'col-sm-2 control-label' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.text_field :fecha_alta, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario", :required => true %>
+					</div>
 				</div>
-			</div>
 
-				<div class="control-group">
-			<%= f.label :cargo , "Cargo (Opcional)",:class=> 'control-label' %> 
-					<div class="controls">
-			<%= f.text_field :cargo, :class => 'input-large' %>
+				<div class="field form-group">
+					<%= f.label :role, "Privilegios", :class=> 'col-sm-2 control-label' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.select :role, "<option value='1'>Empleado</option>
+									 <option value='2'>Jefe de Departamento</option>
+									 <option value='3'>Administrador</option>".html_safe,  {},
+						:class => 'form-control' %> 
+					</div>
 				</div>
-			</div>
 
-				<div class="control-group">
-				<%= f.label :password, :class=> 'control-label' %>  
-					<div class="controls">
-					<%= f.password_field :password, :class => 'input-large', :required => true %>
-						</div>
-			</div>
-
-				<div class="control-group">
-				<%= f.label :password_confirmation, "Confirmar password", :class=> 'control-label' %>  
-					<div class="controls">
-					<%= f.password_field :password_confirmation, :class=> 'input-large', :required => true %>
+				<div class="field form-group">
+					<%= f.label :department_id, "Departamento" , :class=> 'col-sm-2 control-label' %>
+					<div class="col-sm-6 col-md-4">
+						<%= f.select :department_id,  options_for_select(@departments.map{ |s| [s.nombre, s.id] }),{}, :class => 'form-control', :required => true  %>			 
+					</div>
 				</div>
-			</div>
+
+				<div class="field form-group">
+					<%= f.label :cargo , "Cargo (Opcional)",:class=> 'col-sm-2 control-label' %> 
+					<div class="col-sm-6 col-md-4">
+						<%= f.text_field :cargo, :class => 'form-control' %>
+					</div>
+				</div>
+
+				<div class="field form-group">
+					<%= f.label :password, :class=> 'col-sm-2 control-label' %>  
+						<div class="col-sm-6 col-md-4">
+						<%= f.password_field :password, :class => 'form-control', :required => true %>
+							</div>
+				</div>
+
+				<div class="field form-group">
+					<%= f.label :password_confirmation, "Confirmar password", :class=> 'col-sm-2 control-label' %>  
+						<div class="col-sm-6 col-md-4">
+						<%= f.password_field :password_confirmation, :class=> 'form-control', :required => true %>
+					</div>
+				</div>
 	
 	
 	</div>
@@ -79,3 +80,6 @@
 
 		</fieldset>
 	<% end %>
+
+
+

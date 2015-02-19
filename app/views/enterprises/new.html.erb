@@ -1,6 +1,10 @@
-<% provide(:title, 'Registrarse') %>
-<h1>Registrarse</h1>
 
+
+
+<% provide(:title, 'Registrarse') %>
+
+
+<h2 class="page-header">Registrarse</h2>
 
 <% if @enterprise.errors.any? %>
 	<div id="error_explanation">
@@ -25,29 +29,40 @@
 
 
 
-
-
-
-<div class="row">
-	<div class="well span5 offset1">
-	
-		<%= form_for @enterprise do |f| %>
-	
-			<%= f.label :empresa, "Empresa o Razón Social" %>
-			<%= f.text_field :empresa %>
-
-
-			<%= f.fields_for :departments do |d| %>
+<div class="col-row-offset-1 col-sm-10">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			 <h3 class="panel-title">Rellene el formulario</h3>
+		</div>
+		<div class="panel-body">
+			<%= form_for(@enterprise, html: {class: "form-horizontal"}) do |f| %>
+				<fieldset class="scheduler-border">
+			
+					<legend class="scheduler-border">Datos de la empresa</legend>
+					<div class="field form-group">	
+						<%= f.label :empresa, "Empresa o Razón Social",:class=> 'col-sm-3 control-label' %>
+						<div class="col-sm-9">
+						<%= f.text_field :empresa,:placeholder => 'Denominación de la empresa',:class=>'form-control', :required =>true %>
+						</div>
+					</div>
+					
+					<legend class="scheduler-border">Datos del Administrador de la aplicación</legend>
 				
-				<%= render "departments_fields", :f => d %>		
-
+						<%= f.fields_for :departments do |d| %>		
+							<%= render "departments_fields", :f => d %>		
+						<% end %>
+				
+						<div class="actions form-group">
+						    <div class="col-sm-offset-3 col-sm-10">
+						     <%= f.submit "Crear cuenta", class:"btn btn-primary" %>
+						    </div>
+						</div>
+						Ya estas registrado? <%= link_to "Autentificarse!", signin_path %> 
+				</fieldset>
 			<% end %>
-	
-			<p>
-			<%= f.submit "Crear cuenta", class:"btn btn-medium btn-primary" %>
-			</p>
-		<% end %>
+		</div>
+	</div>
+</div>
 
 	
-</div>
-</div>
+

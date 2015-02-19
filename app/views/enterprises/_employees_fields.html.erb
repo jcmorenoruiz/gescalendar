@@ -1,17 +1,46 @@
-<%= f.label :nombre, "Nombre del empleado"   %>
-<%= f.text_field :nombre %>
 
-<%= f.label :email %>
-<%= f.text_field :email %>
 
-<%= f.label :cargo %>
-<%= f.text_field :cargo %>
 
-<%= f.label :fecha_alta, "Fecha de alta en la empresa" %>
-<%= f.text_field :fecha_alta, :class => 'datepicker' %>	
+	<div class="field form-group">	
+			<%= f.label :nombre, "Nombre del empleado",:class=> 'col-sm-3 control-label' %>
+			<div class="col-sm-9">
+			<%= f.text_field :nombre,:placeholder =>'Nombre',:class=>'form-control', :required =>true %>
+			</div>
+	</div>
+
+	<div class="field form-group">	
+			<%= f.label :email, :class=> 'col-sm-3 control-label' %>
+			<div class="col-sm-9">
+			<%= f.text_field :email,:placeholder =>'Email ',:class=>'form-control', :required =>true %>
+			</div>
+	</div>
+
+
+	<div class="field form-group">	
+			<%= f.label :cargo, :class=> 'col-sm-3 control-label' %>
+			<div class="col-sm-9">
+			<%= f.text_field :cargo,:placeholder => ' Cargo en la empresa',:class=>'form-control', :required =>true %>
+			</div>
+	</div>
+
+	<div class="field form-group">	
+			<%= f.label :fecha_alta, "Fecha de alta en la empresa", :class=> 'col-sm-3 control-label' %>
+			<div class="col-sm-9">
+			<%= f.text_field :fecha_alta,:placeholder => 'Seleccione fecha',:class=>'datepicker', :required =>true %>
+			</div>
+	</div>
+
+	<div class="field form-group">	
+			<%= f.label :password, :class=> 'col-sm-3 control-label' %>
+			<div class="col-sm-9">
+			<%= f.password_field :password, :placeholder => 'Password' ,:class=>'form-control', :required =>true %>
+			</div>
+	</div>
+
+	<div class="field form-group">	
+			<%= f.label :password_confirmation, "Confirmar password", :class=> 'col-sm-3 control-label' %>
+			<div class="col-sm-9">
+			<%= f.password_field :password_confirmation ,:placeholder =>' Reescriba el password',:class=>'form-control', :required =>true %>
+			</div>
+	</div>
 				
-<%= f.label :password %>
-<%= f.password_field :password %>
-
-<%= f.label :password_confirmation, "Confirmar password" %>
-<%= f.password_field :password_confirmation %> 

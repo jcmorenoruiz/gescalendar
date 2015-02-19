@@ -2,10 +2,14 @@
 
 <div class="well">
 <fieldset>
-<legend>Datos del Departamento <%= "#{@dpto.nombre}" unless @dpto.nombre.nil? %></legend>		
+<legend>Datos </legend>		
 
-			<%= f.label :nombre, "Nombre*" %>
-			<%= f.text_field :nombre, :required => true, :class => 'input-xlarge' %>
+			<div class ="field form-group">
+				<%= f.label :nombre, "Nombre*", :class =>'col-sm-2 control-label' %>
+				<div class="col-sm-6 col-md-4">
+					<%= f.text_field :nombre, :required => true, :class => 'form-control' %>
+				</div>
+			</div>
 			<br /><br />
 
 </fieldset>
@@ -20,15 +24,15 @@
     </div>
     <%= hidden_field_tag("department[request_type_ids][]", nil) %>
     <% @request_types.each do |rt| %>
-     <label>
+     <label class="control-label">
      	<%= check_box_tag("department[request_type_ids][]", rt.id, rt.id.in?(@dpto.request_types.collect(&:id))) %> <%= rt.nombre %>
-
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      </label>
     <% end %>
     
  </div>
 <% else %>
-	<div class="alert">
+	<div class="alert alert-info">
 	<p>No existen tipos de solicitudes para su empresa.<br />
 	Dirigase al menu de Administración y haga click en Ausencias para generarlas.</p>
 	</div>
@@ -39,6 +43,6 @@
 <div class="modal-footer">
 	<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
 			
-	<%= link_to("Cancelar", departments_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Departamentos.") %>
+	<%= link_to("Cancelar", departments_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-default", :title => "Anular los cambios y volver al índice de Departamentos.") %>
 </div>
 <% end %>

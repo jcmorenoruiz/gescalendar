@@ -1,52 +1,45 @@
 <% provide(:title, @emp.nombre) %>
-<h3>Balance de <%= @emp.nombre %></h3>
-<div class="row">
-	
-</div>
 
-<div class="well well-small">
-	<% if current_user.role>2 %>
-		 
+	<h2 class="sub-header">Balance de <%= @emp.nombre %></h2>
+
+
+	<div class="well">
+		<% if current_user.role>2 %>	 
 			<p><%= link_to "Asignar Ausencias", new_request_path(:id => @emp.id), class: "btn btn-primary" %></p>
-		
-	<% end %>	
-<%= form_tag({action: "balance"}, :method => "get",   :class => 'form-inline') do %>
+		<% end %>	
 
-<%= select_tag :calendar, options_for_select([["Calendario" , "" ]]+@calendars.collect{ |u| [u.anio, u.anio] },@calselected), :class => 'input-large'
-%>
+		<%= form_tag({action: "balance"}, :method => "get",   :class => 'form-inline') do %>
 
+		<%= select_tag :calendar, options_for_select([["Calendario" , "" ]]+@calendars.collect{ |u| [u.anio, u.anio] },@calselected), :class => 'form-control'%>
 
-
-
-<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
-  <%= link_to("Limpiar", {:action => 'balance'},  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
-<% end %>
-</div>
+		<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+		  <%= link_to("Limpiar", {:action => 'balance'},  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+		<% end %>
+	</div>
 
 
-<div class="row">
-	<aside class="span5">
+
+	<div class="col-md-5">
 		<div class="well">
-		<legend>Información</legend>
-		<label><strong>Nombre:</strong> <%= @emp.nombre %></label>
-		<label><strong>Email:</strong> <%= @emp.email %></label>
-		<label><strong>Departamento:</strong> <%= @emp.department.nombre %></label>
-		<label><strong>Fecha de Alta: </strong><%= @emp.fecha_alta %></label>
+			<legend>Información</legend>
+			<label><strong>Nombre:</strong> <%= @emp.nombre %></label>
+			<label><strong>Email:</strong> <%= @emp.email %></label>
+			<label><strong>Departamento:</strong> <%= @emp.department.nombre %></label>
+			<label><strong>Fecha de Alta: </strong><%= @emp.fecha_alta %></label>
 
-		<label><strong>Permisos:</strong> <%= @emp.nombre %></label>
-		<label><strong>Cargo:</strong> <%= @emp.cargo %></label>
-		<label><strong>Situación: </strong><%= bool_to_s(@emp.status) %></label>
+			<label><strong>Permisos:</strong> <%= @emp.nombre %></label>
+			<label><strong>Cargo:</strong> <%= @emp.cargo %></label>
+			<label><strong>Situación: </strong><%= bool_to_s(@emp.status) %></label>
 		</div>
-	</aside>
+	</div>
 
 
-	<div class="span7">	
+	<div class="col-md-7">	
 		<div class="well">
-
+			<legend> Resumen de Ausencias </legend>
 			<div class="accordion">
 				<% @datos.each do |req| %>
-					
-						
+									
 						<legend><%=  req[:nombre] %> </legend>
 						<table>
 						<tr><td>
@@ -99,7 +92,8 @@
 	</div>
 
 
-</div>
-<div class="modal-footer">
-	<%= link_to 'Volver', employees_path, :class => 'btn btn-primary' %>
-</div>
+
+	<div class="modal-footer col-md-12">
+		<%= link_to 'Volver', employees_path, :class => 'btn btn-primary' %>
+	</div>
+

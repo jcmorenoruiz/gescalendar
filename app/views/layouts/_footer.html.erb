@@ -1,12 +1,16 @@
-<footer class="footer">
-	<small>
-		Realizado por <strong>Juan Carlos Moreno Ruiz</strong>
-	</small>
-	<nav>
-		<ul>
-			<li><%= link_to "Sobre Nosotros", about_path %></li>
-			<li><%= link_to "Contacto", contact_path %> </li>
-		</ul>
-	</nav>
+ <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Realizado por <strong>Juan Carlos Moreno Ruiz</strong>
 
-</footer>
+		 <span class="pull-right">
+		 	<%= link_to "Inicio", root_path %>&nbsp;&nbsp;|
+		 	<%= link_to "Contacto", contact_path %>&nbsp;&nbsp;|
+		 	<%= link_to "Quienes Somos", about_path %>
+		 </span>
+
+		 	
+        </p>
+
+      </div>
+
+    </footer>

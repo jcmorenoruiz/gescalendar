@@ -1,5 +1,6 @@
-<h3>Editar Tipo de solicitud</h3>
+<h2 class="sub-header">Editar Tipo de solicitud</h2>
+<%= render partial:'shared/error_messages',  object: @request_type, as: 'object' %>
 <fieldset>
-	<legend>Tipo de Solicitud</legend>
+	
 	<%= render 'form' %>
 </fieldset>

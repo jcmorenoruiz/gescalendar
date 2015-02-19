@@ -1,9 +1,9 @@
-<h3>Listado de tipos de Solicitudes</h3>
+<h2 class="sub-header">Listado de tipos de Solicitudes</h2>
 <div class="well well-sm">
 <%= link_to "Nuevo tipo de Solicitud!", new_request_type_path, class: "btn btn-medium btn-primary" %> 
 </div>
 
-<div class="well well-small">
+<div class="well well-sm">
 <%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
 
 
@@ -33,7 +33,7 @@
       <tr class="field">
         <td><%= rt.nombre %></td>
         <td><%= rt.num_dias_max %></td>
-        <td><div class="well-small" style="background:<%= rt.color %>"></div></td>
+        <td><div class="well well-sm" style="background:<%= rt.color %>"></div></td>
         
         <td><%= number_departments(rt) %></td>
         <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-small btn-default' %></td>

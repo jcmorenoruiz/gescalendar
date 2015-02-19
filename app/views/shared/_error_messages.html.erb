@@ -1,13 +1,19 @@
-<% if @emp.errors.any? %>
-	<div id="error_explanation">
-
-		<div class="alert alert-error">
-		El formulario contiene <%= pluralize(@emp.errors.count,"error") %>
+<!-- info errors -->
+<% if defined?(object) %>
+	<% if object.errors.any? %>
+		<div id="error_explanation">
+		    <div class="alert alert-danger" role="alert">
+		      <h4>El formulario contiene <%= pluralize(object.errors.count,"error")+':' %></h4>
+		      
+		      <ul>
+			      <% object.errors.full_messages.each do |message| %>
+			        <li><%= message %></li>
+			      <% end %>
+		      </ul>
+		    </div>
 		</div>
-		<ul>
-				<% @emp.errors.full_messages.each do |msg| %>
-					<li>* <%= msg %></li>
-				<% end %> 
-		</ul>
-	</div>
+	<% end %>
 <% end %>
+
+
+

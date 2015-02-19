@@ -1,5 +1,5 @@
 <% provide(:title, 'Dias festivos del calendario') %>
-<h3>Dias hábiles del calendario <%= @cal.anio %></h3>
+<h2 class="sub-header">Dias hábiles del calendario <%= @cal.anio %></h2>
   
 
 <%= form_for(@cal, :url => {:action=> "update_days", :id => @cal }, :html => {:class => "form form-horizontal"}) do |f| %>
@@ -8,59 +8,52 @@
 <div class="well">
 <legend>Días hábiles de la semana</legend>
 
-<div class="alert">
+<div class="alert alert-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Aviso!</strong> Los días hábiles son los que se tendrán en cuenta para el computo global de días solicitados por ausencia.
       Por ejemplo, si el empleado dispone de 22 días naturales de vacaciones, y únicamente son laborables los días entre semana(Lunes a Viernes), es necesario deseleccionar sabados y domingos para que no se tengan en cuenta al calcular los días restantes.  
 </div>
 
-<div class="control-group">
-  <%= f.label 'Lunes', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d1 %>
-  </div>
+<div class="checkbox">
+  <label>
+    <%= f.check_box :d1 %> Lunes
+  </label>
 </div>
 
-<div class="control-group">
-  <%= f.label 'Martes', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d2 %>
-  </div>
+<div class="checkbox">
+  <label>
+    <%= f.check_box :d2 %> Martes
+  </label>
 </div>
 
-<div class="control-group">
-  <%= f.label 'Miércoles', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d3 %>
-  </div>
+<div class="checkbox">
+  <label>
+    <%= f.check_box :d3 %> Miercoles
+  </label>
 </div>
 
-<div class="control-group">
-  <%= f.label 'Jueves', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d4 %>
-  </div>
+<div class="checkbox">
+  <label>
+    <%= f.check_box :d4 %> Jueves
+  </label>
 </div>
 
-<div class="control-group">
-  <%= f.label 'Viernes', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d5 %>
-  </div>
+<div class="checkbox">
+    <label>
+ <%= f.check_box :d5 %> Viernes
+    </label>
 </div>
 
-<div class="control-group">
-  <%= f.label 'Sabado', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d6 %>
-  </div>
+<div class="checkbox">
+    <label>
+      <%= f.check_box :d6 %> Sabado
+    </label>
 </div>
 
-<div class="control-group">
-  <%= f.label 'Domingo', :class=>"control-label" %>
- <div class="controls">
- <%= f.check_box :d7 %>
-  </div>
+<div class="checkbox">
+    <label>
+      <%= f.check_box :d7 %> Domingo
+    </label>
 </div>
 </div>
 

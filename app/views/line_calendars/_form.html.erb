@@ -1,32 +1,41 @@
 
-<fieldset>
-    <% if @line_calendar.errors.any? %>
-    <div id="error_explanation">
-      <div class="alert alert-error">
-        El formulario contiene <%= pluralize(@line_calendar.errors.count, "error") %>
-      </div>
-      <ul>
-      <% @line_calendar.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-<div class="well">
-  <legend>Dia no laborable</legend>
-<%= form_for (@line_calendar) do |f| %>
 
-  <%= f.label :fecha, "Fecha" %>
-  <%= f.text_field :fecha, :class => 'datepicker input-large', :placeholder => "Click para abrir calendario" %>
+<%= render partial:'shared/error_messages',  object: @line_calendar, as: 'object' %>
+
+<div class="well">
+
+<%= form_for (@line_calendar) do |f| %>
+<fieldset>
+  <legend>Dia no laborable</legend>
+
+  <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Aviso!</strong> Los días no laborables no se contaran como días de ausencia en el computo global.
+  </div>
+  <div class="field form-group col-sm-12">  
+             <%= f.label :fecha, "Fecha",:class=> 'col-sm-3 control-label' %>
+              <div class="col-sm-3">
+                <%= f.text_field :fecha, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario", :required =>true %>
+              </div>
+  </div>
+   
       
+  <div class="field form-group col-sm-12">
+    <%= f.label :dia, "Nombre del día no laborable / festivo", :class => 'col-sm-3 control-label' %><br>
+    <div class="col-sm-6">
+    <%= f.text_field :dia,:class =>'form-control', :required => true %>
+    </div>
+  </div>
   
-    <%= f.label :dia, "Nombre del día no laborable / festivo" %><br>
-    <%= f.text_field :dia %>
-  
-  
-    <%= f.label :desc, "Descripción" %><br>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :desc, "Descripción", :class =>'col-sm-3 control-label' %><br>
+    <div class="col-sm-9">
     <%= f.text_area :desc, size: "60x4" %>
-  
+    </div>
+  </div>
+
+
     <%= f.hidden_field :calendar_id, :value => @calendar.id %>
 </div>
 

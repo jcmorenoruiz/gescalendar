@@ -1,5 +1,5 @@
 <% provide(:title, 'Lista de Departamentos') %>
-<h3>Calendarios</h3>
+<h2 class="sub-header">Calendarios</h2>
 	
 <div class="well well-small">
 	<p><%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> &nbsp;&nbsp; </p>
@@ -11,10 +11,10 @@
   <% end %>
 <%= form_tag(calendars_path, :method => "get" , :class => 'form-inline') do %>
 
-<%= select_tag :department, options_for_select([["Departamentos" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
+<%= select_tag :department, options_for_select([["Departamentos" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'form-control'
 %>
 
-<%= select_tag :status, options_for_select([["Activo","t"],["Cerrado","f"]],params[:status]), :class=> 'input-small' %>
+<%= select_tag :status, options_for_select([["Estado: Activo","t"],["Estado: Cerrado","f"]],params[:status]), :class=> 'form-control' %>
 
 
 <%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
@@ -26,11 +26,12 @@
 	
 <% if @calendars.count>0 %>
 	<table class="table table-hover table-striped">
+
 	<thead>
 		<th width="4%">Año</th>
 		<th Width="15%">Departamento</th>
-		<th width="10%">Fec. Inicio</th>
-		<th width="10%">Fec. Cierre </th>
+		<th width="10%">Fecha Inicio</th>
+		<th width="10%">Fecha Cierre </th>
 		<th width="4%">Dias</th>
 		<th width="13%">&nbsp;</th>
 		<th width="13%">&nbsp;</th>
@@ -54,7 +55,7 @@
 				
 			</td>
 			<td>
-<%= link_to "Días no lab.", calendar_path(cal) ,:class => "btn btn-small btn-primary" %>
+<%= link_to "Días no laborables", calendar_path(cal) ,:class => "btn btn-small btn-primary" %>
 			</td>
 			<td>
 			

@@ -16,12 +16,13 @@ class CalendarsController < ApplicationController
    @calendar=Calendar.new(calendar_params)
    lines=DefaultCalendar.where(anio: @calendar.anio).first
    if !lines.nil?
-    lines=lines.default_line_calendars
-     # assign default line calendars for year.
-     lines.each do |line|
+      lines=lines.default_line_calendars
+      # assign default line calendars for year.
+      lines.each do |line|
       @calendar.line_calendars.build(:fecha => line.fecha,:dia => line.nombre,:status => line.status)
      end
    end
+
    if(@calendar.save)
       flash[:success]="Ejercicio activado correctamente. Se han asignado los dias no laborales por defecto. Acceda a 'Dias festivos' si desea modificarlos "
       redirect_to calendars_url

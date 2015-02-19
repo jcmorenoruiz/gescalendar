@@ -1,19 +1,17 @@
 <% provide(:title, @emp.nombre) %>
 
-<div class="row">
+
+<div class="col-sm-12">
+	<h2 class="sub-header">Bienvenido, <%= @emp.nombre %></h2>
 	<aside class="span4">
 		<section>
-			<h1>
-				Bienvenido, <%= @emp.nombre %>
-			</h1>
-			<p>&nbsp;</p>
 		 <div class="well">
 			<% if !admin_user? %>
 				<%= link_to "Nueva solicitud", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
 			<% end %>
-	&nbsp;&nbsp;
-	<%= link_to "Mi Balance", {action: "balance" , id: @emp.id}, class: "btn btn-primary" %>
-	</div>
+			&nbsp;&nbsp;
+			<%= link_to "Mi Balance", {action: "balance" , id: @emp.id}, class: "btn btn-primary" %>
+		</div>
 		</section>
 		<legend>Próximas ausencias</legend>
 		<div class="well">
@@ -22,9 +20,10 @@
 				<legend><%= @nextRequest.request_type.nombre %> </legend>
 				<strong>Desde:</strong>&nbsp;<%= @nextRequest.desde %> &nbsp;
 				<strong>Hasta:</strong>&nbsp;<%= @nextRequest.hasta %>
+				<br>
+				<br>
 			<% end %>
-		</br>
-		</br>
+		
 				<legend>Día festivo</legend>
 				<strong>Fecha: </strong>&nbsp; <%= !@nextfree.nil? ? @nextfree.fecha  : '' %>
 				<br />
@@ -55,6 +54,6 @@
 				<%= will_paginate @requests %>
 			<% end %>
 	</div>
-
 </div>
+
 

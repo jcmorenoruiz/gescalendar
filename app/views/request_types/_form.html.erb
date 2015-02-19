@@ -1,41 +1,44 @@
 
-<%= form_for(@request_type) do |f| %>
-  <% if @request_type.errors.any? %>
-    <div id="error_explanation">
-      <div class="alert alert-error">
-      El formulario contiene <%= pluralize(@request_type.errors.count, "error") %>
-      </div>
-      <ul>
-      <% @request_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
+<%= form_for(@request_type, html: {class: "form-horizontal"}) do |f| %>
  
 <div class="well">
   
-    <%= f.label :nombre %>
-    <%= f.text_field :nombre, :class => 'input-xlarge' %>
- 
+    <div class="field form-group">
+      <%= f.label :nombre, :class =>'col-sm-4 control-label' %>
+      <div class="col-sm-6 col-md-4">
+      <%= f.text_field :nombre, :class => 'form-control', :required => true %>
+      </div>
+    </div>
 
-    <%= f.label :num_dias_max, "Número máximo de días permitidos" %>
-    <%= f.number_field :num_dias_max , :class => 'input-small' %>
-  
+    <div class="field form-group">
+      <%= f.label :num_dias_max, "Número máximo de días permitidos", :class =>'col-sm-4 control-label' %>
+      <div class="col-sm-4 col-md-2">
+      <%= f.number_field :num_dias_max , :class => 'form-control', :required => true %>
+      </div>
+    </div>
 
-    <%= f.label :color, "Color de la etiqueta" %>
-    <%= f.text_field :color, :class => 'input-large', :placeholder => 'Color' %>
+    <div class="field form-group">
+        <%= f.label :color, "Color de la etiqueta", :class => 'col-sm-4 control-label' %>
+      <div class="col-sm-6 col-md-4">
+        <%= f.text_field :color, :class => 'form-control', :placeholder => 'Selec.'%>
+      </div>
+    </div>
 
-    <%= f.label :tipo, "Disponible para empleados" %>
-    <%= f.check_box :tipo %>
-    <div class="alert">
+    <div class="field form-group">
+      <%= f.label :tipo, "Disponible para empleados", :class =>'col-sm-4 control-label' %>
+      <div class="col-sm-6 col-md-4">
+        <%= f.check_box :tipo %>
+      </div>
+    </div>
+
+    <div class="alert alert-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Aviso!</strong> Si marca esta opción se permitirá a los empleados hacer solicitudes de este tipo.
     </div>
 </div>
   
-<br />
+
  <div class="modal-footer">
       <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
         <%= link_to("Cancelar", request_types_path, :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
