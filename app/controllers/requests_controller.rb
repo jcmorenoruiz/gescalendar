@@ -16,7 +16,6 @@ class RequestsController < ApplicationController
       @request_types=current_user.department.request_types.where(:status => true,:tipo => true)
     end
 
-       
   end
 
   def create
@@ -60,7 +59,7 @@ class RequestsController < ApplicationController
 
       if @request.update_attributes(:status => params[:request][:status],:motivo_rev => params[:request][:motivo_rev])
           flash[:success]="Solicitud procesada correctamente. Se ha enviado un email con el aviso correspondiente."
-          redirect_to employee_path(current_user.id)
+          redirect_to requests_pending_path
       else
           render "edit"
       end
@@ -69,7 +68,6 @@ class RequestsController < ApplicationController
   def show 
    
   end
-  
   
 
   def destroy   
@@ -117,8 +115,6 @@ class RequestsController < ApplicationController
     @nombredias=(@iniciomes..@finmes).map{ |date| @ndias[date.wday] }
     @diasmes=(1..@date.end_of_month.day).to_a
     @fechas=(@iniciomes..@finmes).map{ |date| date }
-
-
    
     params[:starts_with].present? ? nombre=params[:starts_with] : nombre=""
 
@@ -129,10 +125,26 @@ class RequestsController < ApplicationController
     end
     
 
-
-
   end
 
+  def pending
+    # filling dropdown.
+    @dptos=Department.where(enterprise_id: current_emp.id) # departments from enterprise
+    @rts=RequestType.where(enterprise_id: current_emp.id) # request types for enterprise
+
+
+    if chief_user?      
+      @requests=Request.where(:status => 1,:request_type_id => Department.find(current_user.department_id).request_types).paginate(page: params[:page])
+    else admin_user?        
+      @requests=Request.where(:status => 1,:employee_id => Employee.where(:department_id =>Department.where(:enterprise_id => current_emp.id))).paginate(page: params[:page])
+    end
+
+    # filters
+    @requests=@requests.filter(params.slice(:department,:request_type,:starts_with))
+    # paginate
+    @requests=@requests.paginate(page: params[:page]) 
+
+  end
 
   protected
 

@@ -1,10 +1,24 @@
 class Request < ActiveRecord::Base
+	include Filterable
+
 	enum status: [:denegada,:pendiente,:confirmada]
 
 	belongs_to :employee
 	belongs_to :request_type
 	
-	#default_scope -> { order ('desde DESC')}
+	#filters 
+	default_scope -> { order('desde DESC')}
+	
+	#scope :starts_with, -> (nombre) { where("nombre like ?", "#{nombre}%")}
+	scope :department, -> (department) {
+    	joins(:employee).
+    	where("employees.department_id = ?", department)
+ 	}
+ 	scope :request_type, ->(request_type) { where request_type: request_type } 
+ 	scope :starts_with, -> (nombre){
+ 		joins(:employee).
+ 		where("employees.nombre like ?","%#{nombre}%")
+ 	}
 
 	validates :status, presence: true
 	validates :desde, presence: true
@@ -29,23 +43,49 @@ class Request < ActiveRecord::Base
 	validate :calendar_open, on: :create
 	validate :min_disponibilidad, on: :create
 
-	validate :rest_days, on: :create
+	validate :check_rest_days, on: :create
+	
 	# check if rest days for this availability
-	def rest_days
+	def check_rest_days
 
-		dias_requested=weekdays_in_date_range(desde..hasta)
+		emp=Employee.find(employee_id)
+		calendar=Calendar.where(:department_id => emp.department_id,:anio => desde.year.to_i).first
+
+		dias_requested=weekdays_in_date_range(desde..hasta,calendar)
 		rt=RequestType.find(request_type_id)
 		dias=0
-    requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).all.where('extract(year from desde)= ?',"#{desde.year.to_i}")
-     
-    #working days.
-    requests.each do |rq|  
-      dias+=weekdays_in_date_range(rq.desde..rq.hasta) 
-    end
+	
+		#get all requests from employee
+    	requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).all.where('extract(year from desde)= ?',"#{desde.year.to_i}")
+     	
+	    #working days requested.
+	    requests.each do |rq|  
+	      dias+=weekdays_in_date_range(rq.desde..rq.hasta,calendar) # update weekdays..... monday...
+	    end
 
-    if dias_requested>(rt.num_dias_max-dias)
-    	errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(rt.num_dias_max-dias).abs} dias)")
-    end
+	    #get rest days
+	    num_dias_max=Request.rest_days(desde.year.to_i,employee_id,rt.num_dias_max)
+	   
+	    if dias_requested>(num_dias_max-dias)
+	    	errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(num_dias_max-dias).abs} dias)")
+	    end
+
+	end
+
+
+	# days left for request_type by year
+	def self.rest_days(year,employee_id,num_dias_max)
+
+		user=Employee.find(employee_id)
+	    
+	    if year==user.fecha_alta.year.to_i
+
+	    	ndays=Date.new(year,12,31)
+	    	dias=365-user.fecha_alta.yday
+	    	num_dias_max=(dias.to_i*num_dias_max)/ndays.yday
+	    end
+
+		return num_dias_max
 
 	end
 
@@ -85,15 +125,32 @@ class Request < ActiveRecord::Base
 
 	end
 
-	 # Check if a given interval overlaps this interval    
-  def overlaps?(other)
-    ((start_date - other.end_date) * (other.start_date - end_date)) >= 0
+	# Check if a given interval overlaps this interval    
+  	def overlaps?(other)
+    	((start_date - other.end_date) * (other.start_date - end_date)) >= 0
+  	end
+
+  
+
+  	def weekdays_in_date_range(range,calendar)
+      
+
+    	# You could modify the select block to also check for holidays
+    	range.select { |d| (1..5).include?(d.wday) && working_day(d,calendar) }.size
   end
 
-   def weekdays_in_date_range(range)
-    # You could modify the select block to also check for holidays
-    range.select { |d| (1..5).include?(d.wday) }.size
-  end
+  def working_day(d,calendar)
 
+      if calendar.line_calendars.nil?
+        return true
+      else
+           calendar.line_calendars.each do |line|
+            if(line.fecha==d)
+                  return false
+            end
+           end 
+      end
+      return true
+  end
 
 end

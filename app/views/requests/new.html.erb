@@ -1,78 +1,79 @@
 <% provide(:title, 'Nuevas solicitudes') %>
+
+<div class="col-sm-12">
+
 <% if admin_user? %>
 <h2 class="sub-header">Asignar Ausencia </h2>
 <% else %>
 <h2 class="sub-header">Nueva Solicitud</h2>
 <% end %>
 
+<%= render partial: 'shared/error_messages',  object: @request, as: 'object' %>
+
 <% if @request_types.count<1 %>
-        <div class="alert alert-info">
-       
+    <div class="alert alert-info">   
           <strong>Aviso!</strong> Su departamento no tiene asignados aún tipos de ausencias por lo que no podrá realizar ninguna solicitud.
           <% if admin_user? %>
             Diríjase al panel de departamentos y edite el departmento correspondiente.
           <% end %>
-        </div>
-      <% end %>
+    </div>
+<% end %>
 
 <%= form_for(@request, html: {class: "form-horizontal"}) do |f| %>
- 
 
-
-<fieldset>
-  <div class="well">
-      <% if admin_user? %>
-        <legend>Datos de la Ausencia</legend>
-      <% else %>
-        <legend>Datos de la Solicitud</legend>
-      <% end %>
-      
-      <div class="form-group">
-      <%= f.label :desde, "Desde (Fecha de Inicio):",:class =>'col-sm-2 control-label' %>
-        <div class="col-sm-6 col-md-4">
-          <%= f.text_field :desde, :required => true, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario" %>  
-        </div>
-      </div>
-
-      <div class="form-group"> 
-        <%= f.label :hasta, "Hasta (Fecha de Fin):",:class =>' col-sm-2 control-label' %>
-        <div class="col-sm-6 col-md-4">
-          <%= f.text_field :hasta, :required => true, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario" %>
-        </div>
-      </div>
-
-      
-
-      <div class="form-group">
-        <%= f.label :request_type_id, "Tipo de Solicitud:", :class=>'col-sm-2 control-label' %>
-    	  <div class="col-sm-6 col-md-4">
-          <%= f.select :request_type_id, options_for_select(@request_types.map{ |s| [s.nombre, s.id] }),{} ,:required => true,:class => 'form-control' %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :motivo, "Comentarios:",:class =>'col-sm-2 control-label' %><br>
-        <div class="col-sm-6 col-md-6">
-          <%= f.text_area :motivo, size: "60x4", :class =>'form-control' %>
-        </div>
-      </div>
-
-      <%= f.hidden_field :employee_id, :value => @emp.id %>
-  </div>
-  
-  <div class="modal-footer">
-        <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
-          
+  <fieldset>
+    <div class="well">
         <% if admin_user? %>
-          <%= link_to("Cancelar", {:controller => :employees, :action => :balance, :id => @emp}, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+          <legend>Datos de la Ausencia</legend>
         <% else %>
-          <%= link_to("Cancelar", employee_path(@emp), :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+          <legend>Datos de la Solicitud</legend>
         <% end %>
+        
+        <div class="form-group">
+        <%= f.label :desde, "Fecha Inicio (Desde):",:class =>'col-sm-3 control-label' %>
+          <div class="col-sm-6 col-md-4">
+            <%= f.text_field :desde, :required => true, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario" %>  
+          </div>
+        </div>
 
+        <div class="form-group"> 
+          <%= f.label :hasta, "Fecha Fin (Hasta):",:class =>' col-sm-3 control-label' %>
+          <div class="col-sm-6 col-md-4">
+            <%= f.text_field :hasta, :required => true, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario" %>
+          </div>
+        </div> 
+
+     
+        <div class="form-group">
+          <%= f.label :request_type_id, "Tipo de Solicitud:", :class=>'col-sm-3 control-label' %>
+      	  <div class="col-sm-6 col-md-4">
+            <%= f.select :request_type_id, options_for_select(@request_types.map{ |s| [s.nombre, s.id] }),{ prompt: 'Seleccione Tipo Solicitud ...'},:required => true,:class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :motivo, "Observaciones:",:class =>'col-sm-3 control-label' %><br>
+          <div class="col-sm-8 col-md-6">
+            <%= f.text_area :motivo, size: "60x4", :class =>'form-control' %>
+          </div>
+        </div>
+
+        <%= f.hidden_field :employee_id, :value => @emp.id %>
     </div>
-
-</fieldset>
+    
+    <div class="modal-footer">
+          <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+            
+          <% if admin_user? %>
+            <%= link_to("Cancelar", {:controller => :employees, :action => :balance, :id => @emp}, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-default", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+          <% else %>
+            <%= link_to("Cancelar", employee_path(@emp), :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-default", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+          <% end %>
+    </div>
+  </fieldset>
 
 <% end %>
+
+</div>
 
 

@@ -1,49 +1,58 @@
 
-<%= form_for(@av) do |f| %>
 
-<% if @av.errors.any? %>
-	<div id="error_explanation">
+<%= render partial:'shared/error_messages',  object: @av, as: 'object' %>
 
-		<div class="alert alert-error">
-		El formulario contiene <%= pluralize(@av.errors.count,"error") %>
-		</div>
-		<ul>
-				<% @av.errors.full_messages.each do |msg| %>
-					<li>* <%= msg %></li>
-				<% end %> 
-		</ul>
-	</div>
-<% end %>
+<%= form_for(@av,:html => {:class => 'form-horizontal'}) do |f| %>
+
 <div class="well">
-<fieldset>
-<legend>Datos del Periodo de Disponibilidad mínima</legend>		
+	<fieldset>
+	<legend>Datos del Periodo</legend>		
 
-			<%= f.label :cargo, "Cargo*" %>
-			<%= f.text_field :cargo, :required => true, :class => 'input-large' %>
+			<div class="form-group">
+				<%= f.label :cargo, "Cargo*", :class => 'control-label col-sm-3' %>
+				<div class="col-sm-6 col-md-4">
+					<%= f.text_field :cargo, :required => true, :class => 'form-control' %>
+				</div>
+			</div>
 
-			<%= f.label :num_min_emp, "Nº mínimo de empleados*" %>
-			<%= f.number_field :num_min_emp, :required => true, :class => 'input-small' %>
+			<div class="form-group">
+				<%= f.label :num_min_emp, "Nº mínimo de empleados*" , :class =>'control-label col-sm-3'%>
+				<div class="col-sm-6 col-md-4">
+					<%= f.number_field :num_min_emp, :required => true, :class => 'form-control' %>
+				</div>
+			</div>
 
-			<%= f.label :desde, "Fecha de Inicio*" %>
-			<%= f.text_field :desde, :required => true, :value => @av.desde, :class => 'datepicker input-large', :placeholder => 'Click para abrir calendario' %>
+			<div class="form-group">
+				<%= f.label :desde, "Fecha de Inicio*", :class => 'control-label col-sm-3' %>
+				<div class="col-sm-6 col-md-4">
+					<%= f.text_field :desde, :required => true, :value => @av.desde, :class => 'datepicker form-control', :placeholder => 'Click para abrir calendario' %>
+				</div>
+			</div>
 
-			<%= f.label :hasta, "Hasta*" %>
-			<%= f.text_field :hasta, :required => true, :value => @av.hasta, :class => 'datepicker input-large', :placeholder => 'Click para abrir calendario' %>
+			<div class="form-group">
+				<%= f.label :hasta, "Hasta*", :class =>'control-label col-sm-3' %>
+				<div class="col-sm-6 col-md-4">	
+					<%= f.text_field :hasta, :required => true, :value => @av.hasta, :class => 'datepicker form-control', :placeholder => 'Click para abrir calendario' %>
+				</div>
+			</div>
 
-			<%= f.label :notas, "Notas" %>
-			<%= f.text_area :notas %>
-		
-		  <%= f.hidden_field :department_id, :value => @dpto.id %>
+			<div class="form-group">
+				<%= f.label :notas, "Notas", :class =>'control-label col-sm-3' %>
+				<div class="col-sm-8 col-md-6">
+					<%= f.text_area :notas, :class =>'form-control' %>
+				</div>
+			</div>
+			  <%= f.hidden_field :department_id, :value => @dpto.id %>
 
-			<br /><br />
-</fieldset>
+				<br /><br />
+	</fieldset>
 </div>
-<br />
+	<br />
 
 
-<div class="modal-footer">
-	<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
-			
-	<%= link_to("Cancelar", department_path(@dpto), :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Departamentos.") %>
-</div>
+	<div class="modal-footer">
+		<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
+				
+		<%= link_to("Cancelar", department_path(@dpto), :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-default", :title => "Anular los cambios y volver al índice de Departamentos.") %>
+	</div>
 <% end %>

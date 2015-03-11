@@ -1,6 +1,15 @@
+        <ul class="nav nav-sidebar">
+            <li>
+              <%= link_to ("Solicitudes <span class='badge'> #{ pending_requests } </span>").html_safe, requests_pending_path %> 
+             
+              
+            </li>
 
-      
+        </ul>
+
           <ul class="nav nav-sidebar">
+            
+          
             <li><%= link_to "Ausencias", request_types_path %></li>
             
             <li><%= link_to "Departamentos", departments_path %></li>

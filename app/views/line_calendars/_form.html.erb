@@ -2,46 +2,49 @@
 
 <%= render partial:'shared/error_messages',  object: @line_calendar, as: 'object' %>
 
-<div class="well">
 
-<%= form_for (@line_calendar) do |f| %>
+<%= form_for(@line_calendar, :html => {:class => "form form-horizontal"}) do |f| %>
+
+
 <fieldset>
-  <legend>Dia no laborable</legend>
+<div class="well">
+    <legend>Dia no laborable</legend>
 
-  <div class="alert alert-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>Aviso!</strong> Los días no laborables no se contaran como días de ausencia en el computo global.
-  </div>
-  <div class="field form-group col-sm-12">  
-             <%= f.label :fecha, "Fecha",:class=> 'col-sm-3 control-label' %>
-              <div class="col-sm-3">
-                <%= f.text_field :fecha, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario", :required =>true %>
-              </div>
-  </div>
-   
-      
-  <div class="field form-group col-sm-12">
-    <%= f.label :dia, "Nombre del día no laborable / festivo", :class => 'col-sm-3 control-label' %><br>
-    <div class="col-sm-6">
-    <%= f.text_field :dia,:class =>'form-control', :required => true %>
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Aviso!</strong> Los días no laborables no se contaran como días de ausencia en el computo global.
     </div>
-  </div>
-  
-
-  <div class="form-group col-sm-12">
-    <%= f.label :desc, "Descripción", :class =>'col-sm-3 control-label' %><br>
-    <div class="col-sm-9">
-    <%= f.text_area :desc, size: "60x4" %>
+    <div class="field form-group">  
+               <%= f.label :fecha, "Fecha",:class=> 'col-sm-3 control-label' %>
+                <div class="col-sm-6 col-md-4">
+                  <%= f.text_field :fecha, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario", :required =>true %>
+                </div>
     </div>
-  </div>
+     
+        
+    <div class="field form-group">
+      <%= f.label :dia, "Nombre del día no laborable / festivo", :class => 'col-sm-3 control-label' %><br>
+      <div class="col-sm-6 col-md-4">
+      <%= f.text_field :dia,:class =>'form-control', :required => true %>
+      </div>
+    </div>
+    
+
+    <div class="form-group">
+      <%= f.label :desc, "Descripción", :class =>'col-sm-3 control-label' %><br>
+      <div class="col-sm-8 col-md-6">
+      <%= f.text_area :desc, size: "60x4" %>
+      </div>
+    </div>
 
 
-    <%= f.hidden_field :calendar_id, :value => @calendar.id %>
+      <%= f.hidden_field :calendar_id, :value => @calendar.id %>
 </div>
 
     <div class="modal-footer">
-      <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
-        <%= link_to("Cancelar", calendar_path(@calendar), :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
-      </div>
-<% end %>
+        <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
+          <%= link_to("Cancelar", calendar_path(@calendar), :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-default", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+    </div>
 </fieldset>
+<% end %>
+

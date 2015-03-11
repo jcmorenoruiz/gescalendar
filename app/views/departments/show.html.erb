@@ -1,9 +1,9 @@
 <% provide(:title, @dpto.nombre) %>
 
-<h3>Disponibilidad de <%= @dpto.nombre %></h3>
+<h2 class="sub-header">Disponibilidad de <%= @dpto.nombre %></h2>
 
-<div class="row">
-  <div class="well well-small">
+
+<div class="well well-sm">
 <%= link_to "Nueva Disponibilidad !", new_availability_path(id: @dpto.id), class: "btn btn-medium btn-primary" %> 
     <div class="alert alert-info">
     <strong>Haga Click</strong> para crear un nuevo perdiodo de disponibilidad mínima de empleados con un cargo concreto.
@@ -31,8 +31,8 @@
         <td><%= av.desde %></td>
         <td><%= av.hasta %></td>
         <td><%= av.notas %></td>
-        <td><%= link_to 'Editar', edit_availability_path(av), :class => 'btn btn-small btn-default' %></td>
-        <td><%= link_to 'Eliminar', av, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-small btn-danger' %></td>
+        <td><%= link_to 'Editar', edit_availability_path(av), :class => 'btn btn-sm btn-default' %></td>
+        <td><%= link_to 'Eliminar', av, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-sm btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>

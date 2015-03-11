@@ -6,11 +6,11 @@
 		<td><%= employee.role %></td>
 	
 
-		<td><%= link_to 'Balances', {action: "balance" , id: employee.id}, :class => 'btn btn-small' %></td>
+		<td><%= link_to 'Balance', {action: "balance" , id: employee.id}, :class => 'btn btn-small' %></td>
 		<td><%= link_to 'Editar', edit_employee_path(employee.id), :class => 'btn btn-small' %></td>
 		<td>
 		<% if current_user.role==3 && !current_user?(employee) %>
-			<%= link_to "Dar de baja", employee, method: :delete, data: { confirm: "Esta seguro? Una vez que el empleado sea dado de baja, ya no podra realizar solicitudes" }, :class => 'btn btn-small btn-danger' %>
+			<%= link_to "Dar baja", employee, method: :delete, data: { confirm: "Esta seguro? Una vez que el empleado sea dado de baja, ya no podra realizar solicitudes" }, :class => 'btn btn-small btn-danger' %>
 
 		<% end %>
 		</td>

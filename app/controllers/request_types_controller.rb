@@ -25,7 +25,7 @@ class RequestTypesController < ApplicationController
 
   # GET /request_types/1/edit
   def edit
-   
+    
   end
 
   # POST /request_types

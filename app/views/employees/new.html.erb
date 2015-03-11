@@ -1,6 +1,7 @@
 <% provide(:title, 'Alta de empleados') %>
 <h2 class="sub-header">Alta de empleado</h2>
-	<%= render partial:'shared/error_messages',  object: @calendar, as: 'object' %>
+	
+	<%= render partial:'shared/error_messages',  object: @emp, as: 'object' %>
 
 	
 	<%= form_for(@emp, html: {class: "form-horizontal"}) do |f| %>
@@ -35,17 +36,18 @@
 				<div class="field form-group">
 					<%= f.label :role, "Privilegios", :class=> 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
-					<%= f.select :role, "<option value='1'>Empleado</option>
-									 <option value='2'>Jefe de Departamento</option>
-									 <option value='3'>Administrador</option>".html_safe,  {},
-						:class => 'form-control' %> 
+					<%= f.select :role, options_for_select([["Seleccione Rol...",0],["Empleado",1],["Jefe de Departamento",2],["Administrador",3]]),{prompt:"Seleccione Rol ..."},
+						:class => 'form-control', :required => true %> 
 					</div>
 				</div>
 
 				<div class="field form-group">
 					<%= f.label :department_id, "Departamento" , :class=> 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
-						<%= f.select :department_id,  options_for_select(@departments.map{ |s| [s.nombre, s.id] }),{}, :class => 'form-control', :required => true  %>			 
+							
+						<%= f.select :department_id,  options_for_select(@departments.map{ |s| [s.nombre, s.id] }),{prompt: 'Seleccione Departamento ...'}, 
+							:class => 'form-control', :required => true  %>
+
 					</div>
 				</div>
 
@@ -75,7 +77,7 @@
 	<div class="modal-footer">
 		<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
 				
-		<%= link_to("Cancelar", employees_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Departamentos.") %>
+		<%= link_to("Cancelar", employees_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-default", :title => "Anular los cambios y volver al índice de Departamentos.") %>
 	</div>
 
 		</fieldset>

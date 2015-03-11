@@ -10,7 +10,7 @@
 				<%= link_to "Nueva solicitud", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
 			<% end %>
 			&nbsp;&nbsp;
-			<%= link_to "Mi Balance", {action: "balance" , id: @emp.id}, class: "btn btn-primary" %>
+			<%= link_to "Ver Balance", {action: "balance" , id: @emp.id}, class: "btn btn-primary" %>
 		</div>
 		</section>
 		<legend>Próximas ausencias</legend>
@@ -34,15 +34,16 @@
 
 	<div class="span8">
 	
-			<h3>Solicitudes Pendientes (<%= @emp.requests.count %>) </h3>
+			<legend>Solicitudes Pendientes (<%= @requests.count %>) </legend>
 
-			<% if @emp.requests.any? %>
+			<% if @requests.any? %>
 				<table class="table table-hover table-striped">
 				<thead>
-					<th width="30%">Tipo de Solicitud</th>
-					<th width="15%">Inicio</th>
-					<th width="15%">Fin</th>
-					<th ></th>
+					<th >Tipo de Solicitud</th>
+					<th> Departamento </th>
+					<th >Inicio</th>
+					<th >Fin</th>
+					<th >Empleado</th>
 					<th></th>
 					<th>&nbsp;</th>
 				</thead>

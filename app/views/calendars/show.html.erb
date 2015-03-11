@@ -1,11 +1,11 @@
 <% provide(:title, 'Dias festivos del calendario') %>
-<h3>Dias festivos del calendario <%= @cal.anio %> - <%= @cal.department.nombre %></h3>
+<h2 class="sub-header">Dias no laborables del calendario <%= @cal.anio %> - <%= @cal.department.nombre %></h2>
 
-<div class="row">
-<div class="well well-small">
+<div class="well well-sm">
   <%= link_to "Nuevo Día no laborable !", new_line_calendar_path(calendar_id: @cal.id), class: "btn btn-medium btn-primary" %> 
 </div>
-  <table class="table table-hover table-striped">
+
+<table class="table table-hover table-striped">
   <thead>
     <tr class="fields">
       <th width="15%">Fecha</th>
@@ -31,7 +31,6 @@
 
 <br>
   <div class="modal-footer">
-    
         <%= link_to("Volver", calendars_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-primary", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
   </div>
 

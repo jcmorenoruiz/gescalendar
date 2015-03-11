@@ -1,25 +1,28 @@
 <% provide(:title, 'Lista de Departamentos') %>
 <h2 class="sub-header">Calendarios</h2>
 	
-<div class="well well-small">
-	<p><%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> &nbsp;&nbsp; </p>
+<div class="well well-sm">
+	<%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> &nbsp;&nbsp; 
+</div>
+
+<div class="well well-sm">
 	<% if @calendars.count<1 %>
 	<div class="alert">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Aviso!</strong> No se ha generado ningún calendario para este departamento. Haga click en nuevo para abrir un calendario.
   </div>
   <% end %>
-<%= form_tag(calendars_path, :method => "get" , :class => 'form-inline') do %>
+	<%= form_tag(calendars_path, :method => "get" , :class => 'form-inline') do %>
 
-<%= select_tag :department, options_for_select([["Departamentos" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'form-control'
-%>
+	<%= select_tag :department, options_for_select([["Departamentos" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'form-control'
+	%>
 
-<%= select_tag :status, options_for_select([["Estado: Activo","t"],["Estado: Cerrado","f"]],params[:status]), :class=> 'form-control' %>
+	<%= select_tag :status, options_for_select([["Estado: Activo","t"],["Estado: Cerrado","f"]],params[:status]), :class=> 'form-control' %>
 
 
-<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
-  <%= link_to("Limpiar", calendars_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
-<% end %>
+	<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+	  <%= link_to("Limpiar", calendars_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+	<% end %>
  
 </div>
 <div class="row">
@@ -28,15 +31,15 @@
 	<table class="table table-hover table-striped">
 
 	<thead>
-		<th width="4%">Año</th>
-		<th Width="15%">Departamento</th>
-		<th width="10%">Fecha Inicio</th>
-		<th width="10%">Fecha Cierre </th>
-		<th width="4%">Dias</th>
-		<th width="13%">&nbsp;</th>
-		<th width="13%">&nbsp;</th>
+		<th >Año</th>
+		<th >Departamento</th>
+		<th >Fecha Inicio</th>
+		<th >Fecha Cierre </th>
+		<th >Dias</th>
+		<th >&nbsp;</th>
+		<th >&nbsp;</th>
 		<th>&nbsp; </th>
-		<th > &nbsp; </th>
+		
 		
 		
 	</thead>
@@ -55,19 +58,19 @@
 				
 			</td>
 			<td>
-<%= link_to "Días no laborables", calendar_path(cal) ,:class => "btn btn-small btn-primary" %>
+<%= link_to "Días no laborables", calendar_path(cal) ,:class => "btn btn-sm btn-default" %>
 			</td>
 			<td>
 			
-			<%= link_to "Días Hábiles", {action: "days" , id: cal.id} ,:class => "btn btn-small btn-primary" %>
+			<%= link_to "Días Hábiles", {action: "days" , id: cal.id} ,:class => "btn btn-sm btn-default" %>
 			
 			</td>
 		
 			<td>
 			<% if cal.status %>
-			<%= link_to "Cerrar", cal, method: :delete, :class => "btn btn-small btn-danger", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
+			<%= link_to "Cerrar", cal, method: :delete, :class => "btn btn-sm btn-danger", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
 			<% else %>
-			<%= link_to "Reabrir", cal, method: :delete, :class => "btn btn-small btn-danger" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
+			<%= link_to "Reabrir", cal, method: :delete, :class => "btn btn-sm btn-danger" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
 			<% end %>
 			</td>
 		</tr>

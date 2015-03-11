@@ -1,19 +1,19 @@
 <h2 class="sub-header">Listado de tipos de Solicitudes</h2>
+
 <div class="well well-sm">
-<%= link_to "Nuevo tipo de Solicitud!", new_request_type_path, class: "btn btn-medium btn-primary" %> 
+  <%= link_to "Nuevo tipo de Solicitud!", new_request_type_path, class: "btn btn-medium btn-primary" %> 
 </div>
 
+
 <div class="well well-sm">
-<%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
-
-
-<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query input-large' %>
-
-<%= select_tag :status, options_for_select([["Activo","t"],["Inactivo","f"]],params[:status]), :class=> 'input-small' %>
-
-<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
-  <%= link_to("Limpiar", request_types_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
-<% end %>
+  <%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
+    
+    <%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query form-control' %>
+    <%= select_tag :status, options_for_select([["Activo","t"],["Inactivo","f"]],params[:status]), :class=> 'form-control input-sm' %>
+    <%= submit_tag "Buscar", :name => nil, class:"btn btn-md btn-primary" %>
+    <%= link_to("Limpiar", request_types_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+  
+  <% end %>
 </div>
 
 
@@ -36,12 +36,12 @@
         <td><div class="well well-sm" style="background:<%= rt.color %>"></div></td>
         
         <td><%= number_departments(rt) %></td>
-        <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-small btn-default' %></td>
+        <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-sm btn-default' %></td>
         <td>
           <% if rt.status? %>
-            <%= link_to 'Desactivar', rt, method: :delete, data: { confirm: 'Esta seguro?' },:class => 'btn btn-small btn-danger' %>
+            <%= link_to 'Desactivar', rt, method: :delete, data: { confirm: 'Esta seguro?' },:class => 'btn btn-sm btn-danger' %>
           <% else %>
-             <%= link_to 'Activar', rt, method: :delete, data: { confirm: 'Esta seguro?' },:class => 'btn btn-small btn-danger' %>
+             <%= link_to 'Activar', rt, method: :delete, data: { confirm: 'Esta seguro?' },:class => 'btn btn-sm btn-danger' %>
             <% end %>
         </td>
       </tr>

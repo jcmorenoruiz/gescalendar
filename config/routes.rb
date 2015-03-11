@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'requests/destroy'
   get "requests/stats"
   get "requests/calendar"
+  get "requests/pending" # Requests pending
   resources :requests
 
 

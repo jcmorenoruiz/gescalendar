@@ -1,48 +1,79 @@
 <% provide(:title, 'Editar información') %>
-<h1>Modificar sus datos</h1>
+
+<% if current_user==@emp.id %>
+	<h2 class="sub-header">Modificar mis datos </h2>
+<% else %>
+	<h2 class="sub-header">Modificar datos de <%= current_user.nombre %></h2>
+<% end %>
 
 
-<div class="row">
-		<%= form_for(@emp) do |f| %>
+<%= render partial:'shared/error_messages',  object: @emp, as: 'object' %>
+
+<%= form_for(@emp, html: {:class=>'form-horizontal'}) do |f| %>
 	
 	<div class="well">
-	<fiedlset>
-		<legend>Datos del empleado</legend>
+		<fiedlset>
+			<legend>Datos del empleado</legend>
 
-			<%= render 'shared/error_messages' %>
-			
-			<%= f.label :nombre %>
-			<%= f.text_field :nombre,:class =>'input-xlarge' %>
+				<div class="field form-group">
+					<%= f.label :nombre, :class =>'control-label col-sm-2' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.text_field :nombre,:class =>'form-control', :required => true %>
+					</div>
+				</div>
 
-			<%= f.label :email %>
-			<%= f.text_field :email,:class =>'input-xlarge' %>
-
-			<% if admin_user? %>
-				<%= f.label :fecha_alta, "Fecha de alta" %>
-				<%= f.text_field :fecha_alta, :class => 'datepicker input-large',:placeholder => "Click para abrir calendario" %>
+				<div class="field form-group">
+					<%= f.label :email, :class => 'control-label col-sm-2' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.text_field :email,:class =>'form-control', :required  => true %>
+					</div>
+				</div>
 				
-				<%= f.label :role, "Tipo de Usuario" %>
-				<%= f.select :role, options_for_select({ "Empleado" => 1,"Jefe Departamento" => 2, "Administrador" => 3},@emp.role), {},
-					:class => 'input-large' %>
+				<% if admin_user? %>
 
-				<%= f.label :cargo %>
-				<%= f.text_field :cargo, :class =>'input-xlarge' %>
+					<div class="field form-group">
+						<%= f.label :fecha_alta, "Fecha de alta", :class =>'control-label col-sm-2' %>
+						<div class="col-sm-6 col-md-4">
+							<%= f.text_field :fecha_alta, :class => 'datepicker form-control',:placeholder => "Click para abrir calendario", :required => true %>
+						</div>
+					</div>
 
-			<% end %>	
-			<%= f.label :password %>
-			<%= f.password_field :password, :class =>'input-large' %>
+					<div class="field form-group">
+						<%= f.label :role, "Tipo de Usuario",:class => 'control-label col-sm-2' %>
+						<div class="col-sm-6 col-md-4">
+							<%= f.select :role, options_for_select({ "Empleado" => 1,"Jefe Departamento" => 2, "Administrador" => 3},@emp.role), {},:class => 'form-control', :required => true %>
+						</div>
+					</div>
 
-			<%= f.label :password_confirmation, "Confirmar password" %>
-			<%= f.password_field :password_confirmation, :class => 'input-large' %>
+					<div class="field form-group">
+						<%= f.label :cargo, :class =>'control-label col-sm-2' %>
+						<div class="col-sm-6 col-md-4">
+							<%= f.text_field :cargo, :class =>'form-control', :required => true %>
+						</div>
+					</div>
 
-	
-	</fieldset>
+				<% end %>
+
+				<div class="field form-group">	
+					<%= f.label :password, :class =>'control-label col-sm-2' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.password_field :password, :class =>'form-control' %>
+					</div>
+				</div>
+
+				<div class="field form-group">
+					<%= f.label :password_confirmation, "Confirmar password", :class=>'control-label col-sm-2' %>
+					<div class="col-sm-6 col-md-4">
+					<%= f.password_field :password_confirmation, :class => 'form-control' %>
+					</div>
+				</div>
+		
+		</fieldset>
 	</div>
 
 	<div class="modal-footer">
 		<%= f.submit "Actualizar", class:"btn btn-medium btn-primary",:title =>"Actualizar datos del empleado" %>
 				
-		<%= link_to("Cancelar", employees_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-inverse", :title => "Anular los cambios y volver al índice de Empleados.") %>
+		<%= link_to("Cancelar", employees_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-default", :title => "Anular los cambios y volver al índice de Empleados.") %>
 	</div>
-	<% end %>
-</div>
+<% end %>

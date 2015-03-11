@@ -1,11 +1,8 @@
-<% provide(:title, 'Lista de empleados') %>
-<h2 class="sub-header">Lista de Empleados</h2>
+<% provide(:title, 'Lista de Solicitudes pendientes') %>
+<h2 class="sub-header">Lista de Solicitudes pendientes</h2>
 
 <div class="well well-sm">
-	<%= link_to "Nuevo Empleado!", new_employee_path, class: "btn btn-medium btn-primary" %> 
-</div>
-<div class="well well-sm">
-	<%= form_tag(employees_path, :method => "get" , :class => 'form-inline') do %>
+	<%= form_tag(requests_pending_path, :method => "get" , :class => 'form-inline') do %>
 
 	<div class="form-group">
 		<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query form-control' %>
@@ -16,11 +13,11 @@
 	</div>
 
 	<div class="form-group">
-		<%= select_tag :status, options_for_select([["Activo","t"],["Baja","f"]],params[:status]), :class=> 'input-sm' %>
+		<%= select_tag :request_type, options_for_select([["Seleccione Tipo Solicitud",""]]+@rts.collect{ |u| [u.nombre, u.id] },params[:request_type]), :class => 'form-control'%>
 	</div>
 
 	<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
-	  <%= link_to("Limpiar", employees_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+	  <%= link_to("Limpiar", requests_pending_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
 	<% end %>
 </div>
 
@@ -31,19 +28,17 @@
 
 <table class="table table-hover table-striped">
 <thead>
-	<th>Nombre</th>
-	<th>Email</th>
-	<th>Fecha Alta</th>
-	<th>Cargo</th>
-	<th>Rol</th>
-	<th></th>
+	<th>Empleado</th>
+	<th>Departamento</th>
+	<th>Inicio</th>
+	<th>Fin</th>
+	<th>Solicitud</th>
+	
 	<th></th>
 </thead>
 <tbody>
-	<%= render @employees %>
+	<%= render @requests %>
 </tbody>
 </table>
 
 <%= will_paginate %>
-
-

@@ -8,7 +8,11 @@ class DepartmentsController < ApplicationController
 
 	# departamentos de la empresa cuyo usuario esta autentificado
 	def index
-		 @departments=Department.where(enterprise_id: current_emp.id,status: 't').paginate(page: params[:page]) 	
+		 @departments=Department.where(enterprise_id: current_emp.id)
+		 # filters
+      	 @departments=@departments.filter(params.slice(:status,:starts_with))	
+      	 # paginate
+      	 @departments=@departments.paginate(page: params[:page]) # employes on departments
 	end 
 	def new
 		@dpto=Department.new
@@ -27,6 +31,7 @@ class DepartmentsController < ApplicationController
           	flash[:success] = "Departamento actualizado correctamente"
           	redirect_to departments_url
       	else
+      		
         	render 'edit'
       	end
 	end
@@ -48,8 +53,8 @@ class DepartmentsController < ApplicationController
 	end
 
 	def ausencias 
-    @dpto=Department.find(params[:id])
-  end
+    	@dpto=Department.find(params[:id])
+  	end
 	
 	def show
 		@dpto=Department.find(params[:id])
@@ -61,8 +66,13 @@ class DepartmentsController < ApplicationController
       if(@dpto.employees.count>0)
       	flash[:error]="No es posible dar de baja un departamento si tiene empleados en activo o de baja"
       else
-      	@dpto.update_attribute(:status,0)
-      	flash[:success]="Departamento dado de baja correctamente"  	
+      	if(@dpto.status)
+      		@dpto.update_attribute(:status,0)
+      		flash[:success]="Departamento dado de baja correctamente"  	
+      	else 
+      		@dpto.update_attribute(:status,1)
+      		flash[:success]="Departamento reactivado correctamente"  	
+      	end
       end 
       redirect_to departments_url
     end

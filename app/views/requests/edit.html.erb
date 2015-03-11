@@ -1,94 +1,95 @@
-<h3>Auditoria de la Solicitud</h3>
-<div class="row">
-<%= form_for(@request, html: {:class => 'form-horizontal' }) do |f| %>
+<h2 class="sub-header">Auditoria de la Solicitud</h2>
 
-<% if @request.errors.any? %>
-	<div id="error_explanation">
+<%= render partial: 'shared/error_messages',  object: @request, as: 'object' %>
 
-		<div class="alert alert-error">
-		El formulario contiene <%= pluralize(@request.errors.count,"error") %>
-		</div>
-		<ul>
-				<% @request.errors.full_messages.each do |msg| %>
-					<li>* <%= msg %></li>
-				<% end %> 
-		</ul>
-	</div>
-<% end %>
-
+<%= form_for(@request, html: {:class => 'form form-horizontal' }) do |f| %>
 	<fieldset>
-	<legend>Datos de la Solicitud</legend>
-
-
-<div class="span6">
+	
 
 	<div class="well">
+		<legend>Datos de la Solicitud</legend>
+		<div class="form-group">
+	    	<%= f.label :empleado, "Empleado:", :class=>'col-sm-3 control-label' %>
+	    	<div class="col-sm-6 col-md-4">
+		      	<%=   f.text_field :empleado , :value => @request.employee.nombre,:disabled => true, :class => 'form-control' %>
+			</div>
+		</div>
 
-		<div class="control-group">
-	    <%= f.label :empleado, "Empleado:" %>
-	    	    	<%=   f.text_field :empleado , :value => @request.employee.nombre,:disabled => true, :class => 'input-large' %>
-	  </div>
+
+		<div class="form-group">
+		    <%= f.label :hasta, "Fecha de Fin:", :class=>'col-sm-3 control-label' %>
+		    <div class="col-sm-6 col-md-4">
+		    	<%=   f.text_field :hasta ,:disabled => true, :class => 'form-control' %>
+			</div>
+		</div>
 
 
-	  <div class="control-group">
-	    <%= f.label :hasta, "Fecha de Fin:" %>
-	    	<%=   f.text_field :hasta ,:disabled => true, :class => 'input-medium' %>
-	  </div>
+		<div class="form-group">
+		    <%= f.label :desde, "Fecha de Inicio:", :class=>'col-sm-3 control-label' %>
+		    <div class="col-sm-6 col-md-4">
+		    	<%=   f.text_field :desde , :disabled => true,:class => 'form-control' %>
+			</div>
+		</div>
 
-	  <div class="control-group">
-	    <%= f.label :desde, "Fecha de Inicio:" %>
-	    	<%=   f.text_field :desde , :disabled => true,:class => 'input-medium' %>
-	  </div>
+		<div class="form-group">
+		    <%= f.label :solicitud, "Tipo de Solicitud:", :class =>'col-sm-3 control-label' %>
+		    <div class="col-sm-6 col-md-4">
+		    	<%=   f.text_field :solicitud , :value => @request.request_type.nombre,:disabled => true, :class => 'form-control' %>
+		  	</div>
+		</div>
 
-	<div class="control-group">
-	    <%= f.label :solicitud, "Tipo de Solicitud:" %>
-	    	<%=   f.text_field :solicitud , :value => @request.request_type.nombre,:disabled => true, :class => 'input-large' %>
-	  	
-	  </div>
-
-	 <div class="control-group">
-	    <%= f.label :motivo, "Comentarios:" %>
-	    	<%=   f.text_area :motivo , :rows => 4 , :cols => 60, :disabled => true,:width => '80%', :class =>'span5' %>  	
-	  </div>
-	 
+		<div class="form-group">
+		    <%= f.label :motivo, "Comentarios:", :class =>'col-sm-3 control-label' %>
+		    <div class="col-sm-8 col-md-6">
+		    	<%=   f.text_area :motivo , :rows => 4 , :cols => 60, :disabled => true,:width => '80%', :class =>'form-control' %>  	
+			</div>
+		</div>
+		 
 
 	</div>
 	    
-</div>
+
 <% if current_user.role>1 %>
-	<div class="span5 well">
-		
-			<label> Auditoria: </label>	
-			<label class="radio inline">
-				<input type="radio" name="request[status]" id="request_status_confirmar" value="confirmada" <%= @request.confirmada? ? 'checked="checked"' : "" %> >
-				Confirmar
-			</label>
-			<label class="radio inline">
-				<input type="radio" name="request[status]" id="request_status_denegar" value="denegada" <%= @request.denegada? ? 'checked="checked"' : "" %>>
-				Denegar 
-			</label>
-			     
-		</br></br>
+	<div class="well">
+			<legend>Datos de Auditoria</legend>
 				
+			<div class="form-group">
+				<label class="control-label col-sm-3">
+					<input type="radio" name="request[status]" id="request_status_confirmar" value="confirmada" <%= @request.confirmada? ? 'checked="checked"' : "" %> required="true" >
+					Confirmar
+				</label>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">
+					<input type="radio" name="request[status]" id="request_status_denegar" value="denegada" <%= @request.denegada? ? 'checked="checked"' : "" %> required="true">
+					Denegar 
+				</label>
+			</div>
+			     
+		</br>
 			
-				<%= f.label :motivo_rev, "Comentarios:" %>
-				<%= f.text_area :motivo_rev, :rows => 4, :cols => 60,:class =>'span5' %>
+			<div class="form-group">
+				<%= f.label :motivo_rev, "Observaciones:", :class =>'col-sm-3 control-label' %>
+				<div class="col-sm-8 col-md-6">
+					<%= f.text_area :motivo_rev, :rows => 4, :cols => 60,:class =>'form-control' %>
+				</div>
+			</div>
 
 	</div>
 <% end %>
 
 	</fieldset>
-<br />
+
  <div class="modal-footer">
      <% if current_user.role>1 %>
       <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
      <% end %>
 
-     <%= link_to("Cancelar", employee_path(current_user),  :class => "btn btn-inverse", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+     <%= link_to("Cancelar", employee_path(current_user),  :class => "btn btn-default", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
 
  </div>
 
 
 
 <% end %>
-</div>

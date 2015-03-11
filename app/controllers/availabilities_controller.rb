@@ -16,7 +16,7 @@ class AvailabilitiesController < ApplicationController
     @av = @dpto.availabilities.build(availabilities_params)
 
     if @av.save
-        flash[:success]= 'Disponibilidad agregada correctamente al Departamento'
+        flash[:success]= 'Disponibilidad mínima agregada correctamente al Departamento'
         redirect_to department_path(@dpto)
     else
         render "new" 
@@ -33,7 +33,7 @@ class AvailabilitiesController < ApplicationController
 	def update
 		@dpto=Department.find(@av.department_id)
 		if @av.update(availabilities_params)
-        flash[:success] = "Disponibilidad mínima registrada correctamente"
+        flash[:success] = "Disponibilidad mínima actualizada correctamente"
         redirect_to department_path(@av.department_id)
     else
         render 'edit'
