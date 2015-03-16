@@ -130,16 +130,14 @@ class Request < ActiveRecord::Base
     	((start_date - other.end_date) * (other.start_date - end_date)) >= 0
   	end
 
-  
+    
 
   	def weekdays_in_date_range(range,calendar)
-      
-
     	# You could modify the select block to also check for holidays
-    	range.select { |d| (1..5).include?(d.wday) && working_day(d,calendar) }.size
-  end
+    	range.select { |d| (week_working_days(calendar)).include?(d.wday) && working_day(d,calendar) }.size
+  	end
 
-  def working_day(d,calendar)
+  	def working_day(d,calendar)
 
       if calendar.line_calendars.nil?
         return true
@@ -151,6 +149,11 @@ class Request < ActiveRecord::Base
            end 
       end
       return true
-  end
+  	end
+
+  	def week_working_days(calendar)
+  			return 1..5
+
+  	end
 
 end

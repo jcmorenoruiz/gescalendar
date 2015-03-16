@@ -4,7 +4,7 @@ class RequestsController < ApplicationController
   before_action :chief_user, only: [:edit, :update]
   before_action :set_request, only: [:show, :edit, :update, :destroy]
   #before_action :correct_user, only: [:create, :edit, :update , :destroy]
-
+  before_action :correct_dpto, only: [:calendar]
 
   def new
   	@emp=Employee.find(params[:id])

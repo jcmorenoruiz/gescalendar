@@ -30,6 +30,22 @@ module SessionsHelper
 		emp==current_user
 	end
 
+	# comprobar que el acceso se corresponde con el usuario logeado
+	def correct_employee
+		params[:id]==current_user
+	end
+
+
+	# comprobar que el departamento se corresponde al del usuario logeado, si no es administrador. Si es adm se debera corresponder a la empresa.
+	def correct_dpto
+      if current_user.role<3 && !params[:department].blank?
+        redirect_to current_user unless current_user.department_id==params[:department]
+      elsif current_user.role==3
+        redirect_to current_user unless current_emp.departments.where(:id => params[:department])
+       end
+    end
+
+
 	# obtener la empresa del empleado autentificado.
 	def current_emp
 		user=self.current_user

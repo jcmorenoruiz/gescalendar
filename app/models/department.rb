@@ -3,8 +3,8 @@ class Department < ActiveRecord::Base
 	has_many :employees, :inverse_of => :department
 	# N-N request_type - department
 	has_many :request_types, through: :departments_request_types
-	has_many :departments_request_types
-
+	has_many :departments_request_types,  :class_name => "DepartmentsRequestType"
+ 
 	has_many :calendars
 	has_many :availabilities
 

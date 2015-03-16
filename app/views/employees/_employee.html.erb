@@ -1,5 +1,6 @@
 <tr class="fields">
-		<td><%= employee.nombre %></td>
+		
+		<td><%= link_to employee.nombre, {controller: "employees", action: "balance", id: employee.id}, :class=>'btn btn-small',:style=>'padding:0px' %></td>
 		<td><%= employee.email %></td>
 			<td><%= employee.fecha_alta %></td>
 		<td><%= employee.cargo %></td>

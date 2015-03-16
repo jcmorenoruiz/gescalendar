@@ -1,12 +1,13 @@
 class EmployeesController < ApplicationController
   
-before_action :signed_in_user
-before_action :set_employee, only: [:balance,:edit, :update, :show]
-before_action :chief_user, only: [:index]
-before_action :admin_user, only: [:destroy]
-before_action :acceso_balance, only: [:balance]
-before_action :correct_user, only: [:edit, :update] # check user is from your own emp.
-before_action :correct_emp, only: [:destroy,:balance]
+  before_action :signed_in_user
+  before_action :set_employee, only: [:balance,:edit, :update, :show]
+  before_action :chief_user, only: [:index]
+  before_action :admin_user, only: [:destroy]
+  before_action :acceso_balance, only: [:balance,:show]
+  before_action :correct_user, only: [:edit, :update] # check user is from your own emp.
+  before_action :correct_emp, only: [:destroy]
+
 
     def show
       # next request from employee
@@ -117,7 +118,7 @@ before_action :correct_emp, only: [:destroy,:balance]
        #working days.
        dias=weekdays_in_date_range(rq.desde..rq.hasta,calendar) 
        @dias_habiles[rq.id]=dias
-       @total_dias[rq.id]=(rq.hasta-rq.desde).to_i
+       @total_dias[rq.id]=(rq.hasta-rq.desde).to_i+1
 
         if rq.status==1        # pending
           if @pendientes[rq.rid].nil? 
@@ -176,19 +177,19 @@ before_action :correct_emp, only: [:destroy,:balance]
       if current_user.role<3
            redirect_to current_user unless current_user?(@emp)
       elsif current_user.role==3
-        redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id) 
+        redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id).any? 
       end        
     end
 
     def correct_emp
-       redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id) 
+       redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id).any? 
     end
 
     def acceso_balance
       if current_user.role<2
            redirect_to current_user unless current_user?(@emp)
       else
-           redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id) 
+           redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id).any? 
       end        
     end
     

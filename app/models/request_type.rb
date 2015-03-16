@@ -2,7 +2,7 @@ class RequestType < ActiveRecord::Base
 	include Filterable
 
 	has_many :departments, through: :departments_request_types
-	has_many :departments_request_types
+	has_many :departments_request_types,  :class_name => "DepartmentsRequestType"
 	has_many :requests
 	belongs_to :enterprise
 

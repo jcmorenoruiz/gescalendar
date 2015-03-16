@@ -17,34 +17,39 @@
 }
 </style>
 
+
 <div class="row">
 
-<div class="well well-small">
-<%= form_tag(requests_calendar_path, :method => "get" , :class => 'form-inline') do %>
+<div class="well well-sm">
+	<%= form_tag(requests_calendar_path, :method => "get" , :class => 'form-inline') do %>
+		
+		<div class="form-group col-xs-12 col-sm-8 col-md-4">
+			<%= select_month(@date, {use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)},{:class => 'form-control'}) %>
+				<%= select_year(@date, {start_year: (Date.current.year-1), end_year: (Date.current.year+1)},{:class => 'form-control'}) %>
+		</div>
 
-<%= select_month(@date, {use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)},{:class => 'input-medium'}) %>
+		<div class="form-group">
+			<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Nombre de empleado", :class => 'search-query form-control' %>
+		</div>
 
-<%= select_year(@date, {start_year: (Date.current.year-1), end_year: (Date.current.year+1)},
-			{:class => 'input-small'}) %>
-
-<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre de empleado", :class => 'search-query input-xlarge' %>
-
-<%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'input-large'
-%>
-
-<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
-  <%= link_to("Limpiar", requests_calendar_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
-<% end %>
+		<div class="form-group">
+			<%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'form-control'%>
+		</div>
+		<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+		  <%= link_to("Limpiar", requests_calendar_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+	<% end %>
 </div>
 
+<div class="col-sm-12">
+	<%= link_to '<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>'.html_safe,  "#",  :class => 'btn btn-small anterior'  %>
+	<%= link_to '<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>'.html_safe, "#", :class => 'btn btn-small siguiente' %>
+</div>
 
-	
 	<table class="table table-hover table-striped table-bordered">
 		<thead>
 			<tr >
-				<th width="20%">
-					<%= link_to 'Anterior',  "#",  :class => 'btn btn-small anterior'  %>
-					<%= link_to 'Siguiente', "#", :class => 'btn btn-small siguiente' %>
+				<th width="15%" >
+						&nbsp;
 				</th>
 				<% @diasmes.each do |d|  %>
 					<th  width="2%"><%= d %></th>
@@ -52,7 +57,7 @@
 			</tr>
 
 			<tr>
-				<th width="20%"></th>
+				<th width="15%"></th>
 				<% @nombredias.each do |d|  %>
 					<% if d=='S' || d=='D' %>
 						<th width="2%" style="background:#D9D9D9;"><%= d %></th>
@@ -65,10 +70,18 @@
 
 		<tbody>
 			<% @employees.each do |e| %>
-			<tr>
-					<td style="border:0em;" ><%= e.nombre %></td>
+			<tr>	
+					<td style="border:0em;" >
+						<% if current_user.role>=2 %>
+							<%= link_to e.nombre, {controller: "employees", action: "balance", id: e.id}, :class=>'btn btn-small',:style=>'padding:0px' %>
+						<% else %>
+							<%= e.nombre %>
+						<% end %>
+					</td>
+
 					<% @fechas.each do |dia| %>
 						
+
 								<%  req=e.requests.where(:status => 2).where('? between desde and hasta',dia).first %>
 
 								<% if dia.wday==6 || dia.wday==0	%>
@@ -90,9 +103,9 @@
 <div class="well">
 
 	<% @requests_types.each do |rt| %>
-
-		<span class="label" style="background:<%= rt.color %>"><%= rt.nombre %></span>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+			<span class="label" style="background:<%= rt.color %>"><%= rt.nombre %></span>
+			&nbsp;&nbsp;&nbsp;
 
 	<% end %>
 </div>

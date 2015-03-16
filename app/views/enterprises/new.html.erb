@@ -8,9 +8,9 @@
 
 <% if @enterprise.errors.any? %>
 	<div id="error_explanation">
-		<div class="alert alert-error">
+	 <div class="alert alert-danger" role="alert">
 		Datos de la empresa contiene <%= pluralize(@enterprise.errors.count,"error") %>
-		</div>
+		
 		<ul>
 				<% @enterprise.errors.full_messages.each do |msg| %>
 					<% if !msg.include? 'Department' %>
@@ -24,6 +24,7 @@
 					<% end %>
 				<% end %> 
 		</ul>
+		</div>
 	</div>
 <% end %>
 

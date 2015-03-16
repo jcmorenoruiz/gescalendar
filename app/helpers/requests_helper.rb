@@ -1,10 +1,8 @@
 module RequestsHelper
 
   def weekdays_in_date_range(range,calendar)
-      
-
       # You could modify the select block to also check for holidays
-      range.select { |d| (1..5).include?(d.wday) && working_day(d,calendar) }.size
+      range.select { |d| (week_working_days(calendar)).include?(d.wday) && working_day(d,calendar) }.size
   end
 
   def working_day(d,calendar)
@@ -19,6 +17,10 @@ module RequestsHelper
            end 
       end
       return true
+  end
+
+  def week_working_days(calendar)
+        return [calendar.d1 ? 1:0,calendar.d2 ? 2:0,calendar.d3 ? 3:0,calendar.d4 ? 4:0,calendar.d5 ? 5:0,calendar.d6 ? 6:0,calendar.d7 ? 7:0]
   end
 
   def pending_requests
