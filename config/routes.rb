@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "requests/stats"
   get "requests/calendar"
   get "requests/pending" # Requests pending
+  get "requests/export_requests"
   resources :requests
 
 
@@ -50,7 +51,7 @@ Rails.application.routes.draw do
   get "calendars/update_days"
   match 'calendars/update_days/:id' => 'calendars#update_days', via: 'patch'
 
-
+  
 
   # Not logged in
   match '/signup', to: 'enterprises#new', via: 'get'
@@ -69,7 +70,7 @@ Rails.application.routes.draw do
   #get '*path' => redirect('/') 
   
 
-
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

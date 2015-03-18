@@ -1,6 +1,7 @@
 <% provide(:title, 'Dias festivos del calendario') %>
 <h2 class="sub-header">Dias hábiles del calendario <%= @cal.anio %></h2>
   
+<%= render partial:'shared/error_messages',  object: @cal, as: 'object' %>
 
 <%= form_for(@cal, :url => {:action=> "update_days", :id => @cal }, :html => {:class => "form form-horizontal"}) do |f| %>
 

@@ -117,4 +117,18 @@ module SessionsHelper
     	end
     end
 
+     # return role name
+    def get_role(user)
+    	case user.role
+    	when 1 
+    		@current_role='Empleado'
+    	when 2 
+    		@current_role='Jefe Departamento'
+    	when 3 
+    		@current_role='Administrador'
+    	when 4 
+    		@current_role='SuperAdmin'
+    	end
+    end
+
 end

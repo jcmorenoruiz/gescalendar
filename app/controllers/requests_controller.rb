@@ -87,12 +87,17 @@ class RequestsController < ApplicationController
     end
 
 
+
     if !params[:department].blank?
      @requests_types=RequestType.where(:id => DepartmentsRequestType.select('request_type_id').where(:department_id => params[:department]))
+     @requests=Request.where(:employee_id => Employee.where(:department_id => params[:department]))
     else
      @requests_types=RequestType.where(:enterprise_id => current_emp)
+     @requests=Request.where(:employee_id => Employee.where(:department_id => current_emp.departments))
     end
     
+
+
     @dptos=Department.where(:enterprise_id =>current_emp)
   end
 
@@ -143,8 +148,19 @@ class RequestsController < ApplicationController
     @requests=@requests.filter(params.slice(:department,:request_type,:starts_with))
     # paginate
     @requests=@requests.paginate(page: params[:page]) 
-
   end
+
+  def export_requests
+    @departments=Department.where(:enterprise_id => current_emp)
+
+     respond_to do |format|    
+        format.xlsx {
+          response.headers['Content-Disposition'] = 'attachment; filename="my_new_filename.xlsx"'
+        }
+    end
+  end
+
+  
 
   protected
 

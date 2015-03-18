@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+
+@departments.each do |dpto|
+
+	wb.add_worksheet(name: dpto.nombre ) do |sheet|
+	  sheet.add_row ['Empleado', 'Desde', 'Hasta','Tipo de Permiso', 'Fec. solicitud','Fec. auditoria'], :sz => 16
+		
+	  Request.unscope(:order).joins(:employee).where(:employee_id => Employee.where(:department_id => dpto.id)).order('employees.nombre,desde ASC').each do |button|
+	     
+	    sheet.add_row [button.employee.nombre, button.desde,button.hasta, button.request_type.nombre,button.created_at,button.updated_at]
+	    	
+	  end
+	end
+
+end

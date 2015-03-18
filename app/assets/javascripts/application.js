@@ -17,7 +17,7 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require bootstrap-sprockets
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require jquery.minicolors
 //= require jsapi

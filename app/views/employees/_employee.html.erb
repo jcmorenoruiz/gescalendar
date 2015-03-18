@@ -4,10 +4,10 @@
 		<td><%= employee.email %></td>
 			<td><%= employee.fecha_alta %></td>
 		<td><%= employee.cargo %></td>
-		<td><%= employee.role %></td>
+		<td><%= get_role(employee) %></td>
 	
 
-		<td><%= link_to 'Balance', {action: "balance" , id: employee.id}, :class => 'btn btn-small' %></td>
+		
 		<td><%= link_to 'Editar', edit_employee_path(employee.id), :class => 'btn btn-small' %></td>
 		<td>
 		<% if current_user.role==3 && !current_user?(employee) %>

@@ -84,5 +84,7 @@ gem "chartkick"
 
 gem "groupdate"
 
+gem "axlsx_rails"
+
 
 # jquery modal dialog 

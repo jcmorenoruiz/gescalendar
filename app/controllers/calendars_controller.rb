@@ -79,12 +79,24 @@ class CalendarsController < ApplicationController
 
   def update_days
       @cal=Calendar.find(params[:id])
-     if @cal.update_attributes(calendar_params)
-            flash[:success] = "Ejercicio actualizado correctamente"      
+
+      @cal.d1=params[:calendar][:d1]
+      @cal.d2=params[:calendar][:d2]
+      @cal.d3=params[:calendar][:d3]
+      @cal.d4=params[:calendar][:d4]
+      @cal.d5=params[:calendar][:d5]
+      @cal.d6=params[:calendar][:d6]
+      @cal.d7=params[:calendar][:d7]
+
+     if @cal.save(:validate => false)
+            flash[:success] = "Ejercicio actualizado correctamente"
+            redirect_to calendars_url  
      else
-            flash[:success] = "Se ha producido un error. "
+            flash[:danger] = "Se ha producido un error."
+            redirect_to action: "days", id: params[:id]
      end
-       redirect_to calendars_url
+
+      
   end
   #private methods
   private

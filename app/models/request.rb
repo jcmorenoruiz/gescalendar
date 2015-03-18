@@ -1,4 +1,5 @@
 class Request < ActiveRecord::Base
+	
 	include Filterable
 
 	enum status: [:denegada,:pendiente,:confirmada]
@@ -153,7 +154,7 @@ class Request < ActiveRecord::Base
 
   	def week_working_days(calendar)
   			return 1..5
-
   	end
 
+	
 end

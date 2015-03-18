@@ -22,7 +22,7 @@
 </div>
 
 
-
+<% if @requests.any? %>
 
 <%= will_paginate %>
 
@@ -42,3 +42,10 @@
 </table>
 
 <%= will_paginate %>
+<% else %>
+
+	<div class="alert alert-info">
+		No tiene solicitudes pendientes
+	</div>
+
+<% end %>
