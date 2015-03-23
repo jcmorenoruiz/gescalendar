@@ -51,6 +51,7 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
     if @enterprise.save        
         # Tell the UserMailer to send a welcome email after save
         UserMailer.welcome_email(@enterprise.departments[0].employees[0]).deliver	
+       
         sign_in @enterprise.departments[0].employees[0]
    			flash[:success] = "Bienvenido a su Calendario"
    			redirect_to @enterprise.departments[0].employees[0]

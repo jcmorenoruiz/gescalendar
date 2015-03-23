@@ -87,4 +87,5 @@ gem "groupdate"
 gem "axlsx_rails"
 
 
-# jquery modal dialog 
+# email
+gem 'mailgun-ruby', '~>1.0.2', require: 'mailgun' 
