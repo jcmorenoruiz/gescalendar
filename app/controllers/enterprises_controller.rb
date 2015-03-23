@@ -35,10 +35,11 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
     @enterprise=Enterprise.new(enterprise_params)
    
     rts=DefaultRequestType.where(:status => true).all
+    colors=["#1a6e2b","#5e2913","#de1b28","#faa07a"]
      # assign default request types to enterprise
     rts.each do |line|
       @enterprise.request_types.build(
-        :nombre => line.nombre,:num_dias_max => line.num_dias_max,:status => true,:tipo => true,:color => '#FAA07A')
+        :nombre => line.nombre,:num_dias_max => line.num_dias_max,:status => true,:tipo => true,:color => colors.pop)
     end
   
     @enterprise.departments[0].employees[0].role=3
@@ -47,7 +48,9 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
     @enterprise.notif_apertura=1
     @enterprise.status=1
    	
-    if @enterprise.save         	
+    if @enterprise.save        
+        # Tell the UserMailer to send a welcome email after save
+        UserMailer.welcome_email(@enterprise.departments[0].employees[0]).deliver	
         sign_in @enterprise.departments[0].employees[0]
    			flash[:success] = "Bienvenido a su Calendario"
    			redirect_to @enterprise.departments[0].employees[0]

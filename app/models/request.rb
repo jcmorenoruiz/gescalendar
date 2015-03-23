@@ -43,7 +43,6 @@ class Request < ActiveRecord::Base
 	validate :date_same_year, on: :create
 	validate :calendar_open, on: :create
 	validate :min_disponibilidad, on: :create
-
 	validate :check_rest_days, on: :create
 	
 	# check if rest days for this availability
@@ -57,7 +56,7 @@ class Request < ActiveRecord::Base
 		dias=0
 	
 		#get all requests from employee
-    	requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).all.where('extract(year from desde)= ?',"#{desde.year.to_i}")
+    	requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).where('extract(year from desde)= ?',"#{desde.year.to_i}")
      	
 	    #working days requested.
 	    requests.each do |rq|  
@@ -68,7 +67,7 @@ class Request < ActiveRecord::Base
 	    num_dias_max=Request.rest_days(desde.year.to_i,employee_id,rt.num_dias_max)
 	   
 	    if dias_requested>(num_dias_max-dias)
-	    	errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(num_dias_max-dias).abs} dias)")
+	    	errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(num_dias_max-dias)} dias)")
 	    end
 
 	end
@@ -152,8 +151,8 @@ class Request < ActiveRecord::Base
       return true
   	end
 
-  	def week_working_days(calendar)
-  			return 1..5
+  	 def week_working_days(calendar)
+        return [calendar.d1 ? 1:0,calendar.d2 ? 2:0,calendar.d3 ? 3:0,calendar.d4 ? 4:0,calendar.d5 ? 5:0,calendar.d6 ? 6:0,calendar.d7 ? 7:0]
   	end
 
 	

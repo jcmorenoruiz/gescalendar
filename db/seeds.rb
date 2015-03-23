@@ -83,8 +83,8 @@ requests=[
   ["2015-07-01","2015-01-01",2,2,1],
   ["2015-05-10","2015-05-30",2,1,4],
   ["2015-06-01","2015-06-02",2,1,4],
-  ["2015-08-06","2015-08-18",2,1,3],
-  ["2015-09-01","2015-09-15",2,1,3],
+  ["2015-08-07","2015-08-16",2,1,3],
+  ["2015-09-01","2015-09-13",2,1,3],
   ["2015-06-12","2015-06-12",2,2,3],
 ]
 
@@ -124,7 +124,7 @@ departments.each do |nombre,status,enterprise_id|
     dpto.save()
   end  
 
-   cal=Calendar.create(anio:  "2015",fecha_apertura: '2015-03-16', status: "t", department_id: dpto.id,d1: 't', d2: 't', d3: 't',d4: 't',d5: 't',d6: 't',d7: 't')
+   cal=Calendar.create(anio:  "2015",fecha_apertura: Date.today, status: "t", department_id: dpto.id,d1: 't', d2: 't', d3: 't',d4: 't',d5: 't',d6: 't',d7: 't')
 
    lines=DefaultCalendar.where(anio: cal.anio).first
    

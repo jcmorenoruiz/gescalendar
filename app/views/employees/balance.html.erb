@@ -36,6 +36,7 @@
 
 <h3>Resumen de permisos </h3>
   
+<% if @datos.any? %>  
 				<% @datos.each do |req| %>
 					<div class="accordion">					
 						<div class="list-group">
@@ -87,6 +88,13 @@
 					</div>
 				<% end %>
 				<br />
+<% else %>
+<div class="alert alert-info">
+	No se ha solicitado ningun permiso
+</div>
+
+<% end %>
+
 
 	<% if chief_user? || admin_user? %>
 		<div class="modal-footer col-md-12">

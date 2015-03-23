@@ -7,9 +7,9 @@
 
 <div class="well well-sm">
 	<% if @calendars.count<1 %>
-	<div class="alert">
+	<div class="alert alert-info">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>Aviso!</strong> No se ha generado ningún calendario para este departamento. Haga click en nuevo para abrir un calendario.
+      <strong>Aviso!</strong> No se ha generado ningún calendario para su empresa. Haga click en nuevo para abrir un calendario en uno de los departamentos.
   </div>
   <% end %>
 	<%= form_tag(calendars_path, :method => "get" , :class => 'form-inline') do %>
