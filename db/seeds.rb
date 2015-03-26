@@ -57,15 +57,15 @@ departments=[
 
 employees=[
 ["Juan Carlos Moreno","jcmorenoruiz@gmail.com","jcmoreno",3,"2014-07-13","t","Administrador",1],
-["Antonio Robles","antonio@gmail.com","jcmoreno",2,"2014-07-13","t","Jefe Técnico",2],
-["Jose Luis","jose@gmail.com","jcmoreno",1,"2014-07-13","t","Técnico Mantenimiento",2],
-["Adolfo Rodriguez","adolfo@gmail.com","jcmoreno",1,"2014-07-13","t","Técnico Instalaciones",2],
-["Salvador Allende","salva@gmail.com","jcmoreno",1,"2014-07-11","t","Técnico Instalaciones",2],
-["Eva Maria Gamez","eva@gmail.com","jcmoreno",2,"2014-08-07","t","Jefe Técnico",3],
-["Guti Sanchez","guti@gmail.com","jcmoreno",1,"2015-04-01","t","Técnico Instalaciones",3],
-["Alfredo Sanchez","alfredosanchez@gmail.com","jcmoreno",1,"2015-03-01","t","Técnico Instalaciones",3],
-["Santiago Gomez","santigomez@gmail.com","jcmoreno",3,"2015-01-01","t","Administrador",3],
-["Carlos Romero","konin85@gmail.com","jcmoreno",1,"2012-01-25","t","Técnico Mantenimiento",2],
+["Antonio Robles","pfc.gescalendar@gmail.com","jcmoreno",2,"2014-07-13","t","Jefe Técnico",2],
+["Jose Luis","konin85@gmail.com","jcmoreno",1,"2014-07-13","t","Técnico Mantenimiento",2],
+["Adolfo Rodriguez","juancarlos@payapi.in","jcmoreno",1,"2014-07-13","t","Técnico Instalaciones",2],
+["Salvador Allende","jcmoreno@myconligusteam.com","jcmoreno",1,"2014-07-11","t","Técnico Instalaciones",2],
+["Eva Maria Gamez","24390dsupoirfardshfs@gmail.com","jcmoreno",2,"2014-08-07","t","Jefe Técnico",3],
+["Guti Sanchez","23asudfeww90234jdfs@gmail.com","jcmoreno",1,"2015-04-01","t","Técnico Instalaciones",3],
+["Alfredo Sanchez","askldfjklñ23qru90q34ur@gmail.com","jcmoreno",1,"2015-03-01","t","Técnico Instalaciones",3],
+["Santiago Gomez","24738902rwiujwrasioju@gmail.com","jcmoreno",2,"2015-01-01","t","Administrador",3],
+["Carlos Romero","darko_jc@msn.com","jcmoreno",1,"2012-01-25","t","Técnico Mantenimiento",2],
 ]
 
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+   
+    <h1><%= @calendar.status=='t' ? 'Apertura' : 'Cierre' %> del calendario de solicitudes del <%= @calendar.anio %> para el departamento <%= @calendar.department.nombre %></h1>
+    
+    <p>
+       Datos del calendario: <br>
+
+       <strong>FECHA APERTURA:</strong> <%= @calendar.fecha_apertura %>. <br >
+       <strong>AÑO:</strong> <%= @calendar.anio %> <br >
+       <strong>DEPARTAMENTO:</strong> <%= @calendar.department.nombre %>
+       
+    </p>
+    <p>
+     <% if @calendar.status==1 %>
+      Ya se pueden realizar peticiones de permisos para el calendario y departamento indicados.
+    <% else %>
+      Desde ahora no es posible realizar peticiones para el calendario y departamento indicados.
+    <% end %>
+
+    </p>
+    <p>
+      Para acceder a la aplicación, haga click en el siguiente link: <%= link_to "GesCalendar",@url %>.
+    </p>
+    <p>Email enviado desde GesCalendar.</p>
+  </body>
+</html>

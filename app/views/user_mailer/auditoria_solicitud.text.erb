@@ -1,0 +1,20 @@
+Auditoria de la solicitud para el empleado <%= @user.nombre %>
+===============================================
+ 
+ La solicitud con los datos siguientes: 
+
+       EMPLEADO: <%= @user.nombre %>. 
+       TIPO DE SOLICITUD: <%= @request.request_type.nombre %> 
+       FECHA DE INICIO: <%= @request.desde %> 
+       FECHA DE FIN: <%= @request.hasta %> 
+       OBSERVACIONES: <%= @request.motivo %> 
+       REVISION: <%= @request.motivo_rev %> 
+
+  <% if @request.status=='confirmada' %>
+	ha sido CONFIRMADA
+  <% elsif @request.status=='denegada' %>
+	ha sido DENEGADA
+ <% end %>
+	por el responsable del departamento.
+
+Email enviado desde GesCalendar.

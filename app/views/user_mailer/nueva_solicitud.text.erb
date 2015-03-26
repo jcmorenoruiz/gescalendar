@@ -1,0 +1,18 @@
+Solicitud del empleado <%= @user.nombre %>
+ 
+Datos de la solicitud: 
+       EMPLEADO: <%= @user.nombre %>. 
+       TIPO DE SOLICITUD: <%= @request.request_type.nombre %> 
+       FECHA DE INICIO: <%= @request.desde %> 
+       FECHA DE FIN: <%= @request.hasta %> 
+       OBSERVACIONES: <%= @request.motivo %> 
+
+  Estado de la solicitud:
+  <% if @request.status=='pendiente' %>
+	 PENDIENTE
+  <% elsif @request.status=='confirmada' %>
+	 CONFIRMADA
+  <% end %>
+	 Para acceder a la aplicación, haga click en el siguiente link: <%= @url %>.
+
+Email enviado desde GesCalendar.

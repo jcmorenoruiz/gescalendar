@@ -37,14 +37,14 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      UserMailer.nueva_solicitud(@request).deliver
       if admin_user?
         flash[:success]= 'Asignación de Ausencia generada correctamente. Se ha enviado un email a los empleados indicando la Ausencia.'
         redirect_to employees_path
       else
         flash[:success]= 'Solicitud generada correctamente. Se le notificará el resultado de la auditoría cuando sea efectuada.'
         redirect_to employee_path(@emp)
-      end
-        
+      end        
     else
         render "new" 
     end
@@ -58,6 +58,7 @@ class RequestsController < ApplicationController
   def update
 
       if @request.update_attributes(:status => params[:request][:status],:motivo_rev => params[:request][:motivo_rev])
+          UserMailer.auditoria_solicitud(@request).deliver
           flash[:success]="Solicitud procesada correctamente. Se ha enviado un email con el aviso correspondiente."
           redirect_to requests_pending_path
       else

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Solicitud del empleado <%= @user.nombre %></h1>
+    <p>
+       Datos de la solicitud: <br>
+
+       <strong>EMPLEADO:</strong> <%= @user.nombre %>. <br >
+       <strong>TIPO DE SOLICITUD:</strong> <%= @request.request_type.nombre %> <br >
+       <strong>FECHA DE INICIO:</strong> <%= @request.desde %> <br >
+       <strong>FECHA DE FIN:</strong> <%= @request.hasta %> <br>
+       <strong>OBSERVACIONES:</strong> <%= @request.motivo %> <br>
+       
+    </p>
+    <p>
+      Estado de la solicitud: 
+      <% if @request.status=='pendiente' %>
+        PENDIENTE
+      <% elsif @request.status=='confirmada' %>
+        CONFIRMADA
+      <% end %>
+    </p>
+    <p>
+      Para acceder a la aplicación, haga click en el siguiente link: <%= link_to "GesCalendar",@url %>.
+    </p>
+    <p>Email enviado desde GesCalendar.</p>
+  </body>
+</html>

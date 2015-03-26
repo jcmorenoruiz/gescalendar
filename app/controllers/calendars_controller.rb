@@ -24,6 +24,7 @@ class CalendarsController < ApplicationController
    end
 
    if(@calendar.save)
+      UserMailer.nuevo_calendario(@calendar).deliver
       flash[:success]="Ejercicio activado correctamente. Se han asignado los dias no laborales por defecto. Acceda a 'Dias festivos' si desea modificarlos "
       redirect_to calendars_url
    else
@@ -45,6 +46,7 @@ class CalendarsController < ApplicationController
     @cal.status=!@cal.status?
     @cal.fecha_cierre=Date.current
     if @cal.save
+        UserMailer.nuevo_calendario(@cal).deliver
         flash[:success]="Ejercicio cerrado correctamente"
     else
         flash[:error]= "Se ha producido un error al cerrar el ejercicio. Vuelta a intentarlo mas tarde"
@@ -70,6 +72,7 @@ class CalendarsController < ApplicationController
   def update
       @cal=Calendar.find(params[:id])
      if @cal.update_attributes(:status => 't',:fecha_cierre => "")
+            UserMailer.nuevo_calendario(@cal).deliver
             flash[:success] = "Ejercicio actualizado correctamente"      
      else
             flash[:success] = "Se ha producido un error al actualizar el ejercicio. "

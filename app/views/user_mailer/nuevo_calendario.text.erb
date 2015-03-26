@@ -1,0 +1,18 @@
+
+<%= @calendar.status=='t' ? 'Apertura' : 'Cierre' %> del calendario de solicitudes del <%= @calendar.anio %> para el departamento <%= @calendar.department.nombre %>
+===============================================
+ 
+Datos del calendario de solicitudes:
+
+    FECHA APERTURA: <%= @calendar.fecha_apertura %>
+    AÑO: <%= @calendar.anio %> 
+    DEPARTAMENTO: <%= @calendar.department.nombre %>
+
+ <% if @calendar.status==1 %>
+  Ya se pueden realizar peticiones de permisos para el calendario y departamento indicados.
+<% else %>
+  Desde ahora no es posible realizar solicitudes en el departmento y calendario indicados.
+<% end %>
+Para acceder a la aplicación, haga click en el siguiente link: <%= @url %>.
+
+Email enviado desde GesCalendar.

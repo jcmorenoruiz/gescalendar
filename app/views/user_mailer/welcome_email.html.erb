@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1> Bienvenido a Gescalendar, <%= @user.nombre %></h1>
+    <p>
+       Su registro en GesCalendar (gescalendar.herokuapp.com) se ha completado satisfactoriamente, su email de acceso es: <strong><%= @user.email %>.</strong><br>
+    </p>
+    <p>
+      Para hacer login en la aplicación, haga click en el siguiente link: <%= link_to "GesCalendar", @url %>.
+    </p>
+    <p>Gracias por registrarse en GesCalendar!.</p>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Auditoria de la solicitud para el empleado <%= @user.nombre %></h1>
+    <p>
+       La solicitud con los datos siguientes: <br>
+
+       <strong>EMPLEADO:</strong> <%= @user.nombre %>. <br >
+       <strong>TIPO DE SOLICITUD:</strong> <%= @request.request_type.nombre %> <br >
+       <strong>FECHA DE INICIO:</strong> <%= @request.desde %> <br >
+       <strong>FECHA DE FIN:</strong> <%= @request.hasta %> <br>
+       <strong>OBSERVACIONES:</strong> <%= @request.motivo %> <br>
+       <strong>MOTIVO:</strong> <%= @request.motivo_rev %> <br>
+      
+    </p>
+    <p> 
+      <% if @request.status=='confirmada' %>
+        ha sido CONFIRMADA
+      <% elsif @request.status=='denegada' %>
+        ha sido DENEGADA
+      <% end %>
+        por el responsable del departamento.
+    </p>
+    <p>
+      Para acceder a la aplicación, haga click en el siguiente link: <%= link_to "GesCalendar",@url %>.
+    </p>
+    <p>Email enviado desde GesCalendar.</p>
+  </body>
+</html>
