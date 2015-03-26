@@ -68,7 +68,7 @@ class UserMailer < ActionMailer::Base
     admins_emails=Array.new
     emp_emails=Array.new
 
-    if(@calendar.status==1)
+    if(@calendar.status==true)
       subject='Apertura del calendario del año: '+calendar.anio.to_s+' para el departamento '+calendar.department.nombre
     else
       subject='Cierre del calendario del año: '+calendar.anio.to_s+' para el departamento '+calendar.department.nombre

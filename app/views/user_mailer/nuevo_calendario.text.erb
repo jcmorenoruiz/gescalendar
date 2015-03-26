@@ -1,14 +1,15 @@
 
-<%= @calendar.status=='t' ? 'Apertura' : 'Cierre' %> del calendario de solicitudes del <%= @calendar.anio %> para el departamento <%= @calendar.department.nombre %>
+<%= @calendar.status==true ? 'Apertura' : 'Cierre' %> del calendario de solicitudes del <%= @calendar.anio %> para el departamento <%= @calendar.department.nombre %>
 ===============================================
  
 Datos del calendario de solicitudes:
 
     FECHA APERTURA: <%= @calendar.fecha_apertura %>
+    FECHA CIERRE: <%= @calendar.fecha_cierre %>
     AÑO: <%= @calendar.anio %> 
     DEPARTAMENTO: <%= @calendar.department.nombre %>
 
- <% if @calendar.status==1 %>
+ <% if @calendar.status==true %>
   Ya se pueden realizar peticiones de permisos para el calendario y departamento indicados.
 <% else %>
   Desde ahora no es posible realizar solicitudes en el departmento y calendario indicados.

@@ -5,18 +5,19 @@
   </head>
   <body>
    
-    <h1><%= @calendar.status=='t' ? 'Apertura' : 'Cierre' %> del calendario de solicitudes del <%= @calendar.anio %> para el departamento <%= @calendar.department.nombre %></h1>
+    <h1><%= @calendar.status==true ? 'Apertura' : 'Cierre' %> del calendario de solicitudes del <%= @calendar.anio %> para el departamento <%= @calendar.department.nombre %></h1>
     
     <p>
        Datos del calendario: <br>
 
        <strong>FECHA APERTURA:</strong> <%= @calendar.fecha_apertura %>. <br >
+       <strong>FECHA CIERRE: </strong> <%= @calendar.fecha_cierre %> <br>
        <strong>AÑO:</strong> <%= @calendar.anio %> <br >
        <strong>DEPARTAMENTO:</strong> <%= @calendar.department.nombre %>
        
     </p>
     <p>
-     <% if @calendar.status==1 %>
+     <% if @calendar.status==true %>
       Ya se pueden realizar peticiones de permisos para el calendario y departamento indicados.
     <% else %>
       Desde ahora no es posible realizar peticiones para el calendario y departamento indicados.
