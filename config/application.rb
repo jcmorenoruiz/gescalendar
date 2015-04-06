@@ -23,7 +23,7 @@ module CalLaboral
 
     # sql views
     #config.active_record.schema_format = :sql
-
+     config.autoload_paths += %W(#{config.root}/lib) # add this line
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
   end
 end

@@ -25,14 +25,14 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
   end
 
   def new
-    @countries=COUNTRIES
+    @countries=Enterprise.new.countries
   	@enterprise = Enterprise.new
     department=@enterprise.departments.build
     department.employees.build
   end
 
   def create 
-
+    @countries=Enterprise.new.countries
     @enterprise=Enterprise.new(enterprise_params)
    
     rts=DefaultRequestType.where(:status => true).all
@@ -66,7 +66,7 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
    	private
 
      def enterprise_params
-      params.require(:enterprise).permit(:empresa,
+      params.require(:enterprise).permit(:empresa,:country,
         departments_attributes:[:nombre,:enterprise_id,
           employees_attributes: [:nombre, :email, :password, :password_confirmation, :cargo,
           	:fecha_alta]

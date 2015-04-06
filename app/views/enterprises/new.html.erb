@@ -46,6 +46,13 @@
 						<%= f.text_field :empresa,:placeholder => 'Denominación de la empresa',:class=>'form-control', :required =>true %>
 						</div>
 					</div>
+
+					<div class="field form-group">	
+						<%= f.label :country, "Pais",:class=> 'col-sm-3 control-label' %>
+						<div class="col-sm-6">
+						  <%= f.select :country, options_for_select(@countries),{ prompt: 'Seleccione Pais ...'},:required => true,:class => 'form-control' %>
+						</div>
+					</div>
 					
 					<legend class="scheduler-border">Datos del Administrador de la aplicación</legend>
 				

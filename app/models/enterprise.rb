@@ -1,9 +1,11 @@
 class Enterprise < ActiveRecord::Base
+	include Country
 	has_many :departments, :inverse_of => :enterprise
 	has_many :request_types, :inverse_of => :enterprise
 	has_one  :range_employee
 
 	validates :empresa, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false}
+	validates :country, presence: true
 	accepts_nested_attributes_for :departments
 
 
