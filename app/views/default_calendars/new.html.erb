@@ -1,5 +1,8 @@
-<h1>New default_calendar</h1>
+<% provide(:title, 'Nuevo Calendario') %>
+<h2 class="sub-header">Nuevo calendario</h2>
+<%= render partial:'shared/error_messages',  object: @default_calendar, as: 'object' %>
+
 
 <%= render 'form' %>
 
-<%= link_to 'Back', default_calendars_path %>
+

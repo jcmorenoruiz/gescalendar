@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529082250) do
+ActiveRecord::Schema.define(version: 20150405222750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,18 +43,16 @@ ActiveRecord::Schema.define(version: 20140529082250) do
     t.boolean  "d5",             default: true
     t.boolean  "d6",             default: true
     t.boolean  "d7",             default: true
+    t.index ["anio", "department_id"], :name => "index_calendars_on_anio_and_department_id", :unique => true
   end
-
-  add_index "calendars", ["anio", "department_id"], name: "index_calendars_on_anio_and_department_id", unique: true, using: :btree
 
   create_table "default_calendars", force: true do |t|
     t.integer  "anio"
     t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["anio"], :name => "index_default_calendars_on_anio", :unique => true
   end
-
-  add_index "default_calendars", ["anio"], name: "index_default_calendars_on_anio", unique: true, using: :btree
 
   create_table "default_line_calendars", force: true do |t|
     t.date     "fecha"
@@ -63,9 +61,8 @@ ActiveRecord::Schema.define(version: 20140529082250) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "default_calendar_id"
+    t.index ["fecha", "default_calendar_id"], :name => "index_default_line_calendars_on_fecha_and_default_calendar_id", :unique => true
   end
-
-  add_index "default_line_calendars", ["fecha", "default_calendar_id"], name: "index_default_line_calendars_on_fecha_and_default_calendar_id", unique: true, using: :btree
 
   create_table "default_request_types", force: true do |t|
     t.string   "nombre"
@@ -89,11 +86,10 @@ ActiveRecord::Schema.define(version: 20140529082250) do
     t.integer  "department_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["department_id", "request_type_id"], :name => "departments_request_types_index", :unique => true
+    t.index ["department_id"], :name => "index_departments_request_types_on_department_id"
+    t.index ["request_type_id"], :name => "index_departments_request_types_on_request_type_id"
   end
-
-  add_index "departments_request_types", ["department_id", "request_type_id"], name: "departments_request_types_index", unique: true, using: :btree
-  add_index "departments_request_types", ["department_id"], name: "index_departments_request_types_on_department_id", using: :btree
-  add_index "departments_request_types", ["request_type_id"], name: "index_departments_request_types_on_request_type_id", using: :btree
 
   create_table "employees", force: true do |t|
     t.string   "nombre"
@@ -108,10 +104,9 @@ ActiveRecord::Schema.define(version: 20140529082250) do
     t.boolean  "status",          default: true
     t.string   "cargo"
     t.integer  "department_id"
+    t.index ["email"], :name => "index_employees_on_email", :unique => true
+    t.index ["remember_token"], :name => "index_employees_on_remember_token"
   end
-
-  add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
-  add_index "employees", ["remember_token"], name: "index_employees_on_remember_token", using: :btree
 
   create_table "enterprises", force: true do |t|
     t.string   "empresa"
@@ -122,6 +117,7 @@ ActiveRecord::Schema.define(version: 20140529082250) do
     t.boolean  "status",            default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country"
   end
 
   create_table "line_calendars", force: true do |t|

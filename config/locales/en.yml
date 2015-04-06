@@ -19,6 +19,9 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 en:
+   date:
+    formats:
+      default: "%d/%m/%Y"
    errors:
     format: ! '%{attribute} - %{message}'
     messages:
@@ -43,3 +46,4 @@ en:
       too_long: es demasiado largo (%{count} caracteres máximo)
       too_short: es demasiado corto (%{count} caracteres mínimo)
       wrong_length: no tiene la longitud correcta (%{count} caracteres exactos)
+

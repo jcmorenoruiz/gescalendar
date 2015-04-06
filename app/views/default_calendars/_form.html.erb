@@ -1,25 +1,29 @@
+
 <%= form_for(@default_calendar) do |f| %>
-  <% if @default_calendar.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@default_calendar.errors.count, "error") %> prohibited this default_calendar from being saved:</h2>
-
-      <ul>
-      <% @default_calendar.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+ <fieldset class="scheduler-border">
+ <div class="well">
+    <legend class="scheduler-border" >Datos del calendario</legend>
+    <div class="form-group">
+      <%= f.label :anio, :class=>'control-label col-sm-2 col-md-3 col-xs-3' %>
+      <div class="col-sm-3 col-md-3 col-xs-6">
+        <%= f.number_field :anio , :class=>'form-control' %>
+      </div>
     </div>
-  <% end %>
+  <br><br>
+  <div class="form-group">
+    <div class="checkbox col-sm-3">
+      <label>
+        <%= f.check_box :status %> Activado
+      </label>
+    </div>
+  </div>
+  <br>
+</div>
+</fieldset>
 
-  <div class="field">
-    <%= f.label :anio %><br>
-    <%= f.number_field :anio %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.check_box :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="modal-footer">
+    <%= f.submit "Actualizar", class:"btn btn-medium btn-primary",:title =>"Actualizar datos del calendario" %>
+        
+    <%= link_to("Cancelar", default_calendars_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-default", :title => "Anular los cambios y volver al listado de Calendarios.") %>
   </div>
 <% end %>

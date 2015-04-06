@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   
   
+  get 'admin' => 'admin#index'
+  get 'admin/resumen' => 'admin#resumen'
+
   resources :departments_request_types
-
-
-
   resources :default_request_types
-
   resources :request_types
-
 
   get 'requests/new'
   get 'requests/destroy'
@@ -16,9 +14,8 @@ Rails.application.routes.draw do
   get "requests/calendar"
   get "requests/pending" # Requests pending
   get "requests/export_requests"
+
   resources :requests
-
-
   resources :default_line_calendars
 
   resources :default_calendars
@@ -50,7 +47,6 @@ Rails.application.routes.draw do
   
   get "calendars/update_days"
   match 'calendars/update_days/:id' => 'calendars#update_days', via: 'patch'
-
   
 
   # Not logged in

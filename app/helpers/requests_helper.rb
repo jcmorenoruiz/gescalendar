@@ -26,7 +26,7 @@ module RequestsHelper
   def pending_requests
 
   	if chief_user?      
-        pending_requests=Request.where(:status => 1,:request_type_id => Department.find(current_user.department_id).request_types).paginate(page: params[:page])
+        pending_requests=Request.where(:status => 1,:employee_id=> Department.find(current_user.department_id).employees).count
     else admin_user?        
         pending_requests=Request.where(:status => 1,:employee_id => 
         					Employee.where(:department_id => Department.where(:enterprise_id => current_emp))

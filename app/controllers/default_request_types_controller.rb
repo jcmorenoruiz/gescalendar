@@ -5,11 +5,8 @@ class DefaultRequestTypesController < ApplicationController
   # GET /default_request_types.json
   def index
     @default_request_types = DefaultRequestType.all
-  end
-
-  # GET /default_request_types/1
-  # GET /default_request_types/1.json
-  def show
+    # filters
+    @default_request_types=@default_request_types.filter(params.slice(:status,:starts_with))
   end
 
   # GET /default_request_types/new
@@ -28,11 +25,10 @@ class DefaultRequestTypesController < ApplicationController
 
     respond_to do |format|
       if @default_request_type.save
-        format.html { redirect_to @default_request_type, notice: 'Default request type was successfully created.' }
-        format.json { render :show, status: :created, location: @default_request_type }
+        flash[:success]='Tipo de solicitud creada satisfactoriamente'
+        format.html { redirect_to default_request_types_path }
       else
         format.html { render :new }
-        format.json { render json: @default_request_type.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +38,10 @@ class DefaultRequestTypesController < ApplicationController
   def update
     respond_to do |format|
       if @default_request_type.update(default_request_type_params)
-        format.html { redirect_to @default_request_type, notice: 'Default request type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @default_request_type }
+        flash[:success]='Tipo de solicitud actualizado con éxito'
+        format.html { redirect_to default_request_types_path }    
       else
-        format.html { render :edit }
-        format.json { render json: @default_request_type.errors, status: :unprocessable_entity }
+        format.html { render :edit }   
       end
     end
   end
@@ -54,11 +49,19 @@ class DefaultRequestTypesController < ApplicationController
   # DELETE /default_request_types/1
   # DELETE /default_request_types/1.json
   def destroy
-    @default_request_type.destroy
+
     respond_to do |format|
-      format.html { redirect_to default_request_types_url }
-      format.json { head :no_content }
+    
+      if @default_request_type.destroy
+        flash[:success]="Calendario eliminado correctamente."   
+        format.html { redirect_to default_request_types_url }
+        format.json { head :no_content }
+      else
+        flash[:danger]="Se ha producido un error al intentar eliminar el calendario."   
+         format.html { redirect_to default_request_types_url }
+      end
     end
+   
   end
 
   private

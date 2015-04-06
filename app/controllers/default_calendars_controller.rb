@@ -1,4 +1,5 @@
 class DefaultCalendarsController < ApplicationController
+  include DefaultCalendarsHelper
   before_action :set_default_calendar, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user
   before_action :superadmin_user
@@ -7,11 +8,15 @@ class DefaultCalendarsController < ApplicationController
   # GET /default_calendars.json
   def index
     @default_calendars = DefaultCalendar.all
+    # filters
+    @default_calendars=@default_calendars.filter(params.slice(:status))
   end
 
   # GET /default_calendars/1
   # GET /default_calendars/1.json
+  # line_calendars for calendar
   def show
+    @cal=DefaultCalendar.find(params[:id])
   end
 
   # GET /default_calendars/new
@@ -19,9 +24,6 @@ class DefaultCalendarsController < ApplicationController
     @default_calendar = DefaultCalendar.new
   end
 
-  # GET /default_calendars/1/edit
-  def edit
-  end
 
   # POST /default_calendars
   # POST /default_calendars.json
@@ -30,20 +32,22 @@ class DefaultCalendarsController < ApplicationController
 
     respond_to do |format|
       if @default_calendar.save
-        format.html { redirect_to @default_calendar, notice: 'Default calendar was successfully created.' }
-        format.json { render :show, status: :created, location: @default_calendar }
+          flash[:success] = "Empleado dado de alta correctamente"
+        format.html { redirect_to default_calendars_path }
       else
         format.html { render :new }
-        format.json { render json: @default_calendar.errors, status: :unprocessable_entity }
       end
     end
+    
   end
 
   # PATCH/PUT /default_calendars/1
   # PATCH/PUT /default_calendars/1.json
   def update
+
     respond_to do |format|
       if @default_calendar.update(default_calendar_params)
+
         format.html { redirect_to @default_calendar, notice: 'Default calendar was successfully updated.' }
         format.json { render :show, status: :ok, location: @default_calendar }
       else
@@ -51,18 +55,25 @@ class DefaultCalendarsController < ApplicationController
         format.json { render json: @default_calendar.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # DELETE /default_calendars/1
-  # DELETE /default_calendars/1.json
-  def destroy
-    @default_calendar.destroy
-    respond_to do |format|
-      format.html { redirect_to default_calendars_url }
-      format.json { head :no_content }
-    end
-  end
+  # DELETE /default_calendars/1.json 
+    def destroy
+      @default_calendar=DefaultCalendar.find(params[:id])
 
+        if(@default_calendar.status)
+          @default_calendar.update_attribute(:status,0)
+          flash[:success]="Calendario desactivado correctamente"   
+        else 
+          @default_calendar.update_attribute(:status,1)
+          flash[:success]="Calendario reactivado correctamente"   
+        end
+      
+      redirect_to default_calendars_url
+    end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_default_calendar

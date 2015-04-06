@@ -1,6 +1,6 @@
-<h1>Editing default_request_type</h1>
+<% provide(:title, 'Dias festivos del calendario') %>
+<h2 class="sub-header">Editar Solicitud de tipo: <%= @default_request_type.nombre %> </h2>
+
+<%= render partial:'shared/error_messages',  object: @default_request_type, as: 'object' %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @default_request_type %> |
-<%= link_to 'Back', default_request_types_path %>

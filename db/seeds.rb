@@ -34,13 +34,16 @@ default_request_types = [
   [ "Vacaciones", 22,'t' ],
   [ "Asuntos Propios", 2,'t' ],
   [ "Cambio de domicilio", 1,'t' ],
-  [ "Boda",10,'t' ],
+  [ "Matrimonio",10,'t' ],
+  [ "Baja por enfermedad",60,'t']
 ]
 
 # Enterprises
 enterprises=[
-  ["Confort Systems","t"],
-  ["Hybrid Auctions","t"],
+  ["Confort Systems","t",'Spain',"2015-04-03"],
+  ["Hybrid Auctions","t",'France',"2015-04-13"],
+  ["GesCalendar","t",'Spain',"2015-04-01"],
+  ["PayApi LTD","t",'Finland',"2015-04-18"]
 ]
 
 # Departments
@@ -50,26 +53,27 @@ departments=[
   ["Sede Madrid","t",1],
   ["Gerencia","t",2],
   ["Departamento Técnico","t",2],
-  ["Departamento de Finanzas","t",2]
+  ["Departamento de Finanzas","t",2],
+  ["GesCalendar","t",3]
 ]
 
 # Employees
-
 employees=[
-["Juan Carlos Moreno","jcmorenoruiz@gmail.com","jcmoreno",3,"2014-07-13","t","Administrador",1],
-["Antonio Robles","pfc.gescalendar@gmail.com","jcmoreno",2,"2014-07-13","t","Jefe Técnico",2],
-["Jose Luis","konin85@gmail.com","jcmoreno",1,"2014-07-13","t","Técnico Mantenimiento",2],
-["Adolfo Rodriguez","juancarlos@payapi.in","jcmoreno",1,"2014-07-13","t","Técnico Instalaciones",2],
-["Salvador Allende","jcmoreno@myconligusteam.com","jcmoreno",1,"2014-07-11","t","Técnico Instalaciones",2],
-["Eva Maria Gamez","24390dsupoirfardshfs@gmail.com","jcmoreno",2,"2014-08-07","t","Jefe Técnico",3],
-["Guti Sanchez","23asudfeww90234jdfs@gmail.com","jcmoreno",1,"2015-04-01","t","Técnico Instalaciones",3],
-["Alfredo Sanchez","askldfjklñ23qru90q34ur@gmail.com","jcmoreno",1,"2015-03-01","t","Técnico Instalaciones",3],
-["Santiago Gomez","24738902rwiujwrasioju@gmail.com","jcmoreno",2,"2015-01-01","t","Administrador",3],
-["Carlos Romero","darko_jc@msn.com","jcmoreno",1,"2012-01-25","t","Técnico Mantenimiento",2],
+["Juan Carlos Moreno","jcmorenoruiz@gmail.com","jcmoreno",3,"2014-07-13","t","Administrador",1,"2015-03-05"],
+["Antonio Robles","konin85@gmail.com","jcmoreno",2,"2014-07-13","t","Jefe Técnico",2,"2015-03-27"],
+["Jose Luis","darko_jc@msn.com","jcmoreno",1,"2014-07-13","t","Técnico Mantenimiento",2,"2015-04-03"],
+["Adolfo Rodriguez","juancarlos@payapi.in","jcmoreno",1,"2014-07-13","t","Técnico Instalaciones",2,"2015-04-27"],
+["Salvador Allende","jcmoreno@myconligusteam.com","jcmoreno",1,"2014-07-11","t","Técnico Instalaciones",2,"2015-04-17"],
+["Eva Maria Gamez","24390dsupoirfardshfs@gmail.com","jcmoreno",2,"2014-08-07","t","Jefe Técnico",3,"2015-05-03"],
+["Guti Sanchez","23asudfeww90234jdfs@gmail.com","jcmoreno",1,"2015-04-01","t","Técnico Instalaciones",3,"2015-05-08"],
+["Alfredo Sanchez","askldfjklñ23qru90q34ur@gmail.com","jcmoreno",1,"2015-03-01","t","Técnico Instalaciones",3,"2015-06-03"],
+["Santiago Gomez","24738902rwiujwrasioju@gmail.com","jcmoreno",2,"2015-01-01","t","Administrador",3,"2015-03-28"],
+["Gabriel Gutierrez","24738901rwiujwrasioju@gmail.com","jcmoreno",1,"2015-01-01","t","Técnico de Mantenimiento",3,"2015-04-13"],
+["Cristina Ruiz","2473892101rwiujwrasioju@gmail.com","jcmoreno",1,"2015-01-01","t","Logistica",3,"2015-05-14"],
+["Carlos Romero","pfc.gescalendar@gmail.com","jcmoreno",4,"2012-01-25","t","SUPERADMIN",7,"2015-04-19"], # SUPERADMIN
+["Antonio Benitez","antobenitez@msn.com","jcmoreno",1,"2015-02-25","t","Administrativo",4,"2015-03-21"], 
+["Rodolfo siguenza","rodol823@msn.com","jcmoreno",1,"2015-02-28","t","Administrativo",4,"2015-04-19"], 
 ]
-
-
-
 
 # requests
 
@@ -106,8 +110,8 @@ default_request_types.each do |nombre, num_dias_max,status|
 end
 
 
-enterprises.each do |empresa,status |
-  obj=Enterprise.create( empresa: empresa, status: status)
+enterprises.each do |empresa,status,country,created_at| 
+  obj=Enterprise.create( empresa: empresa, status: status,country: country,created_at: created_at)
   default_request_types.each do |nombre, num_dias_max, status|
       obj.request_types.build(:nombre => nombre,:num_dias_max => num_dias_max,:status => status,:tipo => true,:color => colors.pop)
       obj.save()
@@ -151,8 +155,8 @@ departments.each do |nombre,status,enterprise_id|
    
 end
 
-employees.each do |nombre,email,password,role,fecha_alta,status,cargo,department_id|
-  Employee.create( nombre: nombre, email: email, password: password, role: role, fecha_alta: fecha_alta, status: status, cargo: cargo, department_id: department_id)
+employees.each do |nombre,email,password,role,fecha_alta,status,cargo,department_id,created_at|
+  Employee.create( nombre: nombre, email: email, password: password, role: role, fecha_alta: fecha_alta, status: status, cargo: cargo, department_id: department_id,created_at: created_at)
 end
 
 

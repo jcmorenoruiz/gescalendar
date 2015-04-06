@@ -23,8 +23,7 @@ class EmployeesController < ApplicationController
          @requests=@emp.requests.where(:status => 1,
             :employee_id => current_user.id).paginate(page: params[:page])
       elsif chief_user?      
-        @requests=Request.where(:status => 1,:request_type_id => Department.find(
-          current_user.department_id).request_types).paginate(page: params[:page])
+        @requests=Request.where(:status => 1,:employee_id => current_user.department.employees).paginate(page: params[:page])
       else admin_user?        
          @requests=Request.where(:status => 1,
                       :employee_id => Employee.where(:department_id => Department.where(:enterprise_id => current_emp.id)))
@@ -65,6 +64,7 @@ class EmployeesController < ApplicationController
     end
 
     def update
+      
       if @emp.update_attributes(employee_params)
           flash[:success] = "Perfil actualizado correctamente"
           
@@ -176,7 +176,9 @@ class EmployeesController < ApplicationController
            redirect_to current_user unless current_user?(@emp)
       elsif current_user.role==3
         redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id).any? 
-      end        
+      elsif current_user.role==4
+        redirect_to admin_path
+      end       
     end
 
     def correct_emp
@@ -186,9 +188,11 @@ class EmployeesController < ApplicationController
     def acceso_balance
       if current_user.role<2
            redirect_to current_user unless current_user?(@emp)
-      else
+      elsif current_user.role==3
            redirect_to current_user unless current_emp.departments.where(:id => @emp.department_id).any? 
-      end        
+      elsif current_user.role==4
+           redirect_to admin_path
+      end
     end
     
    

@@ -1,0 +1,39 @@
+<% provide(:title, 'Resumen de empresas') %>
+<h2 class="sub-header">Resumen de empresas registradas</h2>
+
+<div class="row">
+	
+<% if @enterprises.count>0 %>
+	<table class="table table-hover table-striped">
+
+	<thead>
+		<th>Empresa</th>
+		<th>Dptos</th>
+		<th>Empleados</th>
+		<th>Activos</th>
+		<th>No Activos</th>
+		<th>Fecha Alta</th>
+		<th>&nbsp;</th>
+		<th>&nbsp; </th>
+	</thead>
+	<tbody>
+		<% @enterprises.each do |emp| %>
+		<tr class="fields">		
+			<td><%= emp.empresa  %></td>
+			<td><%= emp.departments.count %></td>
+			<td><%= (@activos[emp.id]+@baja[emp.id]) %></td>
+			<td><%= @activos[emp.id] %></td>
+			<td><%= @baja[emp.id] %></td>
+			<td><%= emp.created_at %></td>
+		</tr>
+		<% end %>
+	</tbody>
+	</table>
+<% else %>
+
+<div class="alert alert-info">
+	Actualmente no hay registrada ninguna empresa en la aplicación
+</div>
+<% end %>
+
+</div>

@@ -25,6 +25,7 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
   end
 
   def new
+    @countries=COUNTRIES
   	@enterprise = Enterprise.new
     department=@enterprise.departments.build
     department.employees.build

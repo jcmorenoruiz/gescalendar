@@ -1,14 +1,39 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, 'Dias festivos del calendario') %>
+<h2 class="sub-header">Dias no laborables del calendario <%= @cal.anio %></h2>
 
-<p>
-  <strong>Anio:</strong>
-  <%= @default_calendar.anio %>
-</p>
+<div class="well well-sm">
+  <%= link_to "Nuevo Día no laborable !", new_default_line_calendar_path(calendar_id: @cal.id), class: "btn btn-medium btn-primary" %> 
+</div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @default_calendar.status %>
-</p>
 
-<%= link_to 'Edit', edit_default_calendar_path(@default_calendar) %> |
-<%= link_to 'Back', default_calendars_path %>
+<table class="table table-hover table-striped">
+
+  <thead>
+    <tr class="fields">
+      <th width="15%">Fecha</th>
+      <th width="50%">Nombre</th>
+      <th width="10%">Estado</th>
+      <th width="7%">&nbsp;</th>
+      <th width="7%">&nbsp; </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cal.default_line_calendars.each do |line_calendar| %>
+      <tr>
+        <td><%= line_calendar.fecha %></td>
+        <td><%= line_calendar.nombre %></td>
+        <td><%= bool_to_s(line_calendar.status) %></td>
+        <td><%= link_to 'Editar', edit_default_line_calendar_path(line_calendar), :class => 'btn btn-default btn-small' %></td>
+        <td><%= link_to 'Eliminar', line_calendar, method: :delete, data: { confirm: 'Esta seguro?' }, :class => 'btn btn-danger btn-small' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<br>
+  <div class="modal-footer">
+        <%= link_to("Volver", default_calendars_path, :confirm => "Esta seguro de cancelar la operación?  Los cambios no se guardaran ", :class => "btn btn-primary", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+  </div>
+

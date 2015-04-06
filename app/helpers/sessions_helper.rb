@@ -4,7 +4,7 @@ module SessionsHelper
 		remember_token = Employee.new_remember_token
 		cookies.permanent[:remember_token]= remember_token
 		emp.update_attribute(:remember_token,Employee.digest(remember_token))
-		self.current_user=emp
+		self.current_user=emp  
 	end
 
 	def sign_out

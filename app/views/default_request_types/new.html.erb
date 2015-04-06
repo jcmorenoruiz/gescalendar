@@ -1,5 +1,8 @@
-<h1>New default_request_type</h1>
+<% provide(:title, 'Nuevo tipo de solicitud') %>
+<h2 class="sub-header">Nuevo tipo de solicitud</h2>
+
+<%= render partial:'shared/error_messages',  object: @default_request_type, as: 'object' %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', default_request_types_path %>
+

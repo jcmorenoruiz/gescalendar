@@ -1,9 +1,10 @@
 class RequestsController < ApplicationController
   
   before_action :signed_in_user
-  before_action :chief_user, only: [:edit, :update]
+  before_action :chief_user, only: [:edit, :update,:pending]
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  #before_action :correct_user, only: [:create, :edit, :update , :destroy]
+  before_action :correct_user, only: [:edit, :update , :destroy]
+  before_action :correct_user_new_create, only: [:new,:create]
   before_action :correct_dpto, only: [:calendar]
 
   def new
@@ -140,7 +141,7 @@ class RequestsController < ApplicationController
 
 
     if chief_user?      
-      @requests=Request.where(:status => 1,:request_type_id => Department.find(current_user.department_id).request_types).paginate(page: params[:page])
+      @requests=Request.where(:status => 1,:employee_id => Department.find(current_user.department_id).employees).paginate(page: params[:page])
     else admin_user?        
       @requests=Request.where(:status => 1,:employee_id => Employee.where(:department_id =>Department.where(:enterprise_id => current_emp.id))).paginate(page: params[:page])
     end
@@ -171,6 +172,29 @@ class RequestsController < ApplicationController
   end
 
   private
+
+   def correct_user
+      if current_user.role<2
+          redirect_to current_user
+      elsif current_user.role==2
+           redirect_to current_user unless @request.employee.department.id==current_user.department.id
+      elsif current_user.role==3
+        redirect_to current_user unless current_emp.departments.where(:id => @request.employee.department.id).any? 
+      elsif current_user.role==4
+        redirect_to admin_path
+      end       
+    end
+
+     def correct_user_new_create
+      if current_user.role<3
+          redirect_to current_user unless Employee.find(params[:id])==current_user
+      elsif current_user.role==3
+        redirect_to current_user unless current_emp.departments.where(:id => Employee.find(params[:id]).department.id).any? 
+      elsif current_user.role==4
+        redirect_to admin_path
+      end       
+    end
+
 
    def set_request
       @request = Request.find(params[:id])

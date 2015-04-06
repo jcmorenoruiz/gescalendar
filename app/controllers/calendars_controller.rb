@@ -71,7 +71,8 @@ class CalendarsController < ApplicationController
   # reopen calendar
   def update
       @cal=Calendar.find(params[:id])
-     if @cal.update_attributes(:status => 't',:fecha_cierre => "")
+
+     if @cal.update_attributes(:status => 't',:fecha_cierre => nil)
             UserMailer.nuevo_calendario(@cal).deliver
             flash[:success] = "Ejercicio actualizado correctamente"      
      else

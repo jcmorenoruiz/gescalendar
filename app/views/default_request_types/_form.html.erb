@@ -1,29 +1,41 @@
-<%= form_for(@default_request_type) do |f| %>
-  <% if @default_request_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@default_request_type.errors.count, "error") %> prohibited this default_request_type from being saved:</h2>
+<%= form_for(@default_request_type, html: {:class=>'form-horizontal'}) do |f| %>
+  
+  <div class="well">
+    <fiedlset>
+      <legend>Datos del empleado</legend>
 
-      <ul>
-      <% @default_request_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <div class="field form-group">
+          <%= f.label :nombre, :class =>'control-label col-sm-2' %>
+          <div class="col-sm-6 col-md-4">
+          <%= f.text_field :nombre,:class =>'form-control', :required => true %>
+          </div>
+        </div>
 
-  <div class="field">
-    <%= f.label :nombre %><br>
-    <%= f.text_field :nombre %>
+        <div class="field form-group">
+          <%= f.label :num_dias_max, :class => 'control-label col-sm-2' %>
+          <div class="col-sm-3 col-md-2 col-xs-4">
+          <%= f.number_field :num_dias_max,:class =>'form-control', :required  => true %>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="control-label col-sm-2">
+            <%= f.check_box :status %> Activo
+          </label>
+        </div>
+
+    </fiedlset>
+    
   </div>
-  <div class="field">
-    <%= f.label :num_dias_max %><br>
-    <%= f.number_field :num_dias_max %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.check_box :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="modal-footer">
+    <%= f.submit "Actualizar", class:"btn btn-medium btn-primary",:title =>"Actualizar datos del tipo de solicitud" %>   
+    <%= link_to("Cancelar", default_request_types_path, :confirm => "Esta seguro? Los cambios no seran guardados.", :class => "btn btn-default", :title => "Anular los cambios y volver al índice de Tipos de solicitud.") %>
   </div>
 <% end %>
+
+
+
+
+
+

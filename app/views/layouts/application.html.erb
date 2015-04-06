@@ -12,13 +12,17 @@
 	<!-- print menu -->
 	<%= render 'layouts/header' %>
 
-  <% if signed_in? && (chief_user? || admin_user?)  %>
+  <% if signed_in? && (chief_user? || admin_user? || superadmin_user?)  %>
     <div id="main" class="container-fluid">
       <div class="row">
 
          <!-- dashboard sidebar -->
         <div class="col-sm-2 col-md-2 sidebar">
-          <%= render 'shared/dashboard_menu' %>
+          <% if superadmin_user? %>
+            <%= render 'shared/admin_dashboard_menu' %>
+          <% else %>
+            <%= render 'shared/dashboard_menu' %>
+          <% end %>
         </div>
 
         <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">

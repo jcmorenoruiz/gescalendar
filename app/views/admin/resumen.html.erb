@@ -1,0 +1,43 @@
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+<h2 class="sub-header">Estadísticas de empresas registradas</h2>
+
+<div class="well well-sm">
+	<%= form_tag(admin_resumen_path, :method => "get" , :class => 'form-inline') do %>
+
+		<%= select_month(@month, use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'month') %>
+		<%= select_year(@year, start_year: 2.years.ago.year, end_year: Time.now.year+1, :class =>'input-large', :field_name =>'year')  %>
+
+	<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
+	  <%= link_to("Limpiar", admin_resumen_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+	<br />
+
+	<% end %>
+</div>
+
+
+<div class="well">
+<legend>Empresas por paises </legend>
+<%= geo_chart Enterprise.group(:country).count %>
+</div>
+
+<div class="well">
+<legend> Empresas registradas desde 01-<%= @month.to_s+'-'+@year.to_s  %> hasta el <%= Time.days_in_month(@month.to_i,@year.to_i).to_s+'-'+@month.to_s+'-'+@year.to_s %>  </legend>
+
+     <%= line_chart @enterprises, min:0 %>
+
+</div>
+
+<div class="well">
+<legend> Empleados registrados desde 01-<%= @month.to_s+'-'+@year.to_s  %> hasta el <%= Time.days_in_month(@month.to_i,@year.to_i).to_s+'-'+@month.to_s+'-'+@year.to_s %>  </legend>
+
+     <%= line_chart @employees, min:0 %>
+
+</div>
+
+<div class="well">
+	<legend> Rango de empleados por empresas </legend>
+	<%= pie_chart @range_employees %>
+</div>
+
+
+

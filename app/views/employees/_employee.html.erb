@@ -1,8 +1,7 @@
 <tr class="fields">
-		
 		<td><%= link_to employee.nombre, {controller: "employees", action: "balance", id: employee.id}, :class=>'btn btn-small',:style=>'padding:0px' %></td>
 		<td><%= employee.email %></td>
-			<td><%= employee.fecha_alta %></td>
+		<td><%= employee.fecha_alta %></td>
 		<td><%= employee.cargo %></td>
 		<td><%= get_role(employee) %></td>
 	
@@ -12,9 +11,6 @@
 		<td>
 		<% if current_user.role==3 && !current_user?(employee) %>
 			<%= link_to "Dar baja", employee, method: :delete, data: { confirm: "Esta seguro? Una vez que el empleado sea dado de baja, ya no podra realizar solicitudes" }, :class => 'btn btn-small btn-danger' %>
-
 		<% end %>
 		</td>
-
-
 </tr>

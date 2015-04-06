@@ -16,50 +16,48 @@ class DefaultLineCalendarsController < ApplicationController
 
   # GET /default_line_calendars/new
   def new
-    @default_line_calendar = DefaultLineCalendar.new
+    @calendar=DefaultCalendar.find(params[:calendar_id])
+    @line_calendar = DefaultLineCalendar.new
   end
 
   # GET /default_line_calendars/1/edit
   def edit
+    @line_calendar=DefaultLineCalendar.find(params[:id])
+    @calendar=DefaultCalendar.find(@line_calendar.default_calendar_id)
   end
 
   # POST /default_line_calendars
   # POST /default_line_calendars.json
   def create
-    @default_line_calendar = DefaultLineCalendar.new(default_line_calendar_params)
+    @calendar = DefaultCalendar.find(params[:default_line_calendar][:calendar_id])
+    @line_calendar = @calendar.default_line_calendars.build(default_line_calendar_params)
 
-    respond_to do |format|
-      if @default_line_calendar.save
-        format.html { redirect_to @default_line_calendar, notice: 'Default line calendar was successfully created.' }
-        format.json { render :show, status: :created, location: @default_line_calendar }
-      else
-        format.html { render :new }
-        format.json { render json: @default_line_calendar.errors, status: :unprocessable_entity }
-      end
+    if @line_calendar.save
+        flash[:success]= 'Dia no laborable agregado correctamente al calendario'
+        redirect_to default_calendar_path(@calendar)
+    else
+        render "new" 
     end
   end
 
   # PATCH/PUT /default_line_calendars/1
   # PATCH/PUT /default_line_calendars/1.json
   def update
-    respond_to do |format|
+     @calendar=DefaultCalendar.find(@default_line_calendar.default_calendar_id)
       if @default_line_calendar.update(default_line_calendar_params)
-        format.html { redirect_to @default_line_calendar, notice: 'Default line calendar was successfully updated.' }
-        format.json { render :show, status: :ok, location: @default_line_calendar }
+          flash[:success] = "Dia no laborable actualizado correctamente"
+          redirect_to default_calendar_path(@default_line_calendar.default_calendar_id)
       else
-        format.html { render :edit }
-        format.json { render json: @default_line_calendar.errors, status: :unprocessable_entity }
+          render 'edit'
       end
-    end
   end
 
   # DELETE /default_line_calendars/1
   # DELETE /default_line_calendars/1.json
   def destroy
-    @default_line_calendar.destroy
-    respond_to do |format|
-      format.html { redirect_to default_line_calendars_url }
-      format.json { head :no_content }
+    if @default_line_calendar.destroy
+        flash[:success]= 'Dia no laborable eliminado correctamente'
+        redirect_to default_calendar_path(@default_line_calendar.default_calendar_id)
     end
   end
 
