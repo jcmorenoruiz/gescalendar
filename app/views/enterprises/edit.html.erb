@@ -1,20 +1,50 @@
-<h2 class="sub-header">Datos de la Empresa</h2>
+<h2 class="sub-header">Editar Datos de la empresa</h2>
 
 <div class="row">
 	
 	<%= form_for(@emp,html: {class: "form-horizontal"}) do |f| %>
+	<fieldset>
 		<div class="well">
-			<div class="form-group">	
-				<%= f.label :empresa, :class =>'control-label col-sm-2' %>
-				<div class="col-sm-6 col-md-4">
-					<%= f.text_field :empresa, :class =>'form-control' %>
+			
+				<legend>Datos de la empresa </legend>
+				<div class="form-group">	
+					<%= f.label :empresa, "Nombre:", :class =>'control-label col-sm-2' %>
+					<div class="col-sm-6 col-md-4">
+						<%= f.text_field :empresa, :class =>'form-control' %>
+					</div>
 				</div>
-			</div>
-		</div>
+				<div class="form-group">	
+						<%= f.label :country, "Pais:",:class=> 'col-sm-2 control-label' %>
+						<div class="col-sm-6">
+						  <%= f.select :country, options_for_select(@countries,@emp.country),{ prompt: 'Seleccione Pais ...'},:required => true,:class => 'form-control' %>
+						</div>
+				</div>
 
+					<legend>Configuración de notificaciones</legend>
+					<div class="alert alert-info">
+						Las siguientes opciones le permiten activar el envio de emails cuando se realiza una solicitud, una auditoria, o la apertura o cierre de un calendario
+					
+					</div>
+				<div class="checkbox">
+				  <label>
+				    <%= f.check_box :notif_solicitudes %> <strong>Notificaciones por solicitudes</strong>
+				  </label>
+				</div>
+				<div class="checkbox">
+				  <label>
+				    <%= f.check_box :notif_auditoria %> <strong>Notificaciones por auditorias </strong>
+				  </label>
+				</div>
+				<div class="checkbox">
+				  <label>
+				    <%= f.check_box :notif_apertura %> <strong>Notificaciones de calendarios </strong>
+				  </label>
+				</div>
+		
+		</div>
+		</fieldset>
 		<div class="modal-footer">
 		    <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>    
 		</div>
 	<% end %>
-	
 </div>

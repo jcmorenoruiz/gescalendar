@@ -22,6 +22,7 @@
 //= require jquery.minicolors
 //= require jsapi
 //= require chartkick
+//= require app
 //= require_tree .
 
 

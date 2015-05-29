@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   
+  get 'welcome/index'
+
   get 'admin' => 'admin#index'
   get 'admin/resumen' => 'admin#resumen'
 

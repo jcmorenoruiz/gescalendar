@@ -2,8 +2,11 @@
 <style>	body{	background-color: #eee;	} </style>
 
 <% provide(:title, "Autentificarse") %>
+<div class="container">
 
-
+<% flash.each do |name, msg| -%>
+              <%= content_tag :div, msg, class: "alert alert-#{name}" %>
+<% end -%>
 	
 	
 <%= form_for(:session, url: sessions_path, :html => {:class=>'form-signin'}) do |f| %>
@@ -22,6 +25,6 @@
 			</p>
 <% end %>
 		
-
+</div>
 	
 

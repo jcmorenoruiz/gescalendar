@@ -19,12 +19,14 @@ class CalendarsController < ApplicationController
       lines=lines.default_line_calendars
       # assign default line calendars for year.
       lines.each do |line|
-      @calendar.line_calendars.build(:fecha => line.fecha,:dia => line.nombre,:status => line.status)
-     end
+        @calendar.line_calendars.build(:fecha => line.fecha,:dia => line.nombre,:status => line.status)
+      end
    end
 
    if(@calendar.save)
-      UserMailer.nuevo_calendario(@calendar).deliver
+      if current_emp.notif_apertura 
+        UserMailer.nuevo_calendario(@calendar).deliver
+      end
       flash[:success]="Ejercicio activado correctamente. Se han asignado los dias no laborales por defecto. Acceda a 'Dias festivos' si desea modificarlos "
       redirect_to calendars_url
    else
@@ -46,10 +48,12 @@ class CalendarsController < ApplicationController
     @cal.status=!@cal.status?
     @cal.fecha_cierre=Date.current
     if @cal.save
-        UserMailer.nuevo_calendario(@cal).deliver
+        if current_emp.notif_apertura 
+          UserMailer.nuevo_calendario(@cal).deliver
+        end
         flash[:success]="Ejercicio cerrado correctamente"
     else
-        flash[:error]= "Se ha producido un error al cerrar el ejercicio. Vuelta a intentarlo mas tarde"
+        flash[:danger]= "Se ha producido un error al cerrar el ejercicio. Vuelta a intentarlo mas tarde"
     end
      redirect_to calendars_url
   end
@@ -73,10 +77,12 @@ class CalendarsController < ApplicationController
       @cal=Calendar.find(params[:id])
 
      if @cal.update_attributes(:status => 't',:fecha_cierre => nil)
-            UserMailer.nuevo_calendario(@cal).deliver
+            if current_emp.notif_apertura 
+              UserMailer.nuevo_calendario(@cal).deliver
+            end
             flash[:success] = "Ejercicio actualizado correctamente"      
      else
-            flash[:success] = "Se ha producido un error al actualizar el ejercicio. "
+            flash[:danger] = "Se ha producido un error al actualizar el ejercicio. "
      end
        redirect_to calendars_url
   end

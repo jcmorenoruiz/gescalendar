@@ -1,0 +1,65 @@
+<header class="main-header">
+    <%= link_to "<b>GesCalendar</b>".html_safe, root_path, :class=> 'logo' %>
+  <!-- Header Navbar:  -->
+  <nav class="navbar navbar-static-top" role="navigation">
+
+  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- Requests Tasks: -->
+        <li class="dropdown tasks-menu">
+          <% if pending_requests>0 %>
+            <%= link_to ("Solicitudes <i class='fa fa-bell-o'></i><span class='label label-danger'> #{ pending_requests } </span>").html_safe, requests_pending_path, :class =>'dropdown-toggle', "data-toggle" => 'dropdown' %>
+          <% else %>
+               <%= link_to ("Solicitudes <i class='fa fa-bell-o'></i><span class='label label-success'> #{ pending_requests } </span>").html_safe, requests_pending_path, :class =>'dropdown-toggle', "data-toggle" => 'dropdown' %>
+          <% end %>
+          <ul class="dropdown-menu">
+            <li class="header">Tiene <%= pending_requests %> solicitudes pendientes</li>
+
+            <li class="footer">
+            <%= link_to "Ver solicitudes pendientes", requests_pending_path %>
+            </li>
+          </ul>
+        </li>
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <span class="hidden-xs"><%= current_user.nombre %></span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+              <p>
+               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <%= current_user.nombre %> <br>
+                <%= current_user.cargo %> <br>
+                <%= current_user.department.nombre %> <br>
+                <%= current_user.department.enterprise.empresa %> <br>
+                <small>Miembro desde <%= current_user.created_at.strftime("%d-%m-%Y")  %></small>
+              </p>
+            </li>
+            <!-- Menu Body -->
+            <li class="user-body">
+              <div class="col-xs-12 text-center">
+                  Rol: <%= current_role %>
+              </div>
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                  <%= link_to "Mis Datos", edit_employee_path(current_user), :class =>'btn btn-default btn-flat' %>
+              </div>
+              <div class="pull-right">
+                <%= link_to "Salir", signout_path, method: "delete", :class =>'btn btn-default btn-flat' %>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

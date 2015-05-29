@@ -32,7 +32,7 @@ class DefaultCalendarsController < ApplicationController
 
     respond_to do |format|
       if @default_calendar.save
-          flash[:success] = "Empleado dado de alta correctamente"
+          flash[:success] = "Calendario dado de alta correctamente"
         format.html { redirect_to default_calendars_path }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class DefaultCalendarsController < ApplicationController
     respond_to do |format|
       if @default_calendar.update(default_calendar_params)
 
-        format.html { redirect_to @default_calendar, notice: 'Default calendar was successfully updated.' }
+        format.html { redirect_to @default_calendar, notice: 'Calendario actualizado correctamente.' }
         format.json { render :show, status: :ok, location: @default_calendar }
       else
         format.html { render :edit }

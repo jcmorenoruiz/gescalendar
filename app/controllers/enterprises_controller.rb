@@ -5,6 +5,7 @@ before_action :admin_user, only: [:show,:edit,:update]  # => admin
 before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
 
   def edit
+      @countries=Enterprise.new.countries
       @emp=Enterprise.find(params[:id])
   end
 
@@ -12,7 +13,7 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
     @emp=Enterprise.find(params[:id])
      if @emp.update_attributes(enterprise_params)
             flash[:success] = "Empresa actualizada correctamente"
-            redirect_to current_user
+            redirect_to edit_enterprise_path(current_emp.id)
         else
           render 'edit'
         end
@@ -65,8 +66,8 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
 
    	private
 
-     def enterprise_params
-      params.require(:enterprise).permit(:empresa,:country,
+    def enterprise_params
+      params.require(:enterprise).permit(:empresa,:country,:notif_solicitudes,:notif_auditoria,:notif_apertura,
         departments_attributes:[:nombre,:enterprise_id,
           employees_attributes: [:nombre, :email, :password, :password_confirmation, :cargo,
           	:fecha_alta]

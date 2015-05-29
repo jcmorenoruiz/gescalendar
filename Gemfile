@@ -3,7 +3,7 @@ ruby '2.1.3'
 
 gem 'rake', '10.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0'
+gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
  
@@ -16,10 +16,8 @@ gem 'sass-rails', '~> 4.0.3'
 
 # Bootstrap
 #gem 'bootstrap-sass', '2.3.2.0' if v3 have any problems with rails 4
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass', '~> 3.3.4'
 gem 'autoprefixer-rails'
-gem 'sprockets', '2.11.0'
-
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '2.1.1'
@@ -39,6 +37,8 @@ gem 'turbolinks'
 # jquery need refresh page without this gem
 gem 'jquery-turbolinks'
 
+# admin LTE
+gem 'adminlte2-rails'
 
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.

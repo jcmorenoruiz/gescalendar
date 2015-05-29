@@ -11,24 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405222750) do
+ActiveRecord::Schema.define(version: 20150508083808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "availabilities", force: true do |t|
+  create_table "availabilities", force: :cascade do |t|
     t.date     "desde"
     t.date     "hasta"
     t.integer  "num_min_emp"
-    t.boolean  "status",        default: true
-    t.string   "cargo"
+    t.boolean  "status",                    default: true
+    t.string   "cargo",         limit: 255
     t.integer  "department_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "notas"
   end
 
-  create_table "calendars", force: true do |t|
+  create_table "calendars", force: :cascade do |t|
     t.integer  "anio"
     t.date     "fecha_apertura"
     t.date     "fecha_cierre"
@@ -43,114 +43,121 @@ ActiveRecord::Schema.define(version: 20150405222750) do
     t.boolean  "d5",             default: true
     t.boolean  "d6",             default: true
     t.boolean  "d7",             default: true
-    t.index ["anio", "department_id"], :name => "index_calendars_on_anio_and_department_id", :unique => true
   end
 
-  create_table "default_calendars", force: true do |t|
+  add_index "calendars", ["anio", "department_id"], name: "index_calendars_on_anio_and_department_id", unique: true, using: :btree
+
+  create_table "default_calendars", force: :cascade do |t|
     t.integer  "anio"
     t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["anio"], :name => "index_default_calendars_on_anio", :unique => true
   end
 
-  create_table "default_line_calendars", force: true do |t|
+  add_index "default_calendars", ["anio"], name: "index_default_calendars_on_anio", unique: true, using: :btree
+
+  create_table "default_line_calendars", force: :cascade do |t|
     t.date     "fecha"
-    t.string   "nombre"
+    t.string   "nombre",              limit: 255
     t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "default_calendar_id"
-    t.index ["fecha", "default_calendar_id"], :name => "index_default_line_calendars_on_fecha_and_default_calendar_id", :unique => true
   end
 
-  create_table "default_request_types", force: true do |t|
-    t.string   "nombre"
+  add_index "default_line_calendars", ["fecha", "default_calendar_id"], name: "index_default_line_calendars_on_fecha_and_default_calendar_id", unique: true, using: :btree
+
+  create_table "default_request_types", force: :cascade do |t|
+    t.string   "nombre",       limit: 255
     t.integer  "num_dias_max"
     t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "departments", force: true do |t|
-    t.string   "nombre"
-    t.boolean  "status",        default: true
+  create_table "departments", force: :cascade do |t|
+    t.string   "nombre",        limit: 255
+    t.boolean  "status",                    default: true
     t.integer  "enterprise_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "departments_request_types", force: true do |t|
+  create_table "departments_request_types", force: :cascade do |t|
     t.integer  "num_max_dias"
     t.integer  "request_type_id"
     t.integer  "department_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["department_id", "request_type_id"], :name => "departments_request_types_index", :unique => true
-    t.index ["department_id"], :name => "index_departments_request_types_on_department_id"
-    t.index ["request_type_id"], :name => "index_departments_request_types_on_request_type_id"
   end
 
-  create_table "employees", force: true do |t|
-    t.string   "nombre"
-    t.string   "email"
+  add_index "departments_request_types", ["department_id", "request_type_id"], name: "departments_request_types_index", unique: true, using: :btree
+  add_index "departments_request_types", ["department_id"], name: "index_departments_request_types_on_department_id", using: :btree
+  add_index "departments_request_types", ["request_type_id"], name: "index_departments_request_types_on_request_type_id", using: :btree
+
+  create_table "employees", force: :cascade do |t|
+    t.string   "nombre",          limit: 255
+    t.string   "email",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest"
-    t.string   "remember_token"
-    t.integer  "role",            default: 1
+    t.string   "password_digest", limit: 255
+    t.string   "remember_token",  limit: 255
+    t.integer  "role",                        default: 1
     t.date     "fecha_alta"
     t.date     "fecha_baja"
-    t.boolean  "status",          default: true
-    t.string   "cargo"
+    t.boolean  "status",                      default: true
+    t.string   "cargo",           limit: 255
     t.integer  "department_id"
-    t.index ["email"], :name => "index_employees_on_email", :unique => true
-    t.index ["remember_token"], :name => "index_employees_on_remember_token"
   end
 
-  create_table "enterprises", force: true do |t|
-    t.string   "empresa"
-    t.boolean  "notif_solicitudes", default: true
-    t.boolean  "notif_auditoria",   default: true
-    t.boolean  "notif_apertura",    default: true
+  add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
+  add_index "employees", ["remember_token"], name: "index_employees_on_remember_token", using: :btree
+
+  create_table "enterprises", force: :cascade do |t|
+    t.string   "empresa",           limit: 255
+    t.boolean  "notif_solicitudes",             default: true
+    t.boolean  "notif_auditoria",               default: true
+    t.boolean  "notif_apertura",                default: true
     t.date     "fecha_baja"
-    t.boolean  "status",            default: true
+    t.boolean  "status",                        default: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "country"
+    t.string   "country",           limit: 255
   end
 
-  create_table "line_calendars", force: true do |t|
+  create_table "line_calendars", force: :cascade do |t|
     t.date     "fecha"
-    t.string   "dia"
-    t.string   "desc"
+    t.string   "dia",         limit: 255
+    t.string   "desc",        limit: 255
     t.integer  "calendar_id"
-    t.boolean  "status",      default: true
+    t.boolean  "status",                  default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "request_types", force: true do |t|
-    t.string   "nombre"
+  create_table "request_types", force: :cascade do |t|
+    t.string   "nombre",        limit: 255
     t.integer  "num_dias_max"
-    t.boolean  "status",        default: true
+    t.boolean  "status",                    default: true
     t.integer  "enterprise_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "tipo",          default: true
-    t.string   "color"
+    t.boolean  "tipo",                      default: true
+    t.string   "color",         limit: 255
   end
 
-  create_table "requests", force: true do |t|
-    t.string   "motivo"
-    t.string   "motivo_rev"
+  create_table "requests", force: :cascade do |t|
+    t.string   "motivo",          limit: 255
+    t.string   "motivo_rev",      limit: 255
     t.date     "desde"
     t.date     "hasta"
-    t.integer  "status",          default: 1
+    t.integer  "status",                      default: 1
     t.integer  "request_type_id"
     t.integer  "employee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_foreign_key "requests", "employees"
+  add_foreign_key "requests", "request_types"
 end

@@ -11,9 +11,9 @@ class Calendar < ActiveRecord::Base
 	validates :anio, presence: true,length: { is: 4 }, 
 	numericality: { only_integer: true}
 
-	validates_uniqueness_of  :anio, scope: :department_id
+	validates_uniqueness_of  :anio, scope: :department_id, message: 'El departamento indicado ya tiene un calendario para el año seleccionado.'
 	validates :fecha_apertura, presence: true, length: { is: 10}
 	validates :status, inclusion: { in: [true,false]}
 
-	validates_date :fecha_apertura, :on_or_after => lambda { Date.current}
+	validates_date :fecha_apertura, :on_or_after => lambda { Date.current}, message: 'La fecha de apertura no puede ser anterior a la fecha actual.'
 end
