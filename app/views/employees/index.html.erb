@@ -1,16 +1,43 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#employees').DataTable({
+      		"language": {
+              "lengthMenu": "Mostrar _MENU_ registros por página",
+              "zeroRecords": "No se encontraron resultados",
+              "info": "Mostrando página _PAGE_ de _PAGES_",
+              "infoEmpty": "No hay registros disponibles",
+              "infoFiltered": "(filtrados de _MAX_  registros totales)",
+              "paginate": {
+              first:      "Primera",
+              previous:   "Anterior",
+              next:       "Siguiente",
+              last:       "Última"
+          		},
+          		"search": "Buscar:"
+          },
+           "columnDefs": [
+  			    { "orderable": false, "targets": [5,6] },
+  			    { "type": 'date-eu', targets: 2 },
+  			    { "searchable": false, "targets": [5,6]}
+  			  ],
+  			  "destroy": true
+      	});
+  } );
+</script>
+
+
 <% provide(:title, 'Lista de empleados') %>
 <h2 class="sub-header">Lista de Empleados</h2>
 
+<% if admin_user? %>
 <div class="well well-sm">
 	<%= link_to "Nuevo Empleado!", new_employee_path, class: "btn btn-medium btn-primary" %> 
 </div>
+<% end %>
+
 <div class="well well-sm">
 	<%= form_tag(employees_path, :method => "get" , :class => 'form-inline') do %>
 
-	<div class="form-group">
-		<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query form-control' %>
-	</div>
-	
 	<div class="form-group">
 		<%= select_tag :department, options_for_select([["Seleccione Departamento",""]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'form-control'%>
 	</div>
@@ -25,25 +52,24 @@
 </div>
 
 
-
-
-<%= will_paginate %>
-
-<table class="table table-hover table-striped">
+<table id="employees" class="table table-hover table-striped" cellspacing="0" width="100%">
 <thead>
-	<th>Nombre</th>
-	<th>Email</th>
-	<th>Fecha Alta</th>
-	<th>Cargo</th>
-	<th>Rol</th>
-	
-	<th></th>
+	<tr>
+		<th>Nombre</th>
+		<th>Email</th>
+		<th>Fecha Alta</th>
+		<th>Cargo</th>
+		<th>Rol</th>
+		<th></th>
+		<th></th>
+	</tr>
 </thead>
+
 <tbody>
 	<%= render @employees %>
 </tbody>
+
 </table>
 
-<%= will_paginate %>
 
 

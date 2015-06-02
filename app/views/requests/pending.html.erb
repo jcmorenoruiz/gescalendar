@@ -1,3 +1,30 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#requests').DataTable({
+      		"language": {
+              "lengthMenu": "Mostrar _MENU_ registros por página",
+              "zeroRecords": "No se encontraron resultados",
+              "info": "Mostrando página _PAGE_ de _PAGES_",
+              "infoEmpty": "No hay registros disponibles",
+              "infoFiltered": "(filtrados de _MAX_  registros totales)",
+              "paginate": {
+              first:      "Primera",
+              previous:   "Anterior",
+              next:       "Siguiente",
+              last:       "Última"
+          		},
+          		"search": "Buscar:"
+          },
+           "columnDefs": [
+  			    { "orderable": false, "targets": [6] },
+  			    { "type": 'date-eu', targets: [2,3] },
+  			    { "searchable": false, "targets": [6]}
+  			  ],
+  			  "destroy": true
+      	});
+  } );
+</script>
+
 <% provide(:title, 'Lista de Solicitudes pendientes') %>
 <h2 class="sub-header">Lista de Solicitudes pendientes</h2>
 
@@ -16,6 +43,10 @@
 		<%= select_tag :request_type, options_for_select([["Seleccione Tipo Solicitud",""]]+@rts.collect{ |u| [u.nombre, u.id] },params[:request_type]), :class => 'form-control'%>
 	</div>
 
+	<div class="form-group">
+		<%= select_tag :status, options_for_select([["Pendiente",1],["Confirmada",2],["Denegada",0]],params[:status]), :class=> 'input-sm' %>
+	</div>
+
 	<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
 	  <%= link_to("Limpiar", requests_pending_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
 	<% end %>
@@ -24,16 +55,16 @@
 
 <% if @requests.any? %>
 
-<%= will_paginate %>
 
-<table class="table table-hover table-striped">
+
+<table class="table table-hover table-striped" id="requests">
 <thead>
 	<th>Empleado</th>
 	<th>Departamento</th>
 	<th>Inicio</th>
 	<th>Fin</th>
+	<th>Estado</th>
 	<th>Solicitud</th>
-	
 	<th></th>
 </thead>
 <tbody>
@@ -41,11 +72,11 @@
 </tbody>
 </table>
 
-<%= will_paginate %>
+
 <% else %>
 
 	<div class="alert alert-info">
-		No tiene solicitudes pendientes
+		No se encontraron solicitudes
 	</div>
 
 <% end %>

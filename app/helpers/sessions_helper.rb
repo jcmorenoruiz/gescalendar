@@ -38,8 +38,11 @@ module SessionsHelper
 
 	# comprobar que el departamento se corresponde al del usuario logeado, si no es administrador. Si es adm se debera corresponder a la empresa.
 	def correct_dpto
-      if current_user.role<3 && !params[:department].blank?
-        redirect_to current_user unless current_user.department_id==params[:department]
+      if current_user.role<3 && !params[:department].nil?
+        unless current_user.department_id==params[:department].to_i
+            flash[:danger] = "ERROR: No tiene acceso al recurso solicitado"
+            redirect_to current_user
+        end
       elsif current_user.role==3
         redirect_to current_user unless current_emp.departments.where(:id => params[:department])
        end
@@ -111,9 +114,9 @@ module SessionsHelper
     	when 2 
     		@current_role='Jefe Departamento'
     	when 3 
-    		@current_role='Administrador'
+    		@current_role='Auditor'
     	when 4 
-    		@current_role='SuperAdmin'
+    		@current_role='Administrador'
     	end
     end
 

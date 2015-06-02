@@ -13,7 +13,7 @@ class Department < ActiveRecord::Base
 	#validates :department_id, presence: true
 	default_scope { order('nombre ASC') }
 	scope :status, -> (status) { where status: status}
-	scope :starts_with, -> (nombre) { where("nombre like ?", "#{nombre}%")}
+	scope :starts_with, -> (nombre) { where("upper(nombre) like ?", "#{nombre.upcase}%")}
 
 	validates :nombre, presence: true,length: { maximum: 60 }
 	

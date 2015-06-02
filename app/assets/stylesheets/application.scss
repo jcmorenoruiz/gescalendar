@@ -18,8 +18,20 @@
  *= font-awesome
  *= ionicons
  *= require jquery.minicolors
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  */
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootstrap-datepicker";
+
+
+.modal-footer{
+  background-color: #eee;
+  margin-bottom: 20px;
+}
+
+div .well{
+
+  background-color:#FFFFFF;
+}

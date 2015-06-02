@@ -12,9 +12,9 @@
 			</div>
 			<br /><br />
 
-</fieldset>
 
-<fieldset>
+
+
 <legend>Solicitudes permitidas </legend>
  
 <% if @request_types.count>0 %>
@@ -32,13 +32,27 @@
     
  </div>
 <% else %>
-	<div class="alert alert-info">
+	<div class="alert alert-warning">
 	<p>No existen tipos de solicitudes para su empresa.<br />
 	Dirigase al menu de Administración y haga click en Ausencias para generarlas.</p>
 	</div>
 <% end %>
-</fieldset>
+
 <br />
+
+
+
+        <legend>Responsable de auditorías</legend>
+          <div class="alert alert-warning">
+            Las siguiente opción le permite activar como auditor de las solicitudes realizadas por los empleados del departamento al empleado cuyo rol sea jefe del departamento.
+          </div>
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :jefe_auditor %> <strong>Jefe del departamento</strong>
+          </label>
+        </div>
+
+</fieldset>
 </div>
 <div class="modal-footer">
 	<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>

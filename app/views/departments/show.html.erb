@@ -1,17 +1,42 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#availabilities').DataTable({
+          "language": {
+              "lengthMenu": "Mostrar _MENU_ registros por página",
+              "zeroRecords": "No se encontraron resultados",
+              "info": "Mostrando página _PAGE_ de _PAGES_",
+              "infoEmpty": "No hay registros disponibles",
+              "infoFiltered": "(filtrados de _MAX_  registros totales)",
+              "paginate": {
+              first:      "Primera",
+              previous:   "Anterior",
+              next:       "Siguiente",
+              last:       "Última"
+              },
+              "search": "Buscar:"
+          },
+           "columnDefs": [
+            { "orderable": false, "targets": [5,6] },
+            { "type": 'date-eu', targets: [2,3] },
+            { "searchable": false, "targets": [5,6]}
+          ],
+          "destroy": true
+        });
+  } );
+</script>
+
 <% provide(:title, @dpto.nombre) %>
 
 <h2 class="sub-header">Disponibilidad de <%= @dpto.nombre %></h2>
 
 
 <div class="well well-sm">
-<%= link_to "Nueva Disponibilidad !", new_availability_path(id: @dpto.id), class: "btn btn-medium btn-primary" %> 
-    <div class="alert alert-info">
-    <strong>Haga Click</strong> para crear un nuevo perdiodo de disponibilidad mínima de empleados con un cargo concreto.
-    </div>
+<%= link_to "Nuevo periodo !", new_availability_path(id: @dpto.id), class: "btn btn-medium btn-primary" %> 
+  <br><br>
 </div>
 
 <% if @dpto.availabilities.count>0 %>
-  <table class="table table-hover table-striped">
+  <table class="table table-hover table-striped" id="availabilities">
   <thead>
     <tr class="fields">
       <th width="15%">Cargo</th>

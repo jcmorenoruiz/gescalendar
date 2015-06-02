@@ -12,22 +12,53 @@ class EmployeesController < ApplicationController
     def show
       # next request from employee
       @nextRequest=Request.unscoped.where(:employee_id => current_user).where('desde>?',Time.now).order('desde asc').first
-      
+
       # next holidays for employee
       @nextfree=Calendar.where(:department_id => current_user.department,:anio => Date.current.year).first
       if !@nextfree.nil?
         @nextfree=@nextfree.line_calendars.unscoped.where('fecha>?',Date.current).order('fecha asc').first
+        @last_calendar = current_user.department.calendars.order('anio desc').first
+        tot_request = current_user.requests
+        @total = tot_request.count
+        if(@total>0)
+          @tot_rejected = (tot_request.where(:status => 0).count * 100) / @total
+        else
+          @tot_rejected = 0
+        end
+        @request_types = current_user.department.request_types.where(:status => 1).count
       end
 
       if emp_user?
-         @requests=@emp.requests.where(:status => 1,
-            :employee_id => current_user.id).paginate(page: params[:page])
-      elsif chief_user?      
-        @requests=Request.where(:status => 1,:employee_id => current_user.department.employees).paginate(page: params[:page])
-      else admin_user?        
-         @requests=Request.where(:status => 1,
-                      :employee_id => Employee.where(:department_id => Department.where(:enterprise_id => current_emp.id)))
-              .paginate(page: params[:page])
+         @requests=@emp.requests.where(:status => 1)
+      elsif chief_user?
+        @requests=@emp.requests.where(:status => 1)
+        @tot_emp = current_user.department.employees.count
+        tot_request = Request.where(:employee_id => current_user.department.employees)
+        @total = tot_request.count
+        @tot_availabilities = current_user.department.availabilities.count
+        if(@total>0)
+          @tot_rejected = (tot_request.where(:status => 0).count *100) / @total
+        else
+          @tot_rejected = 0
+        end
+        @last_calendar = current_user.department.calendars.order('anio desc').first
+
+      else admin_user?
+        employees = Employee.where(:department_id => current_emp.departments,:status => 1)
+        @tot_employees = employees.count
+        @employees_month = employees.where('created_at>?',Time.now.beginning_of_month).count
+        data_requests = Request.where(:employee_id => Employee.where(:department_id => current_emp.departments))
+        @tot_requests = data_requests.count
+        if(@tot_requests>0)
+            @percent_rejected = (data_requests.where(:status => 0).count *100 ) / @tot_requests
+        else
+            @percent_rejected = 0
+        end
+        @requests_pending = data_requests.where(:status => 1).count
+        @request_month = data_requests.where('created_at>?',Time.now.beginning_of_month).count
+        @tot_departments = current_emp.departments.count
+        @tot_requests_types = current_emp.request_types.count
+        @tot_calendars = Calendar.where(:department_id => current_emp.departments).count
       end
     end
 
@@ -39,8 +70,7 @@ class EmployeesController < ApplicationController
   	def create
    		@emp=Employee.new(employee_params)
       @departments=Enterprise.find(current_emp).departments
-   		
-      
+
       if(@emp.save)
    			flash[:success] = "Empleado dado de alta correctamente"
    			redirect_to employees_url
@@ -50,14 +80,13 @@ class EmployeesController < ApplicationController
    	end 
 
     def index
-
-      @dptos=Department.where(enterprise_id: current_emp.id) # departments from enterprise
+      if chief_user? && params[:department].nil?
+        params[:department]=current_user.department.id
+      end
+      @dptos=current_emp.departments
       @employees=Employee.where(department_id: @dptos)
       # filters
-      @employees=@employees.filter(params.slice(:status,:department,:starts_with))
-      # paginate
-      @employees=@employees.paginate(page: params[:page]) # employes on departments
-    
+      @employees=@employees.filter(params.slice(:status,:department))
     end
   
     def edit   

@@ -4,7 +4,8 @@ class RequestsController < ApplicationController
   before_action :chief_user, only: [:edit, :update,:pending]
   before_action :set_request, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update , :destroy]
-  before_action :correct_user_new_create, only: [:new,:create]
+  before_action :correct_user_new, only: [:new]
+  before_action :correct_user_create, only: [:create]
   before_action :correct_dpto, only: [:calendar]
 
   def new
@@ -60,15 +61,23 @@ class RequestsController < ApplicationController
   end
 
   def update
-
-      if @request.update_attributes(:status => params[:request][:status],:motivo_rev => params[:request][:motivo_rev])
-          if current.notif_auditoria 
-            UserMailer.auditoria_solicitud(@request).deliver
-          end
-          flash[:success]="Solicitud procesada correctamente. Se ha enviado un email con el aviso correspondiente."
-          redirect_to requests_pending_path
+      
+      if chief_user? && @request.employee_id == current_user.id
+        flash[:danger] = "No tiene permisos para auditar sus propias solicitudes"
+        render "edit"
+      elsif chief_user? && !@request.employee.department.jefe_auditor
+        flash[:danger] = "El jefe de Departamento no esta autorizado a realizar auditorias."
+        render "edit"
       else
-          render "edit"
+        if @request.update_attributes(:status => params[:request][:status],:motivo_rev => params[:request][:motivo_rev])
+            if current_emp.notif_auditoria 
+              UserMailer.auditoria_solicitud(@request).deliver
+            end
+            flash[:success]="Solicitud procesada correctamente. Se ha enviado un email con el aviso correspondiente."
+            redirect_to requests_pending_path
+        else
+            render "edit"
+        end
       end
   end
 
@@ -110,9 +119,9 @@ class RequestsController < ApplicationController
 
 
   def calendar
-    @dptos=Department.where(:enterprise_id =>current_emp)
+    @dptos=current_emp.departments
     @ndias=['D','L','M','X','J','V','S']
-    @requests_types=RequestType.where(:enterprise_id => current_emp)
+    @requests_types=current_emp.request_types
     
     @date=Date.today
     
@@ -120,7 +129,11 @@ class RequestsController < ApplicationController
       if !params[:date][:month].blank? || !params[:date][:year].blank?
         @date=Date.new(params[:date][:year].to_i,params[:date][:month].to_i,1)  
       end
-    end 
+    end
+
+    if chief_user? && params[:deparment].nil?
+      params[:department] = current_user.department.id
+    end
     # generate header calendar table
     @iniciomes=Date.new(@date.year,@date.month,1)
     @finmes=Date.new(@date.year,@date.month,@date.end_of_month.day)
@@ -143,16 +156,18 @@ class RequestsController < ApplicationController
     # filling dropdown.
     @dptos=Department.where(enterprise_id: current_emp.id) # departments from enterprise
     @rts=RequestType.where(enterprise_id: current_emp.id) # request types for enterprise
+    if !params[:status].present?
+      params[:status]=1
+    end
 
-
-    if chief_user?      
-      @requests=Request.where(:status => 1,:employee_id => Department.find(current_user.department_id).employees).paginate(page: params[:page])
-    else admin_user?        
-      @requests=Request.where(:status => 1,:employee_id => Employee.where(:department_id =>Department.where(:enterprise_id => current_emp.id))).paginate(page: params[:page])
+    if chief_user?
+      @requests=Request.where(:employee_id => current_user.department.employees)
+    else admin_user?
+      @requests=Request.where(:employee_id => Employee.where(:department_id =>current_emp.departments))
     end
 
     # filters
-    @requests=@requests.filter(params.slice(:department,:request_type,:starts_with))
+    @requests=@requests.filter(params.slice(:department,:request_type,:starts_with,:status))
     # paginate
     @requests=@requests.paginate(page: params[:page]) 
   end
@@ -160,7 +175,7 @@ class RequestsController < ApplicationController
   def export_requests
     @departments=Department.where(:enterprise_id => current_emp)
 
-     respond_to do |format|    
+     respond_to do |format|
         format.xlsx {
           response.headers['Content-Disposition'] = 'attachment; filename="my_new_filename.xlsx"'
         }
@@ -187,19 +202,30 @@ class RequestsController < ApplicationController
         redirect_to current_user unless current_emp.departments.where(:id => @request.employee.department.id).any? 
       elsif current_user.role==4
         redirect_to admin_path
-      end       
+      end
     end
 
-     def correct_user_new_create
+    def correct_user_new
+
       if current_user.role<3
           redirect_to current_user unless Employee.find(params[:id])==current_user
       elsif current_user.role==3
         redirect_to current_user unless current_emp.departments.where(:id => Employee.find(params[:id]).department.id).any? 
       elsif current_user.role==4
         redirect_to admin_path
-      end       
+      end
     end
 
+    def correct_user_create
+
+      if current_user.role<3
+          redirect_to current_user unless Employee.find(params[:request][:employee_id])==current_user
+      elsif current_user.role==3
+        redirect_to current_user unless current_emp.departments.where(:id => Employee.find(params[:request][:employee_id]).department.id).any? 
+      elsif current_user.role==4
+        redirect_to admin_path
+      end
+    end
 
    def set_request
       @request = Request.find(params[:id])

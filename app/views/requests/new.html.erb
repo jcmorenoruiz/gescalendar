@@ -28,7 +28,13 @@
         <% else %>
           <legend>Datos de la Solicitud</legend>
         <% end %>
-        
+
+        <% if current_user.role<3 %>
+        <div class="alert alert-info">
+          Si desea consultar los días disponibles para un tipo de solicitud, haga click en <%= link_to 'Mi Balance', {controller: "employees",action: "balance" , id: current_user.id} %>
+        </div>
+        <% end %>
+
         <div class="form-group">
         <%= f.label :desde, "Fecha Inicio (Desde):",:class =>'col-sm-3 control-label' %>
           <div class="col-sm-6 col-md-4">

@@ -1,20 +1,30 @@
-<tr class="fields">
+
+	<tr class="fields">
+
 	<td><%= request.employee.nombre %> </td>
 	
 	<td><%= request.employee.department.nombre %></td>
 	<td><%= request.desde %></td>
 	<td><%= request.hasta %></td>
-	<td><%= request.request_type.nombre %></td>
+	<td>
+		<% if request.status=='pendiente' %>
+			<span class="label label-warning">Pendiente</span>
+		<% elsif request.status=='confirmada' %>
+			<span class="label label-success">Confirmada</span>
+		<% else %>
+			<span class="label label-danger">Denegada</span>
+		<% end %>
 	</td>
+	<td><%= request.request_type.nombre %></td>
+	
 	<td><% if current_user.role<2 %>
 		<%= link_to "Mostrar", request, :class => "btn btn-small" %>
 			<% else %>
-		<%= link_to "Mostrar", edit_request_path(request), :class => "btn btn-small" %>
+		<%= link_to "Mostrar", edit_request_path(request), :class => "btn btn-sm btn-default" %>
 			<% end %>
-	</td>
-	<td>
-		<% if current_user.role==1 || current_user.role==2 %>
-		<%= link_to 'Anular', request, method: :delete, data: { confirm: 'Esta seguro?. Una vez anulada tendra que volver a hacer una nueva solicitud' }, :class => 'btn btn-small btn-danger' %>
+
+		<% if current_user.id==request.employee_id %>
+		<%= link_to 'Anular', request, method: :delete, data: { confirm: 'Esta seguro?. Una vez anulada tendra que volver a hacer una nueva solicitud' }, :class => 'btn btn-sm btn-danger' %>
 		<% end %>
 	</td>
 	

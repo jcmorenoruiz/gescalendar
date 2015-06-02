@@ -79,6 +79,11 @@ GEM
     jbuilder (2.2.16)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-datatables-rails (3.3.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
     jquery-minicolors-rails (2.1.4.0)
       jquery-rails
       rails (>= 3.2.8)
@@ -190,6 +195,7 @@ DEPENDENCIES
   faker (= 1.1.2)
   groupdate
   jbuilder (~> 2.0)
+  jquery-datatables-rails (~> 3.3.0)
   jquery-minicolors-rails
   jquery-rails (= 3.0.4)
   jquery-turbolinks

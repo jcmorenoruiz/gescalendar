@@ -1,17 +1,194 @@
 <% provide(:title, @emp.nombre) %>
 
 
-<div class="col-sm-12">
+
 	<h2 class="sub-header">Bienvenido, <%= @emp.nombre %></h2>
 	<aside class="span4">
 		<section>
-		 <div class="well">
-			<% if !admin_user? %>
-				<%= link_to "Nueva solicitud", new_request_path(:id => @emp.id), class: "btn btn-primary" %>
-			<% end %>
-			&nbsp;&nbsp;
-			<%= link_to "Ver Balance", {action: "balance" , id: @emp.id}, class: "btn btn-primary" %>
+		<% if admin_user? %>
+			<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people-outline"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Empleados <br> Activos</span>
+                  <span class="info-box-number"><%= @tot_employees %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-files-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Departamentos</span>
+                  <span class="info-box-number"><%= @tot_departments %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box bg-yellow">
+                <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Solicitudes</span>
+                  <span class="info-box-number"><%= @tot_requests %></span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: #{percent_rejected}%"></div>
+                  </div>
+                  <span class="progress-description">
+                    <%= @percent_rejected %>% Denegadas
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text"> Auditorias<br> Pendientes</span>
+                  <span class="info-box-number"><%= @requests_pending %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
 		</div>
+				<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-files-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Calendarios <br> Activos</span>
+                  <span class="info-box-number"><%= @tot_calendars %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+        </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-files-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Permisos <br> Laborales</span>
+                  <span class="info-box-number"><%= @tot_requests_types %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="ion ion-person-add"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Empleados  <br> mes actual </span>
+                  <span class="info-box-number"><%= @employees_month %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+       <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text"> Solicitudes<br> mes actual</span>
+                  <span class="info-box-number"><%= @request_month %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+		</div>
+
+		<% elsif chief_user? %>
+		 <div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people-outline"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Empleados</span>
+                  <span class="info-box-number"><%= @tot_emp %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+    	 <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box bg-yellow">
+                <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Solicitudes </span>
+                  <span class="info-box-number"><%= @total %></span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: #{@tot_rejected}%"></div>
+                  </div>
+                  <span class="progress-description">
+                    <%= @tot_rejected %>% Denegadas
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+			  <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-files-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Periodos <br> Disponibilidad <br> Mínima</span>
+                  <span class="info-box-number"><%= @tot_availabilities %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Ultimo <br>Calendario <br> DPTO.</span>
+                  <span class="info-box-number"><%= @last_calendar.anio %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+
+		</div>
+		<% elsif emp_user? %>
+		<div class="row">
+			 <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Ultimo <br>Calendario <br> DPTO.</span>
+                  <span class="info-box-number"><%= @last_calendar.anio %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+			<div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Tipos de <br>Permisos <br> disponibles</span>
+                  <span class="info-box-number"><%= @request_types %> </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Solicitudes <br> realizadas</span>
+                  <span class="info-box-number"><%= @total %></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+
+       <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text"> Solicitudes <br>denegadas</span>
+                  <span class="info-box-number"><%= @tot_rejected %>%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+      </div>
+			</div>
+		<% end %>
 		</section>
 		<legend>Próximas ausencias</legend>
 		<div class="well">
@@ -32,29 +209,30 @@
 		</div>
 	</aside>
 
+<% if emp_user? || chief_user? %>
 	<div class="span8">
 	
-			<legend>Solicitudes Pendientes (<%= @requests.count %>) </legend>
+			<legend>Solicitudes propias sin auditoria (<%= @requests.count %>) </legend>
 
 			<% if @requests.any? %>
 				<table class="table table-hover table-striped">
 				<thead>
-					<th >Tipo de Solicitud</th>
+					<th >Empleado</th>
 					<th> Departamento </th>
 					<th >Inicio</th>
 					<th >Fin</th>
-					<th >Empleado</th>
-					<th></th>
+					<th >Estado</th>
+					<th>Solicitud</th>
 					<th>&nbsp;</th>
 				</thead>
 				<tbody>
 					<%= render @requests %>
 				</tbody>
 				</table>
-			
-				<%= will_paginate @requests %>
+
 			<% end %>
 	</div>
-</div>
+	<% end %>
+
 
 

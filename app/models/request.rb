@@ -15,10 +15,11 @@ class Request < ActiveRecord::Base
     	joins(:employee).
     	where("employees.department_id = ?", department)
  	}
+  scope :status, -> (status) { where status: status}
  	scope :request_type, ->(request_type) { where request_type: request_type } 
  	scope :starts_with, -> (nombre){
  		joins(:employee).
- 		where("employees.nombre like ?","%#{nombre}%")
+ 		where("upper(employees.nombre) like ?","%#{nombre.upcase}%")
  	}
 
 	validates :status, presence: true
@@ -108,17 +109,17 @@ class Request < ActiveRecord::Base
 		# if some day of requests overlaps whith min period availability.
 		employee=Employee.find(employee_id)
 		av=Availability.where(:department_id => employee.department_id).where('upper(cargo) like ?',"#{employee.cargo.upcase}")
-			.where("((desde - ?) * (? - hasta)) >= 0", desde, hasta).where(:status => true)
+			.where("((desde - ?) * (? - hasta)) >= 0", hasta, desde).where(:status => true)
 
 		if av.count>0 # employees disponibilities	
 			av.each do |avail|
 			
 				employees_on=Employee.where(:department_id => employee.department_id)
 					.where('upper(cargo) like ?',"#{employee.cargo.upcase}")
-					.where('not exists(select * from requests where ((desde - ?) * (? - hasta)) >= 0 and requests.employee_id=employees.id and status>0)',desde,hasta)
+					.where('not exists(select * from requests where ((desde - ?) * (? - hasta)) >= 0 and requests.employee_id=employees.id and status>0)',hasta,desde)
 
 				if employees_on.count<=avail.num_min_emp
-					errors.add(:desde,"No es posible realizar la solicitud ya que se ha establecido una disponibilidad mínima en su Departamento de #{avail.num_min_emp} Empleados con cargo: '#{avail.cargo}' durante los días comprendidos entre el #{avail.desde} a #{avail.hasta}")
+					errors.add(:desde,"No es posible realizar la solicitud ya que se ha establecido una disponibilidad mínima en su Departamento de #{avail.num_min_emp} Empleados disponibles con cargo: '#{avail.cargo}' durante los días comprendidos entre el #{avail.desde} a #{avail.hasta}")
 				end
 			end
 		end

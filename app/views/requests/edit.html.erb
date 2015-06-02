@@ -52,7 +52,7 @@
 <% if current_user.role>1 %>
 	<div class="well">
 			<legend>Datos de Auditoria</legend>
-				
+		<% if !@request.denegada? %>		
 			<div class="form-group">
 				<label class="control-label col-sm-3">
 					<input type="radio" name="request[status]" id="request_status_confirmar" value="confirmada" <%= @request.confirmada? ? 'checked="checked"' : "" %> required="true" >
@@ -68,7 +68,7 @@
 			</div>
 			     
 		</br>
-			
+	<% end %>
 			<div class="form-group">
 				<%= f.label :motivo_rev, "Observaciones:", :class =>'col-sm-3 control-label' %>
 				<div class="col-sm-8 col-md-6">
@@ -86,8 +86,11 @@
       <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
      <% end %>
 
+		<% if current_user == @request.employee_id %>
      <%= link_to("Cancelar", employee_path(current_user),  :class => "btn btn-default", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
-
+		<% else %>
+			<%= link_to("Cancelar", requests_pending_path,  :class => "btn btn-default", :title => "Cancelar los cambios y volver a la pagina inicial.") %>
+		<% end %>
  </div>
 
 

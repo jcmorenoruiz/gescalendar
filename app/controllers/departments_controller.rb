@@ -1,7 +1,7 @@
 class DepartmentsController < ApplicationController
 
 	before_action :signed_in_user
-	before_action :admin_user
+	before_action :admin_user, except: [:show]
 	before_action :correct_department , only: [:edit, :update, :show]
 	
 	# common actions
@@ -92,8 +92,11 @@ class DepartmentsController < ApplicationController
       # before filers
 
     	def correct_department
-      		@emp=Department.find(params[:id]) 
-      		redirect_to(departments_url) unless current_emp.id==@emp.enterprise_id || current_user.role>3
+      		@dpto=Department.find(params[:id]) 
+      		unless (chief_user? && current_user.department_id==@dpto.id) || (admin_user? && current_emp.id==@dpto.enterprise_id) || current_user.role>3
+            flash[:danger] = 'ERROR. No tiene acceso al recurso solicitado.'
+            redirect_to(departments_url)
+          end
     	end
 
 

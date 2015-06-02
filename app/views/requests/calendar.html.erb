@@ -18,7 +18,7 @@
 </style>
 
 
-<div class="row">
+
 
 <div class="well well-sm">
 	<%= form_tag(requests_calendar_path, :method => "get" , :class => 'form-inline') do %>
@@ -44,74 +44,85 @@
 
 </div>
 
-<div class="col-sm-12">
-	<%= link_to '<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>'.html_safe,  "#",  :class => 'btn btn-small anterior'  %>
-	<%= link_to '<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>'.html_safe, "#", :class => 'btn btn-small siguiente' %>
-</div>
 
-	<table class="table table-hover table-striped table-bordered">
-		<thead>
-			<tr >
-				<th width="15%" >
-						&nbsp;
-				</th>
-				<% @diasmes.each do |d|  %>
-					<th  width="2%"><%= d %></th>
-				<% end %>
-			</tr>
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Calendario mensual</h3>
+	</div>
+	<div class="box-body table-responsive">
 
-			<tr>
-				<th width="15%"></th>
-				<% @nombredias.each do |d|  %>
-					<% if d=='S' || d=='D' %>
-						<th width="2%" style="background:#D9D9D9;"><%= d %></th>
-					<% else %>
-						<th width="2%"><%= d %></th>
+		<table class="table table-hover table-striped table-bordered">
+			<thead>
+				<tr >
+					<th width="15%" rowspan="2" >
+						<button type="button" class="btn btn-primary anterior" aria-label="anterior">
+							<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+						</button>
+						<button type="button" class="btn btn-primary siguiente" aria-label="siguiente">
+							<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+						</button>
+					</th>
+					<% @diasmes.each do |d|  %>
+						<th  width="2%"><%= d %></th>
 					<% end %>
-				<% end %>
-			</tr>
-		</thead>
+				</tr>
 
-		<tbody>
-			<% @employees.each do |e| %>
-			<tr>	
-					<td style="border:0em;" >
-						<% if current_user.role>=2 %>
-							<%= link_to e.nombre, {controller: "employees", action: "balance", id: e.id}, :class=>'btn btn-small',:style=>'padding:0px' %>
+				<tr>
+					<% @nombredias.each do |d|  %>
+						<% if d=='S' || d=='D' %>
+							<th width="2%" style="background:#D9D9D9;"><%= d %></th>
 						<% else %>
-							<%= e.nombre %>
+							<th width="2%"><%= d %></th>
 						<% end %>
-					</td>
-
-					<% @fechas.each do |dia| %>
-						
-
-								<%  req=e.requests.where(:status => 2).where('? between desde and hasta',dia).first %>
-
-								<% if dia.wday==6 || dia.wday==0	%>
-									<td style="background:#D9D9D9;"></td>
-								<% elsif !req.nil? %>
-												<td style="background:<%= req.request_type.color %>"></td>
-								<% else %>
-											<td></td>
-								<% end %>
-
 					<% end %>
-			</tr>
-			<% end %>
-		</tbody>
+				</tr>
+			</thead>
 
-	</table>
+			<tbody>
+				<% @employees.each do |e| %>
+				<tr>
+						<td>
+							<% if current_user.role>=2 %>
+								<%= link_to e.nombre, {controller: "employees", action: "balance", id: e.id}, :class=>'btn btn-small',
+									:style=>'padding:0px' %>
+							<% else %>
+								<%= e.nombre %>
+							<% end %>
+						</td>
 
+						<% @fechas.each do |dia| %>
+									<%  req=e.requests.where(:status => 2).where('? between desde and hasta',dia).first %>
 
-<div class="well">
+									<% if dia.wday==6 || dia.wday==0	%>
+										<td style="background:#D9D9D9;"></td>
+									<% elsif !req.nil? %>
+													<td style="background:<%= req.request_type.color %>"></td>
+									<% else %>
+												<td></td>
+									<% end %>
 
-	<% @requests_types.each do |rt| %>
-		
-			<span class="label" style="background:<%= rt.color %>"><%= rt.nombre %></span>
-			&nbsp;&nbsp;&nbsp;
+						<% end %>
+				</tr>
+				<% end %>
+			</tbody>
 
-	<% end %>
+		</table>
+	</div>
 </div>
-</div>
+
+
+	<div class="box">
+		<div class="box-header with-border">
+			<h4 class="box-title">Tipos de solicitud</h4>
+		</div>
+		<div class="box-body">
+			<% @requests_types.each do |rt| %>
+			<h4><span class="label" style="background:<%= rt.color %>"><b><%= rt.nombre %></b></span></h4>
+		<% end %>
+		</div>
+	</div>
+
+
+
+
 

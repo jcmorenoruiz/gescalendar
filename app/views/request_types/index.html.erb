@@ -1,11 +1,6 @@
 <h2 class="sub-header">Listado de tipos de Solicitudes</h2>
 
 <div class="well well-sm">
-  <%= link_to "Nuevo tipo de Solicitud!", new_request_type_path, class: "btn btn-medium btn-primary" %> 
-</div>
-
-
-<div class="well well-sm">
   <%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
     
     <%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query form-control' %>
