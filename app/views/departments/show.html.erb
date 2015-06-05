@@ -1,20 +1,9 @@
+<%= javascript_include_tag "datatables.language" %>
+
 <script type="text/javascript">
   $(document).ready(function() {
       $('#availabilities').DataTable({
-          "language": {
-              "lengthMenu": "Mostrar _MENU_ registros por página",
-              "zeroRecords": "No se encontraron resultados",
-              "info": "Mostrando página _PAGE_ de _PAGES_",
-              "infoEmpty": "No hay registros disponibles",
-              "infoFiltered": "(filtrados de _MAX_  registros totales)",
-              "paginate": {
-              first:      "Primera",
-              previous:   "Anterior",
-              next:       "Siguiente",
-              last:       "Última"
-              },
-              "search": "Buscar:"
-          },
+          "language": language,
            "columnDefs": [
             { "orderable": false, "targets": [5,6] },
             { "type": 'date-eu', targets: [2,3] },
