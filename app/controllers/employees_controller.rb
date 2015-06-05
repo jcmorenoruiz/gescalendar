@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
   
   before_action :signed_in_user
-  before_action :set_employee, only: [:balance,:edit, :update, :show]
+  before_action :set_employee, only: [:balance,:edit, :update, :show, :destroy]
   before_action :chief_user, only: [:index]
   before_action :admin_user, only: [:destroy]
   before_action :acceso_balance, only: [:balance,:show]
@@ -80,6 +80,9 @@ class EmployeesController < ApplicationController
    	end 
 
     def index
+      if params[:status].nil?
+        params[:status] = true
+      end
       if chief_user? && params[:department].nil?
         params[:department]=current_user.department.id
       end
@@ -109,8 +112,14 @@ class EmployeesController < ApplicationController
 
 
     def destroy
-      if Employee.find(params[:id]).update_attribute(:status, 0)
-        flash[:success]="Empleado dado de baja correctamente"
+        if @emp.status
+          newstatus = 0
+        else
+          newstatus = 1
+        end
+
+      if Employee.find(params[:id]).update_attribute(:status, newstatus)
+        flash[:success]="Se ha actualizado el estado del empleado correctamente"
       end
        redirect_to employees_url
     end
@@ -137,7 +146,8 @@ class EmployeesController < ApplicationController
       @calselected=year
       #get request for user. for calendar
       calendar=Calendar.where(department_id: @emp.department,anio: year).first
-      requests=Request.joins(:request_type).select('requests.id,requests.status,request_types.num_dias_max as maxdias,(hasta-desde)+1 as dias,desde,hasta,nombre,request_type_id as rid').where(:employee_id => @emp.id,status: [1,2]).all.where('extract(year from desde)= ?',"#{year}")
+      requests=Request.joins(:request_type).select('requests.id,requests.status,request_types.num_dias_max as maxdias,(hasta-desde)+1 as dias,desde,hasta,nombre,request_type_id as rid')
+        .where(:employee_id => @emp.id,status: [1,2]).all.where('extract(year from desde)= ?',"#{year}")
      
       requests.each do |rq| 
        #working days.
@@ -164,6 +174,8 @@ class EmployeesController < ApplicationController
             @rts.push(id: rq.rid,nombre: rq.nombre,maxdias: rq.maxdias,dias_habiles: dias)
          end
       end
+
+      @nodata_rt = @emp.department.request_types.where(:tipo => true,:status => true).where.not(id: @rtsdif).all
 
       @rts.each do |rq|
 

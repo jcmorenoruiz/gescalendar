@@ -12,7 +12,11 @@ class SessionsController < ApplicationController
 		
 		respond_to do |format|
 
-			if emp && emp.authenticate(params[:session][:password])
+			if emp && (!emp.status || !emp.department.enterprise.status)
+				flash.now[:danger] = "Usuario no autorizado para acceder al sistema. Consulte con su auditor."
+				format.html { render action: 'new' }
+	      format.json { render json: @emp.errors, status: :unprocessable_entity }
+			elsif emp && emp.authenticate(params[:session][:password])
 				flash.now[:success] = "Autentificación correcta"
 				sign_in emp # create sessions
 				format.html { 

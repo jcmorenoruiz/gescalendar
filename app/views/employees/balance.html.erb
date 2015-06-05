@@ -4,9 +4,9 @@
 
 
 	<div class="well">
-		<% if current_user.role>2 %>	 
+		<% if current_user.role>2 %>
 			<p><%= link_to "Asignar Ausencias", new_request_path(:id => @emp.id), class: "btn btn-primary" %></p>
-		<% end %>	
+		<% end %>
 
 		<%= form_tag({action: "balance"}, :method => "get",   :class => 'form-inline') do %>
 
@@ -17,84 +17,77 @@
 		<% end %>
 	</div>
 
+<div class="row">
+	<% @datos.each do |req| %>
+	<div class="col-md-6">
+		<div class="box box-default box-solid">
+	    <div class="box-header with-border">
+	      <h3 class="box-title"><b><%= req[:nombre] %></b></h3>
+	      <h5>
+	      <% if req[:num_dias_max]>0 %>
+						<%= req[:num_dias_max]-(req[:confirmados]+req[:pendientes]) %> días disponibles
+					<% else %>
+						Sin Límite
+					<% end %>
+				</h5>
+	      <div class="box-tools pull-right">
+	        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	      </div><!-- /.box-tools -->
+	    </div><!-- /.box-header -->
+	    <div class="box-body table-responsive" style="display: block;">
+				  <strong>Días hábiles confirmados:</strong> <%= req[:confirmados] %><br>
+					<strong>Días hábiles pendientes: </strong><%= req[:pendientes] %><br>
+					<strong>Total días: </strong><%= req[:num_dias_max] %>
 
-<!--
-	<div class="col-md-5">
-		<div class="well">
-			<legend>Información</legend>
-			<label><strong>Nombre:</strong> <%= @emp.nombre %></label>
-			<label><strong>Email:</strong> <%= @emp.email %></label>
-			<label><strong>Departamento:</strong> <%= @emp.department.nombre %></label>
-			<label><strong>Fecha de Alta: </strong><%= @emp.fecha_alta %></label>
+					<table class="table table-hover table-striped">
+						<thead>
+							<th >Desde</th>
+							<th >Hasta</th>
+							<th >Permiso</th>
+							<th>Dias hábiles/totales</th>
+							
+							<th>Estado</th>
+						</thead>
+							<tbody>
+								<% req[:requests].each do |rq| %>
+									<tr>
+													<td ><%= rq.desde %></td>
+													<td ><%= rq.hasta %></td>
+													<td><%= rq.request_type.nombre %></td>
+													<td><%= @dias_habiles[rq.id].to_s+' ('+@total_dias[rq.id].to_s+')' %> </td>
+													
 
-			<label><strong>Permisos:</strong> <%= @emp.nombre %></label>
-			<label><strong>Cargo:</strong> <%= @emp.cargo %></label>
-			<label><strong>Situación: </strong><%= bool_to_s(@emp.status) %></label>
-		</div>
+													<td>
+														<% if rq.status=='pendiente' %>
+															<span class="label label-warning">Pendiente</span>
+														<% elsif rq.status=='confirmada' %>
+															<span class="label label-success">Confirmada</span>
+														<% else %>
+															<span class="label label-danger">Denegada</span>
+														<% end %>
+													</td>
+									</tr>
+								<% end %>
+							</tbody>
+					</table>
+	    </div><!-- /.box-body -->
+		</div><!-- /.box -->
 	</div>
--->
-
-<h3>Resumen de permisos </h3>
-  
-<% if @datos.any? %>  
-				<% @datos.each do |req| %>
-					<div class="accordion">					
-						<div class="list-group">
-						  <a href="#" class="list-group-item disabled"><%= req[:nombre] %> </a>
-						  <a href="#" class="list-group-item"><strong>Días hábiles confirmados:</strong> <%= req[:confirmados] %></a>
-						  <a href="#" class="list-group-item"><strong>Días hábiles pendientes: </strong><%= req[:pendientes] %></a>
-						  <a href="#" class="list-group-item"><strong>Días restantes: </strong>
-							<% if req[:num_dias_max]>0 %>
-								<%= req[:num_dias_max]-(req[:confirmados]+req[:pendientes]) %>
-							<% else %>
-								Sin Límite 
-							<% end %>
-						  </a>
-						  
-						  	<a href="#" id="acc_trigger" class="list-group-item active">TOTAL: <%=  req[:num_dias_max] %></a>
-							<div class="acc_container">
-								<div class="block">
-										<table class="table table-hover table-striped">
-										<thead>
-											<th >Desde</th>
-											<th >Hasta</th>
-											<th >Permiso</th>
-											<th>Dias hábiles</th>
-											<th>Total Días</th>
-											<th>Estado</th>
-											
-										</thead>
-										<tbody>
-											<% req[:requests].each do |rq| %>
-												<tr>
-												<td ><%= rq.desde %></td>
-												<td ><%= rq.hasta %></td>
-												<td><%= rq.request_type.nombre %></td>
-												<td><%= @dias_habiles[rq.id] %> </td>
-												<td><%= @total_dias[rq.id] %></td>
-
-												<td><%= rq.status %></td>
-												</tr>
-
-											<% end %>
-										</tbody>
-										</table>
-								</div>
-							</div>
-						</div>
-
-					
-
-					</div>
-				<% end %>
-				<br />
-<% else %>
-<div class="alert alert-info">
-	No se ha solicitado ningun permiso
+	<% end %>
 </div>
 
-<% end %>
 
+<div class="row">
+<% @nodata_rt.each do |rt| %>
+	<div class="col-md-6">
+		<div class="box box-default box-solid">
+			<div class="box-header with-border">
+				<h3 class="box-title"><b><%= rt.nombre %> </b></h3><h5> <%= rt.num_dias_max.to_s %> días disponibles</h5>
+			</div>
+		</div>
+	</div>
+<% end %>
+</div>
 
 	<% if chief_user? || admin_user? %>
 		<div class="modal-footer col-md-12">

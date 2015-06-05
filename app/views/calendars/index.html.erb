@@ -1,8 +1,23 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#calendars').DataTable({
+          "language": language,
+           "columnDefs": [
+            { "orderable": false, "targets": [5,6,7] },
+             { "type": 'date-eu', targets: [2,3] },
+            { "searchable": false, "targets": [5,6,7]}
+          ],
+          "destroy": true
+        });
+  } );
+</script>
+
+
 <% provide(:title, 'Lista de Departamentos') %>
 <h2 class="sub-header">Calendarios</h2>
 
 <div class="well well-sm">
-	<% if @calendars.count<1 %>
+	<% if @calendars.count<1 && params[:status]=='t' %>
 	<div class="alert alert-info">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Aviso!</strong> No se ha generado ningún calendario para su empresa. Haga click en nuevo para abrir un calendario en uno de los departamentos.
@@ -23,8 +38,8 @@
 </div>
 
 	
-<% if @calendars.count>0 %>
-	<table class="table table-hover table-striped">
+
+	<table class="table table-hover table-striped" id="calendars">
 
 	<thead>
 		<th >Año</th>
@@ -64,21 +79,15 @@
 		
 			<td>
 			<% if cal.status %>
-			<%= link_to "Cerrar", cal, method: :delete, :class => "btn btn-sm btn-danger", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
+			<%= link_to "Cerrar", cal, method: :put, :class => "btn btn-sm btn-danger", data: { confirm: "Esta seguro? Una vez cerrado el ejercicio los empleados no podrán hacer solicitudes para el año indicado" } %>
 			<% else %>
-			<%= link_to "Reabrir", cal, method: :delete, :class => "btn btn-sm btn-danger" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
+			<%= link_to "Reabrir", cal, method: :put, :class => "btn btn-sm btn-danger" ,data: { confirm: "Esta seguro? Una vez abierto el ejercicio los empleados podrán hacer solicitudes para el año indicado" } %>
 			<% end %>
 			</td>
 		</tr>
 		<% end %>
 	</tbody>
 	</table>
-<% else %>
-
-
-
-
-<% end %>
 
 
 

@@ -15,5 +15,5 @@ class Calendar < ActiveRecord::Base
 	validates :fecha_apertura, presence: true, length: { is: 10}
 	validates :status, inclusion: { in: [true,false]}
 
-	validates_date :fecha_apertura, :on_or_after => lambda { Date.current}, message: 'La fecha de apertura no puede ser anterior a la fecha actual.'
+	validates_date :fecha_apertura,on: :create, :on_or_after => lambda { Date.current}, message: 'La fecha de apertura no puede ser anterior a la fecha actual.'
 end

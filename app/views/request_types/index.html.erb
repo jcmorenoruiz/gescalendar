@@ -1,25 +1,35 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#request_types').DataTable({
+          "language": language,
+           "columnDefs": [
+            { "orderable": false, "targets": [4] },
+            { "searchable": false, "targets": [4]}
+          ],
+          "destroy": true
+        });
+  } );
+</script>
+
 <h2 class="sub-header">Listado de tipos de Solicitudes</h2>
 
 <div class="well well-sm">
   <%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
-    
-    <%= text_field_tag :starts_with,params[:starts_with],placeholder: "Buscar por nombre", :class => 'search-query form-control' %>
     <%= select_tag :status, options_for_select([["Activo","t"],["Inactivo","f"]],params[:status]), :class=> 'form-control input-sm' %>
     <%= submit_tag "Buscar", :name => nil, class:"btn btn-md btn-primary" %>
     <%= link_to("Limpiar", request_types_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
-  
   <% end %>
 </div>
 
 
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped" id="request_types">
   <thead>
     <tr>
       <th>Nombre</th>
       <th>Núm. máx. Días</th>
       <th>Color</th>
       <th>Departamentos</th>
-      <th colspan="3"></th>
+      <th ></th>
     </tr>
   </thead>
 
@@ -31,8 +41,8 @@
         <td><div class="well well-sm" style="background:<%= rt.color %>"></div></td>
         
         <td><%= number_departments(rt) %></td>
-        <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-sm btn-default' %></td>
-        <td>
+        <td><%= link_to 'Editar', edit_request_type_path(rt),:class => 'btn btn-sm btn-default' %>
+        
           <% if rt.status? %>
             <%= link_to 'Desactivar', rt, method: :delete, data: { confirm: 'Esta seguro?' },:class => 'btn btn-sm btn-danger' %>
           <% else %>

@@ -2,7 +2,7 @@ class CalendarsController < ApplicationController
  
   before_action :signed_in_user
   before_action :admin_user
-  before_action :correct_calendar , only: [:edit, :update, :show, :destroy] 
+  before_action :correct_calendar , only: [:edit, :update, :show, :destroy]
   before_action :set_departments , only: [:new,:create,:index]
   #common methods
   def new
@@ -36,37 +36,24 @@ class CalendarsController < ApplicationController
 
   # get all calendars from department in enterprise logged in.
   def index
+    if params[:status].nil?
+      params[:status] = true
+    end
      #@dptos=Department.where(enterprise_id: current_emp.id)
      @calendars=Calendar.where(department_id: @dptos)   
       # filters
      @calendars=@calendars.filter(params.slice(:status,:department))
   end
 
-  # close calendar
-  def destroy
-    @cal=Calendar.find(params[:id])
-    @cal.status=!@cal.status?
-    @cal.fecha_cierre=Date.current
-    if @cal.save
-        if current_emp.notif_apertura 
-          UserMailer.nuevo_calendario(@cal).deliver
-        end
-        flash[:success]="Ejercicio cerrado correctamente"
-    else
-        flash[:danger]= "Se ha producido un error al cerrar el ejercicio. Vuelta a intentarlo mas tarde"
-    end
-     redirect_to calendars_url
-  end
 
   # line_calendars for calendar
   def show
     @cal=Calendar.find(params[:id])
   end
 
-  def ausencias 
+  def ausencias
     @cal=Calendar.find(params[:id])
   end
-    
 
   def days
     @cal=Calendar.find(params[:id])
@@ -74,13 +61,14 @@ class CalendarsController < ApplicationController
 
   # reopen calendar
   def update
-      @cal=Calendar.find(params[:id])
+      cal=Calendar.find(params[:id])
+      newdate = cal.status ? Date.current : nil
 
-     if @cal.update_attributes(:status => 't',:fecha_cierre => nil)
-            if current_emp.notif_apertura 
-              UserMailer.nuevo_calendario(@cal).deliver
+     if cal.update_attributes(:status => !cal.status,:fecha_cierre => newdate)
+            if current_emp.notif_apertura
+              UserMailer.nuevo_calendario(cal).deliver
             end
-            flash[:success] = "Ejercicio actualizado correctamente"      
+            flash[:success] = "Ejercicio actualizado correctamente"
      else
             flash[:danger] = "Se ha producido un error al actualizar el ejercicio. "
      end
@@ -100,14 +88,13 @@ class CalendarsController < ApplicationController
 
      if @cal.save(:validate => false)
             flash[:success] = "Ejercicio actualizado correctamente"
-            redirect_to calendars_url  
+            redirect_to calendars_url
      else
             flash[:danger] = "Se ha producido un error."
             redirect_to action: "days", id: params[:id]
      end
-
-      
   end
+
   #private methods
   private
 

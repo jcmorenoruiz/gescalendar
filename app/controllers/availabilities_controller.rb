@@ -7,7 +7,7 @@ class AvailabilitiesController < ApplicationController
 
 	def new
 			@dpto=Department.find(params[:id])
-			if chief_user? && current_user.department != @dpto
+			if chief_user? && (current_user.department != @dpto || !current_user.department.jefe_auditor)
         flash[:danger] = 'ERROR. No tiene acceso al recurso solicitado.'
         redirect_to departments_url
       end
@@ -45,7 +45,7 @@ class AvailabilitiesController < ApplicationController
           @positions = Employee.unscoped.where(:department_id => @dpto.id).order('cargo ASC').select(:cargo).distinct
         render 'edit'
     end
-	end 
+	end
 
 	def destroy
 		  if @av.destroy

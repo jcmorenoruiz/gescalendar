@@ -28,6 +28,8 @@
 				<%= select_year(@date, {start_year: (Date.current.year-1), end_year: (Date.current.year+1)},{:class => 'form-control'}) %>
 		</div>
 		
+
+		<% if chief_user? %>
 		<div class="form-group">
 			<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Nombre de empleado", :class => 'search-query form-control' %>
 		</div>
@@ -35,6 +37,7 @@
 		<div class="form-group">
 			<%= select_tag :department, options_for_select([["Departamento" , "" ]]+@dptos.collect{ |u| [u.nombre, u.id] },params[:department]), :class => 'form-control'%>
 		</div>
+		<% end %>
 		<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
 		  <%= link_to("Limpiar", requests_calendar_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
 		  <%= link_to "Exportar en Excel", requests_export_requests_path+'.xlsx', :class=>'btn btn-link', :title=>"Exportar en .xlsx" %>

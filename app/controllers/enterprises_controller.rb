@@ -19,12 +19,6 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
         end
   end
 
-  def show
-  end
-
-  def index
-  end
-
   def new
     @countries=Enterprise.new.countries
   	@enterprise = Enterprise.new
@@ -79,7 +73,10 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
     # Evitar acceso a informacion de otras empresas. Salvo si es superadmin.
     def correct_emp
       @emp=Enterprise.find(params[:id])
-      redirect_to(current_emp) unless current_emp.id==@emp.id || current_user.role>3
+      unless current_emp.id==@emp.id || current_user.role>3
+        flash[:danger] = 'ERROR. Acceso no autorizado al recurso solicitado.'
+        redirect_to(root_path)
+      end
     end
 
 end

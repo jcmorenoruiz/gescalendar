@@ -10,9 +10,9 @@ class DepartmentsController < ApplicationController
 	def index
 		 @departments=Department.where(enterprise_id: current_emp.id)
 		 # filters
-      	 @departments=@departments.filter(params.slice(:status,:starts_with))	
+      	 @departments=@departments.filter(params.slice(:status))	
       	 # paginate
-      	 @departments=@departments.paginate(page: params[:page]) # employes on departments
+      	 #@departments=@departments.paginate(page: params[:page]) # employes on departments
 	end 
 	def new
 		@dpto=Department.new
@@ -80,7 +80,7 @@ class DepartmentsController < ApplicationController
     # private methods
     private
      	def department_params
-   		params.require(:department).permit(:nombre, 
+   		params.require(:department).permit(:nombre,:jefe_auditor,
    			availabilities_attributes: [:num_min_emp,:notas,:desde,:hasta,:cargo],
    		  :request_type_ids => [],
    		  :request_type_num_max_dias => []

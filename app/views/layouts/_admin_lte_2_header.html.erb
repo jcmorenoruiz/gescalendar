@@ -10,6 +10,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Requests Tasks: -->
+        <% if chief_user? || admin_user? %>
         <li class="dropdown tasks-menu">
           <% if pending_requests>0 %>
             <%= link_to ("Solicitudes <i class='fa fa-bell-o'></i><span class='label label-danger'> #{ pending_requests } </span>").html_safe, requests_pending_path, :class =>'dropdown-toggle', "data-toggle" => 'dropdown' %>
@@ -24,6 +25,7 @@
             </li>
           </ul>
         </li>
+        <% end %>
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">

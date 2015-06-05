@@ -30,9 +30,11 @@
       <li><%= link_to "<i class='fa fa-calendar'></i><span>Calendario</span>".html_safe, requests_calendar_path %></li>
       <li><%= link_to "<i class='fa fa-table'></i><span>Mi Balance</span>".html_safe, {controller: "employees",action: "balance" , id: current_user.id} %></li>
 
-      <li class="header">GESTION DE EMPRESA</li>
-      <li><%= link_to ("<i class='fa fa-book'></i>Solicitudes <span class='badge'> #{ pending_requests } </span>").html_safe, requests_pending_path %></li>
-      <li><%= link_to "<i class='fa fa-pie-chart'></i><span>Estadísticas</span>".html_safe, requests_stats_path %></li>
+      <% if chief_user? || admin_user? %>
+        <li class="header">GESTION DE EMPRESA</li>
+        <li><%= link_to ("<i class='fa fa-book'></i>Solicitudes <span class='badge'> #{ pending_requests } </span>").html_safe, requests_pending_path %></li>
+        <li><%= link_to "<i class='fa fa-pie-chart'></i><span>Estadísticas</span>".html_safe, requests_stats_path %></li>
+      <% end %>
 
       <% if chief_user? %>
       <li class="treeview">
@@ -43,6 +45,8 @@
         </ul>
       </li>
       <% end %>
+
+      <% if chief_user? || admin_user? %>
       <li class="treeview">
         <a href="#"><span>Empleados</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
@@ -54,6 +58,7 @@
           <% end %>
         </ul>
       </li>
+      <% end %>
 
       <% if admin_user? %>
       <li class="treeview">

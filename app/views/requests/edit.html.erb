@@ -82,7 +82,7 @@
 	</fieldset>
 
  <div class="modal-footer">
-     <% if current_user.role>1 %>
+     <% if current_user.role>1 && !@request.denegada? %>
       <%= f.submit "Guardar", class:"btn btn-medium btn-primary" %>
      <% end %>
 

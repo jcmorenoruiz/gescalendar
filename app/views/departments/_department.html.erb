@@ -11,16 +11,14 @@
 				employees_path(department: department.id, status: 'f') %>
 		</td>
 
-		<td><%= link_to 'Disponibilidad', department_path(department), :class =>"btn btn-small btn-default" %></td>
-
 
 		<td>
-		<%= link_to 'Editar',[:edit,department], :class =>"btn btn-small btn-default" %>
+		<%= link_to 'Editar',[:edit,department], :class =>"btn btn-sm btn-default" %>
 
 		<% if department.status %>
-			<%= link_to "Dar Baja", department, method: :delete, data: { confirm: "Esta seguro?" }, :class => "btn btn-small btn-danger" %>
+			<%= link_to "Dar Baja", department, method: :delete, data: { confirm: "Esta seguro?" }, :class => "btn btn-sm btn-danger" %>
 		<% else %>
-			<%= link_to "Reactivar", department, method: :delete, data: { confirm: "Esta seguro?" }, :class => "btn btn-small btn-danger" %>
+			<%= link_to "Reactivar", department, method: :delete, data: { confirm: "Esta seguro?" }, :class => "btn btn-sm btn-danger" %>
 		<% end %> 
 
 		 </td>

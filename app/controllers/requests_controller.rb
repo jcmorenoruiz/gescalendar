@@ -1,9 +1,10 @@
+
 class RequestsController < ApplicationController
   
   before_action :signed_in_user
   before_action :chief_user, only: [:edit, :update,:pending]
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update , :destroy]
+  before_action :correct_user, only: [:edit, :update ]
   before_action :correct_user_new, only: [:new]
   before_action :correct_user_create, only: [:create]
   before_action :correct_dpto, only: [:calendar]
@@ -61,7 +62,7 @@ class RequestsController < ApplicationController
   end
 
   def update
-      
+
       if chief_user? && @request.employee_id == current_user.id
         flash[:danger] = "No tiene permisos para auditar sus propias solicitudes"
         render "edit"
@@ -88,9 +89,17 @@ class RequestsController < ApplicationController
 
   def destroy   
     @emp = Employee.find(@request.employee_id)
-    @request.destroy
-    flash[:success]='Solicitud anulada correctamente'
-    redirect_to employee_path(@emp) 
+    if @request.employee_id != current_user.id
+      flash[:danger] = 'No tiene acceso al recurso solicitado'
+    else
+      if @request.destroy
+        flash[:success]='Solicitud anulada correctamente'
+      else
+        flash[:danger] = 'Error al procesar la solicitud.'
+      end
+    end
+    redirect_to employee_path(@emp)
+
   end
 
   def stats
@@ -102,7 +111,9 @@ class RequestsController < ApplicationController
       @year=Date.current.year
     end
 
-
+    if chief_user? && params[:department].blank?
+      params[:department] = current_user.department.id
+    end
 
     if !params[:department].blank?
      @requests_types=RequestType.where(:id => DepartmentsRequestType.select('request_type_id').where(:department_id => params[:department]))
@@ -111,9 +122,14 @@ class RequestsController < ApplicationController
      @requests_types=RequestType.where(:enterprise_id => current_emp)
      @requests=Request.where(:employee_id => Employee.where(:department_id => current_emp.departments))
     end
-    
 
-
+    @request_by_rts = @requests_types.map{|rt|    
+         {name: rt.nombre, data: rt.requests.where('extract(year from desde)= ?',"#{@year}").unscope(:order).group_by_month(:desde).count}
+    }
+    @rts = @requests.unscope(:order).joins(:request_type).group(:nombre).count
+    @reqs = @requests.unscope(:order).group(:status).count.map { |k, v| [Request.statuses.key(k), v] }.to_h
+   
+   
     @dptos=Department.where(:enterprise_id =>current_emp)
   end
 
@@ -132,6 +148,8 @@ class RequestsController < ApplicationController
     end
 
     if chief_user? && params[:deparment].nil?
+      params[:department] = current_user.department.id
+    elsif emp_user? && params[:department].nil?
       params[:department] = current_user.department.id
     end
     # generate header calendar table
@@ -161,9 +179,10 @@ class RequestsController < ApplicationController
     end
 
     if chief_user?
-      @requests=Request.where(:employee_id => current_user.department.employees)
+      @requests=Request.where(:employee_id => current_user.department.employees).where('employee_id != ?',current_user.id)
     else admin_user?
       @requests=Request.where(:employee_id => Employee.where(:department_id =>current_emp.departments))
+        .where('employee_id != ?',current_user.id)
     end
 
     # filters
@@ -197,9 +216,15 @@ class RequestsController < ApplicationController
       if current_user.role<2
           redirect_to current_user
       elsif current_user.role==2
-           redirect_to current_user unless @request.employee.department.id==current_user.department.id
+           unless @request.employee.department.id==current_user.department.id
+            flash[:danger] = 'ERROR. No tiene acceso al recurso solicitado.'
+            redirect_to current_user
+           end
       elsif current_user.role==3
-        redirect_to current_user unless current_emp.departments.where(:id => @request.employee.department.id).any? 
+        unless current_emp.departments.where(:id => @request.employee.department.id).any?
+          flash[:danger] = 'ERROR. No tiene acceso al recurso solicitado.'
+          redirect_to current_user
+        end
       elsif current_user.role==4
         redirect_to admin_path
       end
