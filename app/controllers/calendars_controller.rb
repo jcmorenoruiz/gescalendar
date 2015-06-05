@@ -27,7 +27,7 @@ class CalendarsController < ApplicationController
       if current_emp.notif_apertura 
         UserMailer.nuevo_calendario(@calendar).deliver
       end
-      flash[:success]="Ejercicio activado correctamente. Se han asignado los dias no laborales por defecto. Acceda a 'Dias festivos' si desea modificarlos "
+      flash[:success]="Ejercicio activado correctamente. Se han asignado los dias no laborables por defecto. Acceda a 'Dias festivos' si desea modificarlos "
       redirect_to calendars_url
    else
       render 'new'

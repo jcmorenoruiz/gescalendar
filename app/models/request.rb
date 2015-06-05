@@ -50,27 +50,27 @@ class Request < ActiveRecord::Base
 	def check_rest_days
 
 		emp=Employee.find(employee_id)
-		calendar=Calendar.where(:department_id => emp.department_id,:anio => desde.year.to_i).first
+		calendar=Calendar.where(:department_id => emp.department_id,:anio => Date.parse(desde.to_s).year.to_i).first
+    if !calendar.nil?
 
-		dias_requested=weekdays_in_date_range(desde..hasta,calendar)
-		rt=RequestType.find(request_type_id)
-		dias=0
-	
-		#get all requests from employee
-    	requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).where('extract(year from desde)= ?',"#{desde.year.to_i}")
-     	
-	    #working days requested.
-	    requests.each do |rq|  
-	      dias+=weekdays_in_date_range(rq.desde..rq.hasta,calendar) # update weekdays..... monday...
-	    end
+  		dias_requested=weekdays_in_date_range(desde..hasta,calendar)
+  		rt=RequestType.find(request_type_id)
+  		dias=0
+  		#get all requests from employee
+      requests=Request.joins(:request_type).where(:employee_id => employee_id,status: [1,2],:request_type_id => request_type_id).where('extract(year from desde)= ?',"#{desde.year.to_i}")
 
-	    #get rest days
-	    num_dias_max=Request.rest_days(desde.year.to_i,employee_id,rt.num_dias_max)
-	   
-	    if dias_requested>(num_dias_max-dias)
-	    	errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(num_dias_max-dias)} dias)")
-	    end
+  	   #working days requested.
+  	  requests.each do |rq|  
+  	    dias+=weekdays_in_date_range(rq.desde..rq.hasta,calendar) # update weekdays..... monday...
+  	  end
 
+  	  #get rest days
+  	  num_dias_max=Request.rest_days(desde.year.to_i,employee_id,rt.num_dias_max)
+
+  	  if dias_requested>(num_dias_max-dias)
+  	    errors.add(:desde,"Debe seleccionar un periodo igual o inferior a los días restantes. (#{(num_dias_max-dias)} dias)")
+  	  end
+      end
 	end
 
 
@@ -100,9 +100,9 @@ class Request < ActiveRecord::Base
 	# check if the calendar is open for requests
 	def calendar_open
 		cal=Calendar.where(:anio => Date.parse(desde.to_s).year,:department_id => Employee.find(employee_id).department.id).first
-		if cal.nil? || cal.status!=true 
-				errors.add(:desde,"El calendario para las fechas seleccionadas esta cerrado.")
-		end	
+		if cal.nil? || cal.status!=true
+				errors.add(:desde,"El calendario para las fechas seleccionadas esta cerrado por su auditor.")
+		end
 	end
 
 	def min_disponibilidad
