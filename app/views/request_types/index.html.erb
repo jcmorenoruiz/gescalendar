@@ -15,6 +15,12 @@
 
 <h2 class="sub-header">Listado de tipos de Solicitudes</h2>
 
+
+<div class="well well-sm">
+  <%= link_to "Nuevo tipo de solicitudes!", new_request_type_path, class: "btn btn-medium btn-primary" %> 
+</div>
+
+
 <div class="well well-sm">
   <%= form_tag(request_types_path, :method => "get" , :class => 'form-inline') do %>
     <%= select_tag :status, options_for_select([["Activo","t"],["Inactivo","f"]],params[:status]), :class=> 'form-control input-sm' %>

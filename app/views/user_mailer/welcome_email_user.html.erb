@@ -6,7 +6,7 @@
   <body>
     <h2> Bienvenido a Gescalendar, <%= @user.nombre %></h2>
     <p>
-       Su registro en GesCalendar (gescalendar.herokuapp.com) se ha completado satisfactoriamente, su email de acceso es: <strong><%= @user.email %>.</strong><br>
+      Su cuenta en GesCalendar ha sido activada por la empresa <%= @user.department.enterprise.empresa %>.  Puede acceder a la aplicación mediante su email: <strong><%= @user.email %>.</strong> y password: <%= @newpass %><br>
     </p>
     <p>
       Para hacer login en la aplicación, haga click en el siguiente link: <%= link_to "GesCalendar", @url %>.

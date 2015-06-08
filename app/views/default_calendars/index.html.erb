@@ -1,3 +1,19 @@
+
+<%= javascript_include_tag "datatables.language" %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#default_calendars').DataTable({
+          "language": language,
+           "columnDefs": [
+            { "orderable": false, "targets": [4,5] },
+            { "searchable": false, "targets": [4,5]}
+          ],
+          "destroy": true
+        });
+  } );
+</script>
+
 <% provide(:title, 'Lista de Calendarios') %>
 <h2 class="sub-header">Lista de Calendarios</h2>
   
@@ -7,7 +23,7 @@
 
 <div class="well well-sm">
   <%= form_tag(default_calendars_path, :method => "get" , :class => 'form-inline') do %>
-    <%= select_tag :status, options_for_select([["Estado: Activo","t"],["Estado: No activo","f"]],params[:status]), :class=> 'form-control' %>
+    <%= select_tag :status, options_for_select([["Todos",""],["Estado: Activo","t"],["Estado: No activo","f"]],params[:status]), :class=> 'form-control' %>
     <%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
     <%= link_to("Limpiar", default_calendars_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
   <% end %>
@@ -19,14 +35,15 @@
         <strong>Aviso!</strong> No se encontraron resultados.
     </div>
   <% end %>
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped" id="default_calendars">
   <thead>
     <tr>
       <th>ID</th>
       <th>Año</th>
-     
-      <th colspan="2">Estado</th>
+      <th >Estado</th>
       <th>Días no laborables</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -36,16 +53,15 @@
         <td width="5%"><%= default_calendar.id %> </td>
         <td><%= default_calendar.anio %></td>
         <td><%= show_status(default_calendar.status) %> </td>
-       
-        <td>
-          <% if default_calendar.status %>
-            <%= link_to "Desactivar", default_calendar, method: :delete, :class => "btn btn-sm btn-default", data: { confirm: "Esta seguro? Una vez eliminado el calendario no a aparecera por defecto a las nuevas empresas registradas en el sistema" } %>
-          <% else %>
-            <%= link_to "Reactivar", default_calendar, method: :delete, :class => "btn btn-sm btn-default" ,data: { confirm: "Esta seguro? Una vez activado el calendario aparecera por defecto a las empresas registradas en el sistema" } %>
-          <% end %>
-        </td>
          <td>  <%= default_calendar.default_line_calendars.count %></td>
          <td><%= link_to "Días no laborables", default_calendar_path(default_calendar.id) ,:class => "btn btn-sm btn-default" %></td>
+           <td>
+          <% if default_calendar.status %>
+            <%= link_to "Desactivar", default_calendar, method: :delete, :class => "btn btn-sm btn-danger", data: { confirm: "Esta seguro? Una vez eliminado el calendario no a aparecera por defecto a las nuevas empresas registradas en el sistema" } %>
+          <% else %>
+            <%= link_to "Reactivar", default_calendar, method: :delete, :class => "btn btn-sm btn-danger" ,data: { confirm: "Esta seguro? Una vez activado el calendario aparecera por defecto a las empresas registradas en el sistema" } %>
+          <% end %>
+        </td>
       
       </tr>
     <% end %>

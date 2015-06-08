@@ -18,6 +18,12 @@
 <% provide(:title, 'Lista de Departamentos') %>
 <h2 class="sub-header">Calendarios</h2>
 
+
+<div class="well well-sm">
+  <%= link_to "Nuevo Calendario!", new_calendar_path, class: "btn btn-medium btn-primary" %> 
+</div>
+
+
 <div class="well well-sm">
 	<% if @calendars.count<1 && params[:status]=='t' %>
 	<div class="alert alert-info">

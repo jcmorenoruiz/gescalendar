@@ -3,6 +3,7 @@ class EnterprisesController < ApplicationController
 before_action :signed_in_user, only: [:index,:edit,:update,:show] # => empleados
 before_action :admin_user, only: [:show,:edit,:update]  # => admin
 before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
+before_action :superadmin_user, only: [:destroy]
 
   def edit
       @countries=Enterprise.new.countries
@@ -57,6 +58,17 @@ before_action :correct_emp,  only: [:show,:edit,:update]  # => superadmin
   end 
    
 
+  def destroy
+    emp=Enterprise.find(params[:id])
+
+    if emp.update_attribute(:status, !emp.status)
+      flash[:success]="Se ha actualizado el estado de la empresa correctamente"
+    else
+      flash[:danger]= "Error al actualizar el estado de la empresa"
+    end
+
+      redirect_to admin_summarize_path
+  end
 
    	private
 

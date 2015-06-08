@@ -1,8 +1,21 @@
-<h3>Calendario</h3>
+
+<script type="text/javascript">
+ function open_modal_info(desde,hasta,rt){
+ 		$('#req_desde').html(desde);
+ 		$('#req_hasta').html(hasta);
+ 		$('#req_rt').html(rt);
+		$('#myModal').modal('show');
+ }
+
+</script>
+
+
+<h2 class="sub-header">Calendario</h2>
+
 <style type="text/css">	
 .table th, .table td{
 	padding:5px;
-	font-size:13px;
+	font-size:12px;
 }
 
 
@@ -12,8 +25,6 @@
 
 .table-bordered td{
 	border-left:2px solid white;
-/*	border-top:2px solid white; */
-
 }
 </style>
 
@@ -29,7 +40,7 @@
 		</div>
 		
 
-		<% if chief_user? %>
+		<% if chief_user? || admin_user? %>
 		<div class="form-group">
 			<%= text_field_tag :starts_with,params[:starts_with],placeholder: "Nombre de empleado", :class => 'search-query form-control' %>
 		</div>
@@ -99,7 +110,8 @@
 									<% if dia.wday==6 || dia.wday==0	%>
 										<td style="background:#D9D9D9;"></td>
 									<% elsif !req.nil? %>
-													<td style="background:<%= req.request_type.color %>"></td>
+										<td style="background:<%= req.request_type.color %>; cursor:pointer" onclick="open_modal_info('<%= req.desde %>','<%= req.hasta %>','<%= req.request_type.nombre %>')">
+										</td>
 									<% else %>
 												<td></td>
 									<% end %>
@@ -127,5 +139,40 @@
 
 
 
+              
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Datos de la solicitud</h4>
+      </div>
+      <div class="modal-body">
+
+				<div class="row">
+						<label class="col-xs-3 col-md-2"><strong>Desde:</strong></label>
+						<div class="col-xs-3 col-md-2">
+							 <span  id="req_desde"></span>
+						</div>
+						 <label class="col-xs-3 col-md-2"><strong>Hasta:</strong></label>
+						 <div class="col-xs-3 col-md-2">
+						 	<span  id="req_hasta"></span><br>
+						 </div>
+				</div>
+
+				<div class="row">
+      		<label class="col-sm-2"><strong>Solicitud:</strong></label>
+        	<span id="req_rt"></span><br>
+       	</div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Modal -->
 
 

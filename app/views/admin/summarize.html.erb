@@ -1,0 +1,68 @@
+<%= javascript_include_tag "datatables.language" %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#enterprises').DataTable({
+      		"language": language,
+           "columnDefs": [
+  			    { "orderable": false, "targets": [9] },
+  			    { "type": 'date-eu', targets: [7,8] },
+  			    { "searchable": false, "targets": [9]}
+  			  ],
+  			  "destroy": true
+      	});
+  } );
+</script>
+
+<% provide(:title, 'Resumen de empresas') %>
+<h2 class="sub-header">Resumen de empresas registradas</h2>
+
+
+	
+<% if @enterprises.count>0 %>
+	<table class="table table-hover table-striped" id="enterprises">
+
+	<thead>
+		<th>Empresa</th>
+		<th>Dptos</th>
+		<th>Empleados</th>
+		<th>Permisos</th>
+		<th>Periodos</th>
+		<th>Calendarios</th>
+		<th>Estado</th>
+		<th>Fec. alta</th>
+		<th>Fec. baja </th>
+		<th>&nbsp;</th>
+	</thead>
+	<tbody>
+		<% @enterprises.each do |emp| %>
+		<tr class="fields">		
+			<td><%= emp.empresa  %></td>
+			<td><%= emp.departments.count %></td>
+			<td><%= @employees[emp.id] %></td>
+			<td><%= @request[emp.id] %></td>
+			<td><%= @availabilities[emp.id] %></td>
+			<td><%= @calendars[emp.id] %> </td>
+			<td><%= bool_to_s(emp.status) %></td>
+			<td><%= emp.created_at.strftime('%d-%m-%Y') %></td>
+			<td><%= emp.fecha_baja.nil?  ? "" : emp.fecha_baja.strftime('%d-%m-%Y') %></td>
+			<td>
+				<% if emp.status %>
+					<%= link_to "Dar baja", emp, method: :delete, data: { confirm: "Esta seguro? Una vez que la empresa sea dada de baja, sus empleados no podran seguir utillizand la aplicación." },
+						:class => 'btn btn-sm btn-danger' %>
+				<% else %>
+					<%= link_to "Reactivar", emp, method: :delete, data: { confirm: "Esta seguro? Una vez que la empresa sea reactivada, sus empleados podran utilizar de nuevo la aplicación." },
+						:class => 'btn btn-sm btn-danger' %>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+	</table>
+<% else %>
+
+<div class="alert alert-info">
+	Actualmente no hay registrada ninguna empresa en la aplicación
+</div>
+<% end %>
+

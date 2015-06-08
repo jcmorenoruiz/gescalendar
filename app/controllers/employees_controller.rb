@@ -73,6 +73,7 @@ class EmployeesController < ApplicationController
 
       if(@emp.save)
    			flash[:success] = "Empleado dado de alta correctamente"
+        UserMailer.welcome_email_user(@emp,params[:employee][:password]).deliver
    			redirect_to employees_url
    		else
    			render 'new'
@@ -145,7 +146,7 @@ class EmployeesController < ApplicationController
 
       @calselected=year
       #get request for user. for calendar
-      calendar=Calendar.where(department_id: @emp.department,anio: year).first
+      calendar=Calendar.where(department_id: @emp.department_id,anio: year).first
       requests=Request.joins(:request_type).select('requests.id,requests.status,request_types.num_dias_max as maxdias,(hasta-desde)+1 as dias,desde,hasta,nombre,request_type_id as rid')
         .where(:employee_id => @emp.id,status: [1,2]).all.where('extract(year from desde)= ?',"#{year}")
      

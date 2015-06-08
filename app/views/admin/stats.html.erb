@@ -2,13 +2,13 @@
 <h2 class="sub-header">Estadísticas de empresas registradas</h2>
 
 <div class="well well-sm">
-	<%= form_tag(admin_resumen_path, :method => "get" , :class => 'form-inline') do %>
+	<%= form_tag(admin_stats_path, :method => "get" , :class => 'form-inline') do %>
 
 		<%= select_month(@month, use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'month') %>
 		<%= select_year(@year, start_year: 2.years.ago.year, end_year: Time.now.year+1, :class =>'input-large', :field_name =>'year')  %>
 
 	<%= submit_tag "Buscar", :name => nil, class:"btn btn-medium btn-primary" %>
-	  <%= link_to("Limpiar", admin_resumen_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
+	  <%= link_to("Limpiar", admin_stats_path,  :class => "btn btn-info", :title => "Limpiar parámetros de búsqueda") %>
 	<br />
 
 	<% end %>

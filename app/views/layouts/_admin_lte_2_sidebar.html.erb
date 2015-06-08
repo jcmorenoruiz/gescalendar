@@ -16,8 +16,31 @@
     </div>
 
     <% if superadmin_user? %>
+      <ul class="sidebar-menu">
+        <li class="header">MENU PRINCIPAL</li>
+        <li><%= link_to "Inicio", admin_path %></li>
+        <li><%= link_to "Resumen", admin_summarize_path %></li>
+        <li><%= link_to "Estadísticas", admin_stats_path %></li>
 
+        <li class="header">GESTION DE EMPRESAS</li>
 
+        <li class="treeview">
+          <a href="#"><span>Calendarios</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><%= link_to "<i class='fa fa-circle-o'></i>Nuevo calendario".html_safe, new_default_calendar_path %></li>
+            <li><%= link_to "<i class='fa fa-circle-o'></i>Listar calendarios".html_safe, default_calendars_path %></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><span>Permisos laborales</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><%= link_to "<i class='fa fa-circle-o'></i>Nuevo permiso".html_safe, new_default_request_type_path %></li>
+            <li><%= link_to "<i class='fa fa-circle-o'></i>Listar permisos".html_safe, default_request_types_path %></li>
+          </ul>
+        </li>
+        
+      </ul>
 
     <% else %>
 

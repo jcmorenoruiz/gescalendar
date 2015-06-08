@@ -1,3 +1,19 @@
+
+<%= javascript_include_tag "datatables.language" %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#default_request_types').DataTable({
+          "language": language,
+           "columnDefs": [
+            { "orderable": false, "targets": [3,4] },
+            { "searchable": false, "targets": [3,4]}
+          ],
+          "destroy": true
+        });
+  } );
+</script>
+
 <% provide(:title, 'Lista de Calendarios') %>
 <h2 class="sub-header">Lista de Permisos</h2>
 
@@ -13,7 +29,7 @@
   <% end %>
 </div>
 
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped" id="default_request_types">
   <thead>
     <tr>
       <th>Nombre</th>
@@ -27,9 +43,9 @@
       <tr>
         <td><%= default_request_type.nombre %></td>
         <td><%= default_request_type.num_dias_max %></td>
-       <td><%= show_status(default_request_type.status) %> </td>
-        <td><%= link_to 'Editar', edit_default_request_type_path(default_request_type), :class =>'btn btn-default' %></td>
-        <td><%= link_to 'Borrar', default_request_type, :class =>'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= show_status(default_request_type.status) %> </td>
+        <td><%= link_to 'Editar', edit_default_request_type_path(default_request_type), :class =>'btn btn-default btn-sm' %></td>
+        <td><%= link_to 'Eliminar', default_request_type, :class =>'btn btn-danger btn-sm', method: :delete, data: { confirm: 'Esta seguro de que desea eliminar este tipo de solicitud?' } %></td>
       </tr>
     <% end %>
   </tbody>

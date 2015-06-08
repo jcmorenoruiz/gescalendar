@@ -1,0 +1,16 @@
+<% provide(:title, "Forgot password") %>
+
+
+<div class="container">
+     
+  
+    <%= form_for(:password_reset, url: password_resets_path,:html => {:class=>'form-signin'}) do |f| %>
+     <h3 class="form-signin-heading">Recuperar contraseña</h3>
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+      <br>
+      <%= f.submit "Recuperar", class: "btn btn-primary" %>
+    <% end %>
+ 
+  
+</div>

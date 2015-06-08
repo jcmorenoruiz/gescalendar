@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   
   
+  get 'password_resets/new'
+
   get 'welcome/index'
 
   get 'admin' => 'admin#index'
-  get 'admin/resumen' => 'admin#resumen'
+  get 'admin/stats' => 'admin#stats'
+  get 'admin/summarize' => 'admin#summarize'
 
   resources :departments_request_types
   resources :default_request_types
@@ -25,7 +28,7 @@ Rails.application.routes.draw do
   resources :line_calendars
 
 
-  resources :enterprises, only: [:show,:new, :create,:edit,:update]
+  resources :enterprises, only: [:new, :create,:edit,:update,:destroy]
   resources :employees
   resources :departments
   resources :sessions, only: [:new, :create, :destroy]
@@ -50,6 +53,8 @@ Rails.application.routes.draw do
   get "calendars/update_days"
   match 'calendars/update_days/:id' => 'calendars#update_days', via: 'patch'
   
+  # password reset
+  resources :password_resets,     only: [:new, :create]
 
   # Not logged in
   match '/signup', to: 'enterprises#new', via: 'get'

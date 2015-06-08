@@ -8,6 +8,13 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Bienvenido a GesCalendar')
   end
 
+  def welcome_email_user(user, password)
+    @user = user
+    @newpass=password
+    @url  = 'http://gescalendar.herokuapp.com'
+    mail(to: @user.email, subject: 'Bienvenido a GesCalendar')
+
+  end
 
   def auditoria_solicitud(request)
   	@request=request
@@ -93,6 +100,13 @@ class UserMailer < ActionMailer::Base
 
 
     mail(to: emp_emails.concat(admins_emails.concat(chief_emails)), subject: subject)
+  end
+
+  def password_reset(employee,newpass)
+    @user = employee
+    @newpass=newpass
+    @url  = 'http://gescalendar.herokuapp.com'
+    mail to: employee.email, subject: "Recuperacion de password en GesCalendar"
   end
 
 
