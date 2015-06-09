@@ -61,7 +61,7 @@ class Request < ActiveRecord::Base
 
   	   #working days requested.
   	  requests.each do |rq|  
-  	    dias+=weekdays_in_date_range(rq.desde..rq.hasta,calendar) # update weekdays..... monday...
+  	    dias+=weekdays_in_date_range(rq.desde..rq.hasta,calendar)
   	  end
 
   	  #get rest days
@@ -135,7 +135,7 @@ class Request < ActiveRecord::Base
 
   	def weekdays_in_date_range(range,calendar)
     	# You could modify the select block to also check for holidays
-    	range.select { |d| (week_working_days(calendar)).include?(d.wday) && working_day(d,calendar) }.size
+    	range.select { |d| (week_working_days(calendar)).include?(d.wday+1) && working_day(d,calendar) }.size
   	end
 
   	def working_day(d,calendar)
@@ -152,9 +152,9 @@ class Request < ActiveRecord::Base
       return true
   	end
 
-  	 def week_working_days(calendar)
-        return [calendar.d1 ? 1:0,calendar.d2 ? 2:0,calendar.d3 ? 3:0,calendar.d4 ? 4:0,calendar.d5 ? 5:0,calendar.d6 ? 6:0,calendar.d7 ? 7:0]
-  	end
+  	def week_working_days(calendar)
+        return [calendar.d1 ? 2:0,calendar.d2 ? 3:0,calendar.d3 ? 4:0,calendar.d4 ? 5:0,calendar.d5 ? 6:0,calendar.d6 ? 7:0,calendar.d7 ? 1:0]
+    end
 
 	
 end

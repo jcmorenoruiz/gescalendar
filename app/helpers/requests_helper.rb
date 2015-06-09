@@ -20,7 +20,7 @@ module RequestsHelper
   end
 
   def week_working_days(calendar)
-        return [calendar.d1 ? 1:0,calendar.d2 ? 2:0,calendar.d3 ? 3:0,calendar.d4 ? 4:0,calendar.d5 ? 5:0,calendar.d6 ? 6:0,calendar.d7 ? 7:0]
+        return [calendar.d1 ? 2:0,calendar.d2 ? 3:0,calendar.d3 ? 4:0,calendar.d4 ? 5:0,calendar.d5 ? 6:0,calendar.d6 ? 7:0,calendar.d7 ? 1:0]
   end
 
   def pending_requests

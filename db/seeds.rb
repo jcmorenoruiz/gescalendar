@@ -4,8 +4,8 @@
 # Examples:
 #
 default_calendars = [
-  [ "2014",'t' ],
-  [ "2015",'t' ]
+  [ 1,"2014",'t' ],
+  [ 2,"2015",'t' ]
 ]
 
 default_line_calendars = [
