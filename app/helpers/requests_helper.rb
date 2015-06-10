@@ -29,7 +29,8 @@ module RequestsHelper
         pending_requests=Request.where(:status => 1,:employee_id=> current_user.department.employees)
           .where.not(employee_id: current_user.id).count
     else admin_user?
-        pending_requests=Request.where(:status => 1,:employee_id =>Employee.where(:department_id => current_emp.departments)).count
+        pending_requests=Request.where(:status => 1,:employee_id =>Employee.where(:department_id => current_emp.departments))
+        .where.not(employee_id: current_user.id).count
     end
 
   end

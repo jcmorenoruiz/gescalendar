@@ -153,7 +153,11 @@
                 <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Ultimo <br>Calendario <br> DPTO.</span>
-                  <span class="info-box-number"><%= @last_calendar.anio %></span>
+                  <span class="info-box-number">
+                  <% if !@last_calendar.nil? %>
+                  <%= @last_calendar.anio %>
+                  <% end %>
+                  </span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
       </div>

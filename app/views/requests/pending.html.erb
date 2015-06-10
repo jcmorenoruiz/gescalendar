@@ -45,7 +45,8 @@
 <% if @requests.any? %>
 
 
-
+<div class="table-responsive row">
+<div class="col-md-12">
 <table class="table table-hover table-striped" id="requests">
 <thead>
 	<th>Empleado</th>
@@ -60,7 +61,8 @@
 	<%= render @requests %>
 </tbody>
 </table>
-
+</div>
+</div>
 
 <% else %>
 
