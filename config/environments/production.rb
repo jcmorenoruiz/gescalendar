@@ -90,7 +90,7 @@ Rails.application.configure do
     port:                 587,
     domain:               'gmail.com',
     user_name:            'pfc.gescalendar@gmail.com',
-    password:             'vajligay85A',
+    password:             'w8Mq4cNWC4lg&',
     authentication:       'plain',
     enable_starttls_auto: true  }
 end

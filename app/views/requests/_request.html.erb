@@ -1,7 +1,7 @@
 
 	<tr class="fields">
 
-	<td><%= request.employee.nombre %> </td>
+	<td nowrap><%= request.employee.nombre %> </td>
 	
 	<td><%= request.employee.department.nombre %></td>
 	<td><%= request.desde %></td>
@@ -18,7 +18,7 @@
 	<td><%= request.request_type.nombre %></td>
 	
 	<td><% if current_user.role<2 %>
-		<%= link_to "Mostrar", request, :class => "btn btn-small" %>
+		<%= link_to "Mostrar", request, :class => "btn btn-sm btn-default" %>
 			<% else %>
 		<%= link_to "Mostrar", edit_request_path(request), :class => "btn btn-sm btn-default" %>
 			<% end %>

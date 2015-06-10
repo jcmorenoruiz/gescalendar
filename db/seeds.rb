@@ -32,10 +32,7 @@ default_line_calendars = [
 
 default_request_types = [
   [ "Vacaciones", 22,'t' ],
-  [ "Asuntos Propios", 2,'t' ],
-  [ "Cambio de domicilio", 1,'t' ],
-  [ "Matrimonio",10,'t' ],
-  [ "Baja por enfermedad",60,'t']
+  [ "Asuntos Propios", 2,'t' ]
 ]
 
 # Enterprises

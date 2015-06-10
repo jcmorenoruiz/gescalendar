@@ -68,7 +68,7 @@
 		<table class="table table-hover table-striped table-bordered">
 			<thead>
 				<tr >
-					<th width="15%" rowspan="2" >
+					<th  rowspan="2" >
 						<button type="button" class="btn btn-primary anterior" aria-label="anterior">
 							<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
 						</button>
@@ -95,7 +95,7 @@
 			<tbody>
 				<% @employees.each do |e| %>
 				<tr>
-						<td>
+						<td nowrap>
 							<% if current_user.role>=2 %>
 								<%= link_to e.nombre, {controller: "employees", action: "balance", id: e.id}, :class=>'btn btn-small',
 									:style=>'padding:0px' %>

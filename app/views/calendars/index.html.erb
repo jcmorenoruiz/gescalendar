@@ -52,8 +52,8 @@
 	<thead>
 		<th >Año</th>
 		<th >Departamento</th>
-		<th >Fecha Inicio</th>
-		<th >Fecha Cierre </th>
+		<th >Fec. inicio</th>
+		<th >Fec. cierre </th>
 		<th >Dias</th>
 		<th >&nbsp;</th>
 		<th >&nbsp;</th>
@@ -77,11 +77,11 @@
 				
 			</td>
 			<td>
-<%= link_to "Días no laborables", calendar_path(cal) ,:class => "btn btn-sm btn-default" %>
+<%= link_to "Laborables", calendar_path(cal) ,:class => "btn btn-sm btn-default" %>
 			</td>
 			<td>
 			
-			<%= link_to "Días Hábiles", {action: "days" , id: cal.id} ,:class => "btn btn-sm btn-default" %>
+			<%= link_to "Hábiles", {action: "days" , id: cal.id} ,:class => "btn btn-sm btn-default" %>
 			
 			</td>
 		
