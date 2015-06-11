@@ -54,7 +54,7 @@ class EmployeesController < ApplicationController
         else
             @percent_rejected = 0
         end
-        @requests_pending = data_requests.where(:status => 1).count
+        @requests_pending = data_requests.where(:status => 1).where.not(:employee_id => current_user.id).count
         @request_month = data_requests.where('created_at>?',Time.now.beginning_of_month).count
         @tot_departments = current_emp.departments.count
         @tot_requests_types = current_emp.request_types.count

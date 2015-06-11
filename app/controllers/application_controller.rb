@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   rescue_from (ActiveRecord::RecordNotFound) { |exception| handle_exception(exception, 404) }
+  rescue_from (ActionController::RoutingError) { |exception| handle_exception(exception, 404) }
   layout 'admin_lte_2'
 
   # Prevent CSRF attacks by raising an exception.

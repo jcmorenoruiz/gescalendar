@@ -24,7 +24,7 @@
 <legend> Empresas registradas desde 01-<%= @month.to_s+'-'+@year.to_s  %> hasta el <%= Time.days_in_month(@month.to_i,@year.to_i).to_s+'-'+@month.to_s+'-'+@year.to_s %>  </legend>
 
      <%= line_chart @enterprises, min:0 %>
-
+º
 </div>
 
 <div class="well">

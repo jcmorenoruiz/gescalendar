@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   # redirect root if not action found
-  #get '*path' => redirect('/') 
+  match "*path", to: "errors#catch_404", via: :all
   
 
   
