@@ -1,9 +1,10 @@
 
 <script type="text/javascript">
- function open_modal_info(desde,hasta,rt){
+ function open_modal_info(desde,hasta,rt,notas){
  		$('#req_desde').html(desde);
  		$('#req_hasta').html(hasta);
  		$('#req_rt').html(rt);
+ 		$('#req_notas').html(notas);
 		$('#myModal').modal('show');
  }
 
@@ -98,7 +99,7 @@
 						<td nowrap>
 							<% if current_user.role>=2 %>
 								<%= link_to e.nombre, {controller: "employees", action: "balance", id: e.id}, :class=>'btn btn-small',
-									:style=>'padding:0px' %>
+									:style=>'padding:0px; font-size:13px' %>
 							<% else %>
 								<%= e.nombre %>
 							<% end %>
@@ -110,7 +111,7 @@
 									<% if dia.wday==6 || dia.wday==0	%>
 										<td style="background:#D9D9D9;"></td>
 									<% elsif !req.nil? %>
-										<td style="background:<%= req.request_type.color %>; cursor:pointer" onclick="open_modal_info('<%= req.desde %>','<%= req.hasta %>','<%= req.request_type.nombre %>')">
+										<td style="background:<%= req.request_type.color %>; cursor:pointer" onclick="open_modal_info('<%= req.desde %>','<%= req.hasta %>','<%= req.request_type.nombre %>','<%= req.motivo %>')">
 										</td>
 									<% else %>
 												<td></td>
@@ -132,7 +133,7 @@
 		</div>
 		<div class="box-body">
 			<% @requests_types.each do |rt| %>
-			<h4><span class="label" style="background:<%= rt.color %>"><b><%= rt.nombre %></b></span></h4>
+			<span class="label" style="background:<%= rt.color %>"><big><b><%= rt.nombre %></b></big></span>
 		<% end %>
 		</div>
 	</div>
@@ -164,6 +165,11 @@
 				<div class="row">
       		<label class="col-sm-2"><strong>Solicitud:</strong></label>
         	<span id="req_rt"></span><br>
+       	</div>
+
+       		<div class="row">
+      		<label class="col-sm-2"><strong>Notas:</strong></label>
+        	<span id="req_notas"></span><br>
        	</div>
 
       </div>

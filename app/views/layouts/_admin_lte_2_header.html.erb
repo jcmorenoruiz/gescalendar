@@ -37,8 +37,6 @@
             <li class="user-header">
             <%= image_tag("avatar_placeholder.png", alt: "User", :class => 'img-circle') %>
               <p>
-                
-                <%= current_user.nombre %> <br>
                 <%= current_user.cargo %> <br>
                 <%= current_user.department.nombre %> <br>
                 <small>Miembro desde <%= current_user.created_at.strftime("%d-%m-%Y")  %></small>

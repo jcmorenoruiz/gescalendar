@@ -37,7 +37,7 @@ default_request_types = [
 
 # Enterprises
 enterprises=[
-  ["Confort Systems","t",'Spain',"2015-04-03"],
+  ["Electrosur","t",'Spain',"2015-04-03"],
   ["Hybrid Auctions","t",'France',"2015-04-13"],
   ["GesCalendar","t",'Spain',"2015-04-01"],
   ["PayApi LTD","t",'Finland',"2015-04-18"]
@@ -56,20 +56,24 @@ departments=[
 
 # Employees
 employees=[
-["Juan Carlos Moreno","jcmorenoruiz@gmail.com","jcmoreno",3,"2014-07-13","t","Administrador",1,"2015-03-05"],
-["Antonio Robles","konin85@gmail.com","jcmoreno",2,"2014-07-13","t","Jefe Técnico",2,"2015-03-27"],
-["Jose Luis","darko_jc@msn.com","jcmoreno",1,"2014-07-13","t","Técnico Mantenimiento",2,"2015-04-03"],
-["Adolfo Rodriguez","juancarlos@payapi.in","jcmoreno",1,"2014-07-13","t","Técnico Instalaciones",2,"2015-04-27"],
-["Salvador Allende","jcmoreno@myconligusteam.com","jcmoreno",1,"2014-07-11","t","Técnico Instalaciones",2,"2015-04-17"],
-["Eva Maria Gamez","24390dsupoirfardshfs@gmail.com","jcmoreno",2,"2014-08-07","t","Jefe Técnico",3,"2015-05-03"],
-["Guti Sanchez","23asudfeww90234jdfs@gmail.com","jcmoreno",1,"2015-04-01","t","Técnico Instalaciones",3,"2015-05-08"],
-["Alfredo Sanchez","askldfjklñ23qru90q34ur@gmail.com","jcmoreno",1,"2015-03-01","t","Técnico Instalaciones",3,"2015-06-03"],
-["Santiago Gomez","24738902rwiujwrasioju@gmail.com","jcmoreno",2,"2015-01-01","t","Administrador",3,"2015-03-28"],
-["Gabriel Gutierrez","24738901rwiujwrasioju@gmail.com","jcmoreno",1,"2015-01-01","t","Técnico de Mantenimiento",3,"2015-04-13"],
-["Cristina Ruiz","2473892101rwiujwrasioju@gmail.com","jcmoreno",1,"2015-01-01","t","Logistica",3,"2015-05-14"],
-["Carlos Romero","pfc.gescalendar@gmail.com","jcmoreno",4,"2012-01-25","t","SUPERADMIN",7,"2015-04-19"], # SUPERADMIN
-["Antonio Benitez","antobenitez@msn.com","jcmoreno",1,"2015-02-25","t","Administrativo",4,"2015-03-21"], 
-["Rodolfo siguenza","rodol823@msn.com","jcmoreno",1,"2015-02-28","t","Administrativo",4,"2015-04-19"], 
+["Juan Carlos Moreno","gescalendar1@gmail.com","gescalendar1",3,"2014-07-13","t","Administrador",1,"2015-06-05"],
+["Antonio Robles","gescalendar2@gmail.com","gescalendar2",2,"2014-06-13","t","Jefe Técnico",2,"2015-06-12"],
+["Jose Luis","gescalendar3@gmail.com","gescalendar3",1,"2014-06-10","t","Técnico Mantenimiento",2,"2015-06-08"],
+["Adolfo Rodriguez","gescalendar4@gmail.com","gescalendar4",1,"2014-06-05","t","Técnico Instalaciones",2,"2015-06-12"],
+
+["Salvador Allende","gescalendar5@gmail.com","gescalendar5",1,"2014-07-11","t","Técnico Instalaciones",2,"2015-06-17"],
+["Eva Maria Gamez","gescalendar6@gmail.com","gescalendar6",2,"2014-08-07","t","Jefe Técnico",3,"2015-06-03"],
+["Guti Sanchez","gescalendar7@gmail.com","gescalendar7",1,"2015-04-01","t","Técnico Instalaciones",3,"2015-06-08"],
+
+["Alfredo Sanchez","gescalendar8@gmail.com","gescalendar8",1,"2015-03-01","t","Técnico Instalaciones",3,"2015-06-03"],
+["Santiago Gomez","gescalendar9@gmail.com","gescalendar9",2,"2015-01-01","t","Administrador",3,"2015-06-28"],
+["Gabriel Gutierrez","gescalendar10@gmail.com","gescalendar10",1,"2015-01-01","t","Técnico de Mantenimiento",3,"2015-06-13"],
+["Cristina Ruiz","gescalendar11@gmail.com","gescalendar11",1,"2015-01-01","t","Logistica",3,"2015-06-14"],
+
+["Carlos Romero","pfc.gescalendar@gmail.com","gescalendar",4,"2012-01-25","t","SUPERADMIN",7,"2015-06-16"], # SUPERADMIN
+
+["Antonio Benitez","juancarlos@payapi.in","jcmoreno",1,"2015-02-25","t","Administrativo",4,"2015-06-11"], 
+["Rodolfo Siguenza","rodolfo@payapi.in","jcmoreno",1,"2015-02-28","t","Administrativo",4,"2015-06-12"], 
 ]
 
 # requests
@@ -141,7 +145,7 @@ departments.each do |nombre,status,enterprise_id|
 
      if cal.valid?
         cal.save()
-        puts "guardado"
+        puts "calendario generado"
     else
        cal.errors.each do |e|
           puts e

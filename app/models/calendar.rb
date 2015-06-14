@@ -1,7 +1,7 @@
 class Calendar < ActiveRecord::Base
 	include Filterable
 	has_many :line_calendars
-	has_many :request_types
+
 	belongs_to :department , :inverse_of => :calendars
 	default_scope { order('anio ASC') }
 	scope :status, -> (status) { where status: status}

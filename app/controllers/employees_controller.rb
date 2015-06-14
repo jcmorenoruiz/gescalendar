@@ -69,11 +69,14 @@ class EmployeesController < ApplicationController
 
   	def create
    		@emp=Employee.new(employee_params)
+      newpass = Employee.new_password
+      @emp.password = newpass
+      @emp.password_confirmation = newpass
       @departments=Enterprise.find(current_emp).departments
 
       if(@emp.save)
    			flash[:success] = "Empleado dado de alta correctamente"
-        UserMailer.welcome_email_user(@emp,params[:employee][:password]).deliver
+        UserMailer.welcome_email_user(@emp,newpass).deliver
    			redirect_to employees_url
    		else
    			render 'new'

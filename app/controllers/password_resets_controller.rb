@@ -14,11 +14,11 @@ class PasswordResetsController < ApplicationController
         flash[:success] = "Se le ha enviado un email con las instrucciones para recuperar la constraseña"
         redirect_to signin_path
       else
-        flash.now[:danger] = "Se ha producido un error al generar el nuevo password. Por favor, vuelva a intentarlo."
+        flash[:danger] = "Se ha producido un error al generar el nuevo password. Por favor, vuelva a intentarlo."
         render 'new'
       end
     else
-      flash.now[:danger] = "No se ha encontrado el correo electronico indicado."
+      flash[:danger] = "No se ha encontrado el correo electronico indicado."
       render 'new'
     end
   end

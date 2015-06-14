@@ -1,7 +1,6 @@
 class Employee < ActiveRecord::Base
 	include Filterable
 	before_save { self.email = email.downcase }
-  before_save { self.nombre = nombre.capitalize }
 	before_create :create_remember_token
 
 	has_many :requests, dependent: :destroy
@@ -20,7 +19,7 @@ class Employee < ActiveRecord::Base
 				uniqueness: { case_sensitive: false }
 	
 	validates :password, length: { minimum: 6 }
-  validate :only_one_chief_department, on: :create
+  validate :only_one_chief_department, on: [:create,:update]
 
 	has_secure_password
 

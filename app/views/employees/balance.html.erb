@@ -54,8 +54,8 @@
 													<td ><%= rq.desde %></td>
 													<td ><%= rq.hasta %></td>
 													<td><%= rq.request_type.nombre %></td>
-													<td><%= @dias_habiles[rq.id].to_s+' ('+@total_dias[rq.id].to_s+')' %> </td>
-													
+												<!--	<td><%= @dias_habiles[rq.id].to_s+' ('+@total_dias[rq.id].to_s+')' %> </td> -->
+													<td><%= @dias_habiles[rq.id].to_s %></td>
 
 													<td>
 														<% if rq.status=='pendiente' %>

@@ -13,28 +13,28 @@
 		
 
 				<div class="field form-group">
-					<%= f.label :nombre,"Nombre Completo", :class => 'col-sm-2 control-label' %>
+					<%= f.label :nombre,"Nombre Completo*", :class => 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
 						<%= f.text_field :nombre, :class =>'form-control',:required => true %>
 					</div>
 				</div>
 				
 				<div class="field form-group">
-					<%= f.label :email, :class => 'col-sm-2 control-label' %>
+					<%= f.label :email," Email*", :class => 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
 					<%= f.text_field :email, :class =>'form-control', :required => true %>
 					</div>
 				</div>
 
 				<div class="field form-group">
-					<%= f.label :fecha_alta, "Fecha de alta", :class => 'col-sm-2 control-label' %>
+					<%= f.label :fecha_alta, "Fecha de alta*", :class => 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
 					<%= f.text_field :fecha_alta, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario", :required => true %>
 					</div>
 				</div>
 
 				<div class="field form-group">
-					<%= f.label :role, "Privilegios", :class=> 'col-sm-2 control-label' %>
+					<%= f.label :role, "Privilegios*", :class=> 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
 					<%= f.select :role, options_for_select([["Seleccione Rol...",0],["Empleado",1],["Jefe de Departamento",2],["Administrador",3]]),{prompt:"Seleccione Rol ..."},
 						:class => 'form-control', :required => true %> 
@@ -42,7 +42,7 @@
 				</div>
 
 				<div class="field form-group">
-					<%= f.label :department_id, "Departamento" , :class=> 'col-sm-2 control-label' %>
+					<%= f.label :department_id, "Departamento*" , :class=> 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
 							
 						<%= f.select :department_id,  options_for_select(@departments.map{ |s| [s.nombre, s.id] }),{prompt: 'Seleccione Departamento ...'}, 
@@ -52,27 +52,12 @@
 				</div>
 
 				<div class="field form-group">
-					<%= f.label :cargo , "Cargo (Opcional)",:class=> 'col-sm-2 control-label' %> 
+					<%= f.label :cargo , "Cargo",:class=> 'col-sm-2 control-label' %> 
 					<div class="col-sm-6 col-md-4">
 						<%= f.text_field :cargo, :class => 'form-control' %>
 					</div>
 				</div>
 
-				<div class="field form-group">
-					<%= f.label :password, :class=> 'col-sm-2 control-label' %>  
-						<div class="col-sm-6 col-md-4">
-						<%= f.password_field :password, :class => 'form-control', :required => true %>
-							</div>
-				</div>
-
-				<div class="field form-group">
-					<%= f.label :password_confirmation, "Confirmar password", :class=> 'col-sm-2 control-label' %>  
-						<div class="col-sm-6 col-md-4">
-						<%= f.password_field :password_confirmation, :class=> 'form-control', :required => true %>
-					</div>
-				</div>
-	
-	
 	</div>
 	<div class="modal-footer">
 		<%= f.submit "Guardar", class:"btn btn-medium btn-primary",:title =>"Guardar cambios para este departamento" %>
