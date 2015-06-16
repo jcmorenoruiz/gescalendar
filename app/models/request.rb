@@ -116,7 +116,7 @@ class Request < ActiveRecord::Base
 			
 				employees_on=Employee.where(:department_id => employee.department_id)
 					.where('upper(cargo) like ?',"#{employee.cargo.upcase}")
-					.where('not exists(select * from requests where ((desde - ?) * (? - hasta)) >= 0 and requests.employee_id=employees.id and status>0)',hasta,desde)
+					.where('not exists(select * from requests where ((desde - ?) * (? - hasta)) >= 0 and requests.employee_id=employees.id and status>0)',avail.hasta,avail.desde)
 
 				if employees_on.count<=avail.num_min_emp
 					errors.add(:desde,"No es posible realizar la solicitud ya que se ha establecido una disponibilidad mínima en su Departamento de #{avail.num_min_emp} Empleados disponibles con cargo: '#{avail.cargo}' durante los días comprendidos entre el #{avail.desde} a #{avail.hasta}")
