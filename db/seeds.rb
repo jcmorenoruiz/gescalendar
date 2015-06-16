@@ -56,7 +56,7 @@ departments=[
 
 # Employees
 employees=[
-["Juan Carlos Moreno","gescalendar1@gmail.com","gescalendar1",3,"2014-07-13","t","Administrador",1,"2015-06-05"],
+["Juan Carlos Moreno","gescalendar1@gmail.com","gescalendar1",3,"2014-07-13","t","Directo",1,"2015-06-05"],
 ["Antonio Robles","gescalendar2@gmail.com","gescalendar2",2,"2014-06-13","t","Jefe Técnico",2,"2015-06-12"],
 ["Jose Luis","gescalendar3@gmail.com","gescalendar3",1,"2014-06-10","t","Técnico Mantenimiento",2,"2015-06-08"],
 ["Adolfo Rodriguez","gescalendar4@gmail.com","gescalendar4",1,"2014-06-05","t","Técnico Instalaciones",2,"2015-06-12"],

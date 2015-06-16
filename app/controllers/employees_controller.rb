@@ -5,7 +5,7 @@ class EmployeesController < ApplicationController
   before_action :chief_user, only: [:index]
   before_action :admin_user, only: [:destroy]
   before_action :acceso_balance, only: [:balance,:show]
-  before_action :correct_user, only: [:edit, :update] # check user is from your own emp.
+  before_action :correct_user, only: [:edit, :update,:show] # check user is from your own emp.
   before_action :correct_emp, only: [:destroy]
 
 

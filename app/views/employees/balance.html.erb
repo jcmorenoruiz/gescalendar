@@ -17,6 +17,9 @@
 		<% end %>
 	</div>
 
+
+
+
 <div class="row">
 	<% @datos.each do |req| %>
 	<div class="col-md-6">
@@ -88,6 +91,10 @@
 	</div>
 <% end %>
 </div>
+
+<% if @datos.count<1 %>
+	<div class="alert alert-info">No se encontraron solicitudes para el año seleccionado</div>
+<% end %>
 
 	<% if chief_user? || admin_user? %>
 		<div class="modal-footer col-md-12">
