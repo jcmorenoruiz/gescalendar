@@ -10,14 +10,14 @@ class Availability < ActiveRecord::Base
 
 	validates_datetime :hasta, :on_or_after => :desde , :on_or_after_message => 'debe ser igual o posterior a la fecha de inicio'
 	# date range validations. (pendientes,confirmadas)
-	#validates :desde,:hasta,:overlap =>
-	#{
-	#	:scope => "department_id",
-	#	:scope => "cargo",
-	# 	:message_content => "Ya existe un periodo de disponibilidad en las fechas indicadas para el mismo cargo"
-	#}
-	validate :check_overlaps_cargo_department, on: :create
-	validate :edit_overlaps_cargo_department, on: :update
+	validates :desde,:hasta,:overlap =>
+	{
+		:scope => "department_id",
+		:scope => "cargo",
+		:message_content => "Ya existe un periodo de disponibilidad en las fechas indicadas para el mismo cargo"
+	}
+	#validate :check_overlaps_cargo_department, on: :create
+	#validate :edit_overlaps_cargo_department, on: :update
 
 	def check_overlaps_cargo_department
 		# if some day of availabilityes overlaps whith new period availability.	
