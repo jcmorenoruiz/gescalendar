@@ -1,6 +1,7 @@
 class Employee < ActiveRecord::Base
 	include Filterable
 	before_save { self.email = email.downcase }
+  before_save { self.cargo = ActiveSupport::Inflector.transliterate(self.cargo) }
 	before_create :create_remember_token
 
 	has_many :requests, dependent: :destroy

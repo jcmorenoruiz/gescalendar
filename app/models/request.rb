@@ -109,14 +109,14 @@ class Request < ActiveRecord::Base
 		# if some day of requests overlaps whith min period availability.
 		employee=Employee.find(employee_id)
 		av=Availability.where(:department_id => employee.department_id).where('upper(cargo) like ?',"#{employee.cargo.upcase}")
-			.where("((desde::Date - ?::Date) * (?::Date - hasta::Date)) >= 0", hasta, desde).where(:status => true)
+			.where("((desde - ?) * (? - hasta)) >= 0", hasta, desde).where(:status => true)
 
 		if av.count>0 # employees disponibilities	
 			av.each do |avail|
 			 puts "Availability found"
 				employees_on=Employee.where(:department_id => employee.department_id)
 					.where('upper(cargo) like ?',"#{employee.cargo.upcase}")
-					.where('not exists(select * from requests where ((desde::Date - ?::Date) * (?::Date - hasta::Date)) >= 0 and requests.employee_id=employees.id and status>0)',avail.hasta,avail.desde)
+					.where('not exists(select * from requests where ((desde - ?) * (? - hasta)) >= 0 and requests.employee_id=employees.id and status>0)',avail.hasta,avail.desde)
 
 				if employees_on.count<=avail.num_min_emp
 					errors.add(:desde,"No es posible realizar la solicitud ya que se ha establecido una disponibilidad mínima en su Departamento de #{avail.num_min_emp} Empleados disponibles con cargo: '#{avail.cargo}' durante los días comprendidos entre el #{avail.desde} a #{avail.hasta}")

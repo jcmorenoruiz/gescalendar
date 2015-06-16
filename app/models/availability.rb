@@ -1,6 +1,6 @@
 class Availability < ActiveRecord::Base
 	belongs_to :department
-	
+	before_save { self.cargo = ActiveSupport::Inflector.transliterate(self.cargo) }
 
 	validates :num_min_emp, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 199}
 	validates :cargo, presence: true,length: { maximum: 50 }
