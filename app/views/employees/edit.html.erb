@@ -38,13 +38,15 @@
 						</div>
 					</div>
 
+					<% if !(admin_user? && current_user.id==@emp.id) %>
 					<div class="field form-group">
 						<%= f.label :role, "Tipo de Usuario",:class => 'control-label col-sm-2' %>
 						<div class="col-sm-6 col-md-4">
 							<%= f.select :role, options_for_select({ "Empleado" => 1,"Jefe Departamento" => 2, "Administrador" => 3},@emp.role), {},:class => 'form-control', :required => true %>
 						</div>
 					</div>
-
+					<% end %>
+					
 					<div class="field form-group">
 						<%= f.label :cargo, :class =>'control-label col-sm-2' %>
 						<div class="col-sm-6 col-md-4">

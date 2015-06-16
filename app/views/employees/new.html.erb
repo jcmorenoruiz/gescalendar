@@ -32,7 +32,9 @@
 					<%= f.text_field :fecha_alta, :class => 'datepicker form-control', :placeholder => "Click para abrir calendario", :required => true %>
 					</div>
 				</div>
-
+				<div class="alert alert-warning">
+					<p>Seleccione la fecha de alta del empleado en la empresa. A partir de esta fecha se obtienen los días restantes por cada uno de los tipos de solicitud que se le permiten.</p>
+				</div>
 				<div class="field form-group">
 					<%= f.label :role, "Privilegios*", :class=> 'col-sm-2 control-label' %>
 					<div class="col-sm-6 col-md-4">
