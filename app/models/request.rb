@@ -40,7 +40,7 @@ class Request < ActiveRecord::Base
 	}
 	 scope :active, -> { where  status: [1,2] }
 
-	validate :date_same_year, :calendar_open, :min_disponibilidad, :check_res_days, on: :create
+	validate :date_same_year, :calendar_open, :min_disponibilidad, :check_rest_days, on: :create
 
 	# check if rest days for this availability
 	def check_rest_days
