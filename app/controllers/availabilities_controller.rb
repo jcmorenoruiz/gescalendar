@@ -7,7 +7,7 @@ class AvailabilitiesController < ApplicationController
 
 	def new
 			@dpto=Department.find(params[:id])
-			if chief_user? && (current_user.department != @dpto || !current_user.department.jefe_auditor)
+			if current_user.department != @dpto
         flash[:danger] = 'ERROR. No tiene acceso al recurso solicitado.'
         redirect_to departments_url
       end

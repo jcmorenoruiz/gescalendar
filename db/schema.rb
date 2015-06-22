@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150601130642) do
+ActiveRecord::Schema.define(version: 20150622071158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,15 @@ ActiveRecord::Schema.define(version: 20150601130642) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "availabilities", "departments"
+  add_foreign_key "calendars", "departments"
+  add_foreign_key "default_line_calendars", "default_calendars"
+  add_foreign_key "departments", "enterprises"
+  add_foreign_key "departments_request_types", "departments"
+  add_foreign_key "departments_request_types", "request_types"
+  add_foreign_key "employees", "departments"
+  add_foreign_key "line_calendars", "calendars"
+  add_foreign_key "request_types", "enterprises"
   add_foreign_key "requests", "employees"
   add_foreign_key "requests", "request_types"
 end

@@ -37,10 +37,10 @@ default_request_types = [
 
 # Enterprises
 enterprises=[
-  ["Electrosur","t",'Spain',"2015-04-03"],
-  ["Hybrid Auctions","t",'France',"2015-04-13"],
-  ["GesCalendar","t",'Spain',"2015-04-01"],
-  ["PayApi LTD","t",'Finland',"2015-04-18"]
+  ["Electrosur","t",'Spain',"2015-06-03"],
+  ["Hybrid Auctions","t",'France',"2015-06-13"],
+  ["GesCalendar","t",'Spain',"2015-06-01"],
+  ["PayApi LTD","t",'Finland',"2015-06-15"]
 ]
 
 # Departments
@@ -81,17 +81,17 @@ employees=[
 
  # desde-hasta-status-rt-empleado
 requests=[
-  ["2015-03-30","2015-04-05",2,1,1],
-  ["2015-06-22","2015-07-05",2,1,1],
-  ["2015-04-06","2015-04-19",2,1,2],
-  ["2015-08-03","2015-08-16",2,1,2],
-  ["2015-08-17","2015-08-17",2,2,2],
-  ["2015-07-01","2015-01-01",2,2,1],
-  ["2015-05-10","2015-05-30",2,1,4],
-  ["2015-06-01","2015-06-02",2,1,4],
-  ["2015-08-07","2015-08-16",2,1,3],
-  ["2015-09-01","2015-09-10",2,1,3],
-  ["2015-06-12","2015-06-12",2,2,3],
+  ["2015-03-30","2015-04-05",2,1,1,"2015-06-01"],
+  ["2015-06-22","2015-07-05",2,1,1,"2015-06-03"],
+  ["2015-04-06","2015-04-19",2,1,2,"2015-06-03"],
+  ["2015-08-03","2015-08-16",2,1,2,"2015-06-07"],
+  ["2015-08-17","2015-08-17",2,2,2,"2015-06-04"],
+  ["2015-07-01","2015-01-01",2,2,1,"2015-06-07"],
+  ["2015-05-10","2015-05-30",2,1,4,"2015-06-07"],
+  ["2015-06-01","2015-06-02",2,1,4,"2015-06-09"],
+  ["2015-08-07","2015-08-16",2,1,3,"2015-06-09"],
+  ["2015-09-01","2015-09-10",2,1,3,"2015-06-15"],
+  ["2015-06-12","2015-06-12",2,2,3,"2015-06-13"],
 ]
 
 
@@ -162,8 +162,8 @@ employees.each do |nombre,email,password,role,fecha_alta,status,cargo,department
 end
 
 
-requests.each do |desde,hasta,status,request_type_id,employee_id |
-  Request.create(:desde => desde, :hasta => hasta, :status => status, :request_type_id => request_type_id, :employee_id => employee_id)
+requests.each do |desde,hasta,status,request_type_id,employee_id,created_at |
+  Request.create(:desde => desde, :hasta => hasta, :status => status, :request_type_id => request_type_id, :employee_id => employee_id, :created_at => created_at)
 end
 
 

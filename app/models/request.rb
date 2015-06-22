@@ -31,7 +31,6 @@ class Request < ActiveRecord::Base
 	validates :motivo_rev, length: { maximum: 140 }
 	validates :employee_id , presence: true
 	validates :request_type_id, length: { minimum: 1, message: "Indique el tipo de solicitud" }
-    
 
 	# date range validations. (pendientes,confirmadas)
 	validates :desde,:hasta,:overlap => 
@@ -40,12 +39,9 @@ class Request < ActiveRecord::Base
 	 :message_content => "Ya existe una solicitud en el periodo solicitado."
 	}
 	 scope :active, -> { where  status: [1,2] }
-	 
-	validate :date_same_year, on: :create
-	validate :calendar_open, on: :create
-	validate :min_disponibilidad, on: :create
-	validate :check_rest_days, on: :create
-	
+
+	validate :date_same_year, :calendar_open, :min_disponibilidad, :check_res_days, on: :create
+
 	# check if rest days for this availability
 	def check_rest_days
 
@@ -122,10 +118,7 @@ class Request < ActiveRecord::Base
 					errors.add(:desde,"No es posible realizar la solicitud ya que se ha establecido una disponibilidad mínima en su Departamento de #{avail.num_min_emp} Empleados disponibles con cargo: '#{avail.cargo}' durante los días comprendidos entre el #{avail.desde} a #{avail.hasta}")
 				end
 			end
-		else
-      puts "Availability not found"
-    end
-
+		end
 	end
 
 	# Check if a given interval overlaps this interval    

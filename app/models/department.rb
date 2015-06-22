@@ -15,7 +15,7 @@ class Department < ActiveRecord::Base
 	scope :status, -> (status) { where status: status}
 	scope :starts_with, -> (nombre) { where("upper(nombre) like ?", "#{nombre.upcase}%")}
 
-	validates :nombre, presence: true,length: { maximum: 60 }
+	validates :nombre, presence: true,length: { maximum: 60 }, 	uniqueness: { case_sensitive: false, :scope => :enterprise_id }
 	
 	accepts_nested_attributes_for :employees
 	accepts_nested_attributes_for :availabilities
