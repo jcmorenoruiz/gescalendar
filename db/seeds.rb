@@ -10,7 +10,7 @@ default_calendars = [
 
 default_line_calendars = [
   [ "2014-01-01", "Año nuevo", 1, 't' ],
-  [ "2014-01-06", "Epifanía del Señor", 1, 't' ],
+  [ "2014-01-06", "Día de los reyes", 1, 't' ],
   [ "2014-04-18", "Viernes Santo", 1, 't' ],
   [ "2014-05-01", "Dia del trabajador", 1 ,'t'],
   [ "2014-10-13", "Día de la Hispanidad", 1, 't' ],
@@ -20,7 +20,7 @@ default_line_calendars = [
   [ "2014-12-25", "Navidad", 1, 't' ],
 
   [ "2015-01-01", "Año nuevo", 2, 't' ],
-  [ "2015-01-06", "Epifanía del Señor", 2, 't' ],
+  [ "2015-01-06", "Día de los reyes", 2, 't' ],
   [ "2015-04-03", "Viernes Santo", 2, 't' ],
   [ "2015-05-01", "Dia del trabajador", 2 ,'t'],
   [ "2015-10-12", "Día de la Hispanidad", 2, 't' ],
